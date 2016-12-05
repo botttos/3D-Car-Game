@@ -14,6 +14,19 @@ struct PhysBody3D;
 struct PhysVehicle3D;
 struct VehicleInfo;
 
+//Directions:
+//		 x		 NORTH
+//		-x		 SOUTH
+//		 z		 EAST
+//		-z		 WEST
+enum Direction
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+};
+
 class ModulePhysics3D : public Module
 {
 public:
@@ -34,6 +47,8 @@ public:
 
 	void AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB);
 	void AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false);
+
+	PhysBody3D* CreateFlat(float lenght, Direction dir, Direction prev_dir);
 
 private:
 

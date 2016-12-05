@@ -136,6 +136,11 @@ update_status ModulePhysics3D::Update(float dt)
 		}
 	}
 
+	for (p2List_item<Cube>* item = App->scene_intro->Cubes.getFirst(); item; item = item->next)
+	{
+		item->data.Render();
+	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -358,6 +363,86 @@ void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, c
 	world->addConstraint(hinge, disable_collision);
 	constraints.add(hinge);
 	hinge->setDbgDrawSize(2.0f);
+}
+
+//Map Creation Functions
+
+PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction prev_dir)
+{
+	PhysBody3D* ret;
+	Cube cube;
+	if (dir == NORTH)
+	{
+		if (prev_dir == EAST)
+		{
+			App->scene_intro->actual_pos.x -= 3;
+			App->scene_intro->actual_pos.z += 3;
+		}
+		else if (prev_dir == WEST)
+		{
+			App->scene_intro->actual_pos.x -= 3;
+			App->scene_intro->actual_pos.z -= 3;
+		}
+		cube.size.Set(lenght, 1, 6);
+		App->scene_intro->actual_pos.x += lenght / 2;
+		cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
+		App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
+	}
+	else if (dir == SOUTH)
+	{
+		if (prev_dir == EAST)
+		{
+			App->scene_intro->actual_pos.x += 3;
+			App->scene_intro->actual_pos.z -= 3;
+		}
+		else if (prev_dir == WEST)
+		{
+			App->scene_intro->actual_pos.x += 3;
+			App->scene_intro->actual_pos.z += 3;
+		}
+		cube.size.Set(lenght, 1, 6);
+		App->scene_intro->actual_pos.x -= lenght / 2;
+		cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
+		App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
+	}
+	else if (dir == EAST)
+	{
+		if (prev_dir == NORTH)
+		{
+			App->scene_intro->actual_pos.x += 3;
+			App->scene_intro->actual_pos.z -= 3;
+		}
+		else if (prev_dir == SOUTH)
+		{
+			App->scene_intro->actual_pos.x -= 3;
+			App->scene_intro->actual_pos.z -= 3;
+		}
+
+		cube.size.Set(6, 1, lenght);
+		App->scene_intro->actual_pos.z += lenght / 2;
+		cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
+		App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2);
+	}
+	else if (dir == WEST)
+	{
+		if (prev_dir == NORTH)
+		{
+			App->scene_intro->actual_pos.x += 3;
+			App->scene_intro->actual_pos.z += 3;
+		}
+		else if (prev_dir == SOUTH)
+		{
+			App->scene_intro->actual_pos.x -= 3;
+			App->scene_intro->actual_pos.z += 3;
+		}
+		cube.size.Set(6, 1, lenght);
+		App->scene_intro->actual_pos.z -= lenght / 2;
+		cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
+		App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - lenght / 2);
+	}
+	ret = AddBody(cube, 0);
+	App->scene_intro->Cubes.add(cube);
+	return ret;
 }
 
 // =============================================

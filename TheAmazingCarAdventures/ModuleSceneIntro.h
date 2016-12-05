@@ -22,14 +22,6 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
-	/*
-	PhysBody3D* pb_snake[MAX_SNAKE];
-	Sphere s_snake[MAX_SNAKE];
-
-	PhysBody3D* pb_snake2[MAX_SNAKE];
-	Sphere s_snake2[MAX_SNAKE];
-	*/
-
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
 
@@ -41,4 +33,8 @@ public:
 
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
+
+	vec3 actual_pos;
+	p2List<PhysBody3D*> Map;
+	p2List<Cube> Cubes;		//Need to render them
 };

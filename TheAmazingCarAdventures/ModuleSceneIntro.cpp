@@ -20,6 +20,15 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	actual_pos.x = 0;
+	actual_pos.y = 0;
+	actual_pos.z = 0;
+
+	Map.add(App->physics->CreateFlat(20, EAST, EAST));
+	Map.add(App->physics->CreateFlat(20, NORTH, EAST));
+	Map.add(App->physics->CreateFlat(40, WEST, NORTH));
+	Map.add(App->physics->CreateFlat(20, SOUTH, WEST));
+
 	return ret;
 }
 
