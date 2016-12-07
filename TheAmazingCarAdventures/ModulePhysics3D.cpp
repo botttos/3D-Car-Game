@@ -141,6 +141,23 @@ update_status ModulePhysics3D::Update(float dt)
 		item->data.Render();
 	}
 
+	for (p2List_item<Cube>* item = App->scene_intro->Uncolored_Walls.getFirst(); item; item = item->next)
+	{
+		item->data.Render();
+	}
+	for (p2List_item<Cube>* item = App->scene_intro->Red_Walls.getFirst(); item; item = item->next)
+	{
+		item->data.Render();
+	}
+	for (p2List_item<Cube>* item = App->scene_intro->Green_Walls.getFirst(); item; item = item->next)
+	{
+		item->data.Render();
+	}
+	for (p2List_item<Cube>* item = App->scene_intro->Yellow_Walls.getFirst(); item; item = item->next)
+	{
+		item->data.Render();
+	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -442,6 +459,38 @@ PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction p
 	}
 	ret = AddBody(cube, 0);
 	App->scene_intro->Cubes.add(cube);
+	return ret;
+}
+
+PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width, int x, int z, Direction dir, obstacle_color color)
+{
+	PhysBody3D* ret;
+	Cube cube;
+
+	if (dir == NORTH || dir == SOUTH)
+		cube.size.Set(lenght, height, width);
+	else if (dir == EAST || dir == WEST)
+		cube.size.Set(width, height, lenght);
+		
+	cube.SetPos(x, height / 2, z);
+
+	switch (color)
+	{
+	case RED:
+		App->scene_intro->Red_Walls.add(cube);
+		break;
+	case GREEN:
+		App->scene_intro->Green_Walls.add(cube);
+		break;
+	case YELLOW:
+		App->scene_intro->Yellow_Walls.add(cube);
+		break;
+	case UNCOLORED:
+		App->scene_intro->Uncolored_Walls.add(cube);
+		break;
+	}
+
+	ret = AddBody(cube, 0);
 	return ret;
 }
 
