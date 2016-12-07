@@ -57,7 +57,7 @@ public:
 	void AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false);
 
 	PhysBody3D* CreateFlat(float lenght, Direction dir, Direction prev_dir);
-	PhysBody3D* CreateWall(float height, float lenght, float width, int x, int z, Direction dir, obstacle_color color);
+	PhysBody3D* CreateWall(float height, float lenght, float width, int x, int z, Direction dir, obstacle_color color, float angle = 0, vec3 axis = (0,0,0));
 
 private:
 

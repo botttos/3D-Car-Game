@@ -462,7 +462,7 @@ PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction p
 	return ret;
 }
 
-PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width, int x, int z, Direction dir, obstacle_color color)
+PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width, int x, int z, Direction dir, obstacle_color color, float angle, vec3 axis)
 {
 	PhysBody3D* ret;
 	Cube cube;
@@ -473,6 +473,8 @@ PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width,
 		cube.size.Set(width, height, lenght);
 		
 	cube.SetPos(x, height / 2, z);
+	if (angle != 0)
+		cube.SetRotation(angle, axis);
 
 	switch (color)
 	{
