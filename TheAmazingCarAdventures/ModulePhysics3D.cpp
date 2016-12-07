@@ -388,7 +388,7 @@ void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, c
 
 //Map Creation Functions
 
-PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction prev_dir)
+PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction prev_dir, int last_width, int width)
 {
 	PhysBody3D* ret;
 	Cube cube;
@@ -396,15 +396,15 @@ PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction p
 	{
 		if (prev_dir == EAST)
 		{
-			App->scene_intro->actual_pos.x -= 3;
-			App->scene_intro->actual_pos.z += 3;
+			App->scene_intro->actual_pos.x -= last_width / 2;
+			App->scene_intro->actual_pos.z += width / 2;
 		}
 		else if (prev_dir == WEST)
 		{
-			App->scene_intro->actual_pos.x -= 3;
-			App->scene_intro->actual_pos.z -= 3;
+			App->scene_intro->actual_pos.x -= last_width / 2;
+			App->scene_intro->actual_pos.z -= width / 2;
 		}
-		cube.size.Set(lenght, 1, 6);
+		cube.size.Set(lenght, 1, width);
 		App->scene_intro->actual_pos.x += lenght / 2;
 		cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 		App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
@@ -413,15 +413,15 @@ PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction p
 	{
 		if (prev_dir == EAST)
 		{
-			App->scene_intro->actual_pos.x += 3;
-			App->scene_intro->actual_pos.z -= 3;
+			App->scene_intro->actual_pos.x += last_width / 2;
+			App->scene_intro->actual_pos.z -= width / 2;
 		}
 		else if (prev_dir == WEST)
 		{
-			App->scene_intro->actual_pos.x += 3;
-			App->scene_intro->actual_pos.z += 3;
+			App->scene_intro->actual_pos.x += last_width / 2;
+			App->scene_intro->actual_pos.z += width / 2;
 		}
-		cube.size.Set(lenght, 1, 6);
+		cube.size.Set(lenght, 1, width);
 		App->scene_intro->actual_pos.x -= lenght / 2;
 		cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 		App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
@@ -430,16 +430,16 @@ PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction p
 	{
 		if (prev_dir == NORTH)
 		{
-			App->scene_intro->actual_pos.x += 3;
-			App->scene_intro->actual_pos.z -= 3;
+			App->scene_intro->actual_pos.x += width / 2;
+			App->scene_intro->actual_pos.z -= last_width / 2;
 		}
 		else if (prev_dir == SOUTH)
 		{
-			App->scene_intro->actual_pos.x -= 3;
-			App->scene_intro->actual_pos.z -= 3;
+			App->scene_intro->actual_pos.x -= width / 2;
+			App->scene_intro->actual_pos.z -= last_width / 2;
 		}
 
-		cube.size.Set(6, 1, lenght);
+		cube.size.Set(width, 1, lenght);
 		App->scene_intro->actual_pos.z += lenght / 2;
 		cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 		App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2);
@@ -448,15 +448,15 @@ PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction p
 	{
 		if (prev_dir == NORTH)
 		{
-			App->scene_intro->actual_pos.x += 3;
-			App->scene_intro->actual_pos.z += 3;
+			App->scene_intro->actual_pos.x += width / 2;
+			App->scene_intro->actual_pos.z += last_width / 2;
 		}
 		else if (prev_dir == SOUTH)
 		{
-			App->scene_intro->actual_pos.x -= 3;
-			App->scene_intro->actual_pos.z += 3;
+			App->scene_intro->actual_pos.x -= width / 2;
+			App->scene_intro->actual_pos.z += last_width / 2;
 		}
-		cube.size.Set(6, 1, lenght);
+		cube.size.Set(width, 1, lenght);
 		App->scene_intro->actual_pos.z -= lenght / 2;
 		cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 		App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - lenght / 2);
