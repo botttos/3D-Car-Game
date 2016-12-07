@@ -24,8 +24,8 @@ bool ModuleSceneIntro::Start()
 	actual_pos.y = 0;
 	actual_pos.z = 0;
 
-	Map.add(App->physics->CreateFlat(100, EAST, EAST,0,15));
-	Map.add(App->physics->CreateFlat(100, NORTH, EAST,15,30));
+	Map.add(App->physics->CreateFlat(50, WEST, EAST,0,15));
+	Map.add(App->physics->CreateFlat(100, NORTH, WEST,15,30));
 	Map.add(App->physics->CreateFlat(200, WEST, NORTH,30,25));
 	Map.add(App->physics->CreateFlat(100, SOUTH, WEST, 25, 5));
 	Cube cube;
