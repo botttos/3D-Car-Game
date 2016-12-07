@@ -40,5 +40,5 @@ public:
 	p2List<Cube> Uncolored_Walls;
 	p2List<Cube> Red_Walls;
 	p2List<Cube> Green_Walls;
-	p2List<Cube> Yellow_Walls;
+	p2List<Cube> Blue_Walls;
 };

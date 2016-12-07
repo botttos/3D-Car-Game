@@ -31,7 +31,7 @@ enum obstacle_color
 {
 	RED,
 	GREEN,
-	YELLOW,
+	BLUE,
 	UNCOLORED
 };
 

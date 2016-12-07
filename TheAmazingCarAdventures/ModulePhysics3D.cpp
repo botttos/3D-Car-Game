@@ -143,18 +143,22 @@ update_status ModulePhysics3D::Update(float dt)
 
 	for (p2List_item<Cube>* item = App->scene_intro->Uncolored_Walls.getFirst(); item; item = item->next)
 	{
+		item->data.color = Black;
 		item->data.Render();
 	}
 	for (p2List_item<Cube>* item = App->scene_intro->Red_Walls.getFirst(); item; item = item->next)
 	{
+		item->data.color = Red;
 		item->data.Render();
 	}
 	for (p2List_item<Cube>* item = App->scene_intro->Green_Walls.getFirst(); item; item = item->next)
 	{
+		item->data.color = Green;
 		item->data.Render();
 	}
-	for (p2List_item<Cube>* item = App->scene_intro->Yellow_Walls.getFirst(); item; item = item->next)
+	for (p2List_item<Cube>* item = App->scene_intro->Blue_Walls.getFirst(); item; item = item->next)
 	{
+		item->data.color = Blue;
 		item->data.Render();
 	}
 
@@ -484,8 +488,8 @@ PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width,
 	case GREEN:
 		App->scene_intro->Green_Walls.add(cube);
 		break;
-	case YELLOW:
-		App->scene_intro->Yellow_Walls.add(cube);
+	case BLUE:
+		App->scene_intro->Blue_Walls.add(cube);
 		break;
 	case UNCOLORED:
 		App->scene_intro->Uncolored_Walls.add(cube);

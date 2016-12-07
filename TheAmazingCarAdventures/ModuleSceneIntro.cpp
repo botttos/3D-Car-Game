@@ -34,7 +34,7 @@ bool ModuleSceneIntro::Start()
 	App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 25);
 	ret = App->physics->AddBody(cube, 0);
 	App->scene_intro->Cubes.add(cube);
-	Map.add(App->physics->CreateWall(10, 50, 1, 0, 0, NORTH, UNCOLORED));	//We will need to use actual_pos to help positioning walls
+	Map.add(App->physics->CreateWall(10, 50, 1, 0, 0, NORTH, GREEN));	//We will need to use actual_pos to help positioning walls
 
 	return ret;
 }
