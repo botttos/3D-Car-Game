@@ -419,11 +419,15 @@ PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction p
 		{
 			App->scene_intro->actual_pos.x += last_width / 2;
 			App->scene_intro->actual_pos.z -= width / 2;
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - ((lenght - last_width) / 2) - last_width, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
 		}
 		else if (prev_dir == WEST)
 		{
 			App->scene_intro->actual_pos.x += last_width / 2;
-			App->scene_intro->actual_pos.z += width / 2;
+			App->scene_intro->actual_pos.z -= width / 2;
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - ((lenght - last_width) / 2) - last_width, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
 		}
 		cube.size.Set(lenght, 1, width);
 		App->scene_intro->actual_pos.x -= lenght / 2;
@@ -436,11 +440,15 @@ PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction p
 		{
 			App->scene_intro->actual_pos.x += width / 2;
 			App->scene_intro->actual_pos.z -= last_width / 2;
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.z + lenght / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - width / 2 , App->scene_intro->actual_pos.z + ((lenght - last_width) / 2) + last_width, dir, UNCOLORED);
 		}
 		else if (prev_dir == SOUTH)
 		{
 			App->scene_intro->actual_pos.x -= width / 2;
 			App->scene_intro->actual_pos.z -= last_width / 2;
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.z + lenght / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.z + ((lenght - last_width) / 2) + last_width, dir, UNCOLORED);
 		}
 
 		cube.size.Set(width, 1, lenght);
@@ -454,11 +462,15 @@ PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction p
 		{
 			App->scene_intro->actual_pos.x += width / 2;
 			App->scene_intro->actual_pos.z += last_width / 2;
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.z - lenght / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.z - ((lenght - last_width) / 2) - last_width, dir, UNCOLORED);
 		}
 		else if (prev_dir == SOUTH)
 		{
 			App->scene_intro->actual_pos.x -= width / 2;
 			App->scene_intro->actual_pos.z += last_width / 2;
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.z - lenght / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.z - ((lenght - last_width) / 2) - last_width, dir, UNCOLORED);
 		}
 		cube.size.Set(width, 1, lenght);
 		App->scene_intro->actual_pos.z -= lenght / 2;

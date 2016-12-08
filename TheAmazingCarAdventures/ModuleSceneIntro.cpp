@@ -24,10 +24,14 @@ bool ModuleSceneIntro::Start()
 	actual_pos.y = 0;
 	actual_pos.z = 0;
 
-	Map.add(App->physics->CreateFlat(50, WEST, EAST,0,15));
-	Map.add(App->physics->CreateFlat(100, NORTH, WEST,15,30));
+	Map.add(App->physics->CreateFlat(50, EAST, EAST,0,15));
+	Map.add(App->physics->CreateFlat(100, NORTH, EAST,15,30));
 	Map.add(App->physics->CreateFlat(200, WEST, NORTH,30,25));
-	Map.add(App->physics->CreateFlat(100, SOUTH, WEST, 25, 5));
+	Map.add(App->physics->CreateFlat(100, SOUTH, WEST, 25, 20));
+	Map.add(App->physics->CreateFlat(50, WEST, SOUTH, 20, 10));
+	Map.add(App->physics->CreateFlat(200, NORTH, WEST, 10, 20));
+	Map.add(App->physics->CreateFlat(50, EAST, NORTH, 20, 10));
+
 	Cube cube;
 	cube.size.Set(50, 1, 50);
 	cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 25);
