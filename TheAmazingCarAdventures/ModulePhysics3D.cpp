@@ -388,7 +388,7 @@ void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, c
 
 //Map Creation Functions
 
-PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction prev_dir, int last_width, int width)
+PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction prev_dir, int last_width, int width, float angle)
 {
 	PhysBody3D* ret;
 	Cube cube;
@@ -412,8 +412,19 @@ PhysBody3D* ModulePhysics3D::CreateFlat(float lenght, Direction dir, Direction p
 		}
 		cube.size.Set(lenght, 1, width);
 		App->scene_intro->actual_pos.x += lenght / 2;
-		cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
-		App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
+		if (angle != 0 && prev_dir == NORTH)
+		{
+			if (angle >= 45)
+				angle = 45;
+			//cube.SetRotation(angle, vec3(1, 0, 0));.
+			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + (lenght / sin(angle)), App->scene_intro->actual_pos.z);
+			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y + (lenght/sin(angle)), App->scene_intro->actual_pos.z);
+		}
+		else
+		{
+			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
+			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
+		}
 	}
 	else if (dir == SOUTH)
 	{

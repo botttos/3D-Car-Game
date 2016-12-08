@@ -24,22 +24,27 @@ bool ModuleSceneIntro::Start()
 	actual_pos.y = 0;
 	actual_pos.z = 0;
 
-	Map.add(App->physics->CreateFlat(50, EAST, EAST,0,15));
-	Map.add(App->physics->CreateFlat(100, NORTH, EAST,15,30));
-	Map.add(App->physics->CreateFlat(200, WEST, NORTH,30,25));
-	Map.add(App->physics->CreateFlat(100, SOUTH, WEST, 25, 20));
-	Map.add(App->physics->CreateFlat(50, WEST, SOUTH, 20, 10));
-	Map.add(App->physics->CreateFlat(200, NORTH, WEST, 10, 20));
-	Map.add(App->physics->CreateFlat(50, EAST, NORTH, 20, 10));
+	Map.add(App->physics->CreateRoad(50, EAST, EAST,0,15));
+	Map.add(App->physics->CreateRoad(100, NORTH, EAST,15,30));
+	Map.add(App->physics->CreateRoad(200, WEST, NORTH,30,25));
+	Map.add(App->physics->CreateRoad(100, SOUTH, WEST, 25, 20));
+	Map.add(App->physics->CreateRoad(50, WEST, SOUTH, 20, 10));
+	Map.add(App->physics->CreateRoad(200, NORTH, WEST, 10, 20));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 10, 45.0));
 
 	Cube cube;
 	cube.size.Set(50, 1, 50);
 	cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 25);
 	App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 25);
-	ret = App->physics->AddBody(cube, 0);
-	//App->scene_intro->Cubes.add(cube);
+	App->physics->AddBody(cube);
+	//Cubes.add(cube);
 	//Map.add(App->physics->CreateWall(10, 50, 1, 0, 0, NORTH, GREEN));	//We will need to use actual_pos to help positioning walls
-
+	/*Cube cube2;
+	cube2.size.Set(50, 1, 50);
+	cube2.SetPos(0,0,0);
+	cube2.SetRotation(45, vec3(1, 0, 0));
+	App->physics->AddBody(cube2);
+	Cubes.add(cube2);*/
 	return ret;
 }
 
