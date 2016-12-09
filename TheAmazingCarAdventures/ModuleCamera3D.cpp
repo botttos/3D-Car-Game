@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "PhysBody3D.h"
 #include "ModuleCamera3D.h"
+#include "PhysVehicle3D.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -22,6 +23,13 @@ ModuleCamera3D::~ModuleCamera3D()
 bool ModuleCamera3D::Start()
 {
 	LOG("Setting up the camera");
+	//Start camera position
+	X = vec3(1.0f, 0.0f, 0.0f);
+	Y = vec3(0.0f, 1.0f, 0.0f);
+	Z = vec3(0.0f, 0.0f, 1.0f);
+
+	Position = vec3(0.0f, 20.0f, -10.0f);
+	Reference = vec3(0.0f, 0.0f, 0.0f);
 	bool ret = true;
 
 	return ret;
@@ -38,26 +46,26 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	// Implement a debug camera with keys and mouse
-	// Now we can make this movememnt frame rate independant!
+	btVector3 var;
+	float x, y, z;
+	App->player->vehicle->GetPos(&x, &y, &z);
+	LookAt({ x, y, z });
 
-	vec3 newPos(0,0,0);
-	float speed = 10.0f * dt;
-	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed = 100.0f * dt;
+	btVector3 distanceVec(Position.x - x, Position.y - y, Position.z - z);
+	float distanceToVehicle = distanceVec.length();
 
-	if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if(App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+	if (distanceToVehicle != maxDist)
+	{
+		btVector3FloatData data;
+		distanceVec.serializeFloat(data);
+		float angle = atan2(data.m_floats[0], data.m_floats[2]);
+		float toAdd = distanceToVehicle - maxDist;
+		Position.x -= toAdd*sin(angle);
+		Position.z -= toAdd*cos(angle);
+	}
 
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
-
-
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
-
-	Position += newPos;
-	Reference += newPos;
+	vec3 newPos(0, 0, 0);
+	float speed = 3.0f * dt;
 
 	// Mouse motion ----------------
 

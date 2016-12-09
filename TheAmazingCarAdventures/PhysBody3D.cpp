@@ -38,6 +38,17 @@ void PhysBody3D::SetTransform(const float* matrix) const
 	}
 }
 
+void PhysBody3D::GetPos(float* x, float* y, float* z)
+{
+	btTransform t = body->getWorldTransform();
+	btVector3 pos = t.getOrigin();
+	btVector3FloatData posFloat;
+	pos.serializeFloat(posFloat);
+	*x = posFloat.m_floats[0];
+	*y = posFloat.m_floats[1];
+	*z = posFloat.m_floats[2];
+}
+
 // ---------------------------------------------------------
 void PhysBody3D::SetPos(float x, float y, float z)
 {
