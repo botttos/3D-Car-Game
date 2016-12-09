@@ -26,6 +26,8 @@ public:
 	
 	vec3 X, Y, Z, Position, Reference;
 
+	float maxDist = 10.0f;
+
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;

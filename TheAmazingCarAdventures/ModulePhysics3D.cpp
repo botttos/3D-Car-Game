@@ -146,17 +146,17 @@ update_status ModulePhysics3D::Update(float dt)
 		item->data.color = Black;
 		item->data.Render();
 	}
-	for (p2List_item<Cube>* item = App->scene_intro->Red_Walls.getFirst(); item; item = item->next)
+	for (p2List_item<Cube>* item = App->scene_intro->Red_Obstacles.getFirst(); item; item = item->next)
 	{
 		item->data.color = Red;
 		item->data.Render();
 	}
-	for (p2List_item<Cube>* item = App->scene_intro->Green_Walls.getFirst(); item; item = item->next)
+	for (p2List_item<Cube>* item = App->scene_intro->Green_Obstacles.getFirst(); item; item = item->next)
 	{
 		item->data.color = Green;
 		item->data.Render();
 	}
-	for (p2List_item<Cube>* item = App->scene_intro->Blue_Walls.getFirst(); item; item = item->next)
+	for (p2List_item<Cube>* item = App->scene_intro->Blue_Obstacles.getFirst(); item; item = item->next)
 	{
 		item->data.color = Blue;
 		item->data.Render();
@@ -388,7 +388,7 @@ void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, c
 
 //Map Creation Functions
 
-PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction prev_dir, int last_width, int width, float angle)
+PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction prev_dir, int last_width, int width, float angle, obstacle_color color)
 {
 	PhysBody3D* ret;
 	Cube cube;
@@ -398,17 +398,17 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			App->scene_intro->actual_pos.x -= last_width / 2;
 			App->scene_intro->actual_pos.z += width / 2;
-			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
-			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x + ((lenght - last_width) / 2) + last_width, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
-			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x + ((lenght - last_width) / 2) + last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
 		}
 		else if (prev_dir == WEST)
 		{
 			App->scene_intro->actual_pos.x -= last_width / 2;
 			App->scene_intro->actual_pos.z -= width / 2;
-			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
-			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x + ((lenght - last_width) / 2) + last_width, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
-			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.z, WEST, UNCOLORED);
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x + ((lenght - last_width) / 2) + last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
+			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, WEST, UNCOLORED);
 		}
 		cube.size.Set(lenght, 1, width);
 		App->scene_intro->actual_pos.x += lenght / 2;
@@ -416,10 +416,9 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			if (angle >= 45)
 				angle = 45;
-			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y , App->scene_intro->actual_pos.z);
-			cube.SetRotation(angle, vec3(0, 0, 1));// - ((lenght / 2) * cos(angle))  + ((lenght / 2) * sin(angle))
-			cube.SetPos(App->scene_intro->actual_pos.x - ((lenght / 2) * cos(angle)), App->scene_intro->actual_pos.y + ((lenght / 2) * sin(angle)), App->scene_intro->actual_pos.z);
-			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y + (lenght / sin(angle)), App->scene_intro->actual_pos.z);
+			cube.SetPos(App->scene_intro->actual_pos.x - (sin(DEGTORAD*angle) * (lenght / 4)), App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z);
+			cube.SetRotation(angle, vec3(0, 0, 1));
+			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x - (sin(DEGTORAD*angle) * (lenght / 3)) + lenght / 2, App->scene_intro->actual_pos.y + ((lenght)* sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z);
 		}
 		else
 		{
@@ -433,17 +432,17 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			App->scene_intro->actual_pos.x += last_width / 2;
 			App->scene_intro->actual_pos.z -= width / 2;
-			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
-			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - ((lenght - last_width) / 2) - last_width, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
-			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - ((lenght - last_width) / 2) - last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
 		}
 		else if (prev_dir == WEST)
 		{
 			App->scene_intro->actual_pos.x += last_width / 2;
 			App->scene_intro->actual_pos.z -= width / 2;
-			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
-			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - ((lenght - last_width) / 2) - last_width, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
-			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.z, WEST, UNCOLORED);
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - ((lenght - last_width) / 2) - last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
+			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, WEST, UNCOLORED);
 		}
 		cube.size.Set(lenght, 1, width);
 		App->scene_intro->actual_pos.x -= lenght / 2;
@@ -456,23 +455,38 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			App->scene_intro->actual_pos.x += width / 2;
 			App->scene_intro->actual_pos.z -= last_width / 2;
-			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.z + lenght / 2, dir, UNCOLORED);
-			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - width / 2 , App->scene_intro->actual_pos.z + ((lenght - last_width) / 2) + last_width, dir, UNCOLORED);
-			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.z, NORTH, UNCOLORED);
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + ((lenght - last_width) / 2) + last_width, dir, UNCOLORED);
+			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, NORTH, UNCOLORED);
 		}
 		else if (prev_dir == SOUTH)
 		{
 			App->scene_intro->actual_pos.x -= width / 2;
 			App->scene_intro->actual_pos.z -= last_width / 2;
-			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.z + lenght / 2, dir, UNCOLORED);
-			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.z + ((lenght - last_width) / 2) + last_width, dir, UNCOLORED);
-			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.z, SOUTH, UNCOLORED);
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + ((lenght - last_width) / 2) + last_width, dir, UNCOLORED);
+			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, SOUTH, UNCOLORED);
 		}
 
 		cube.size.Set(width, 1, lenght);
 		App->scene_intro->actual_pos.z += lenght / 2;
-		cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
-		App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2);
+		if (color == UNCOLORED)
+		{
+			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
+			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2);
+		}
+		else
+		{
+			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
+			Cube low_cube;
+			//TODO rotate low_cube
+			low_cube.size.Set(width, 1, lenght);
+			low_cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - 10, App->scene_intro->actual_pos.z);
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, dir, UNCOLORED);
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, dir, UNCOLORED); 
+			App->scene_intro->Cubes.add(low_cube);
+			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2);
+		}
 	}
 	else if (dir == WEST)
 	{
@@ -480,17 +494,17 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			App->scene_intro->actual_pos.x += width / 2;
 			App->scene_intro->actual_pos.z += last_width / 2;
-			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.z - lenght / 2, dir, UNCOLORED);
-			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.z - ((lenght - last_width) / 2) - last_width, dir, UNCOLORED);
-			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.z, NORTH, UNCOLORED);
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - lenght / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - ((lenght - last_width) / 2) - last_width, dir, UNCOLORED);
+			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, NORTH, UNCOLORED);
 		}
 		else if (prev_dir == SOUTH)
 		{
 			App->scene_intro->actual_pos.x -= width / 2;
 			App->scene_intro->actual_pos.z += last_width / 2;
-			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.z - lenght / 2, dir, UNCOLORED);
-			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.z - ((lenght - last_width) / 2) - last_width, dir, UNCOLORED);
-			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.z, SOUTH, UNCOLORED);
+			CreateWall(10, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - lenght / 2, dir, UNCOLORED);
+			CreateWall(10, lenght - last_width, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - ((lenght - last_width) / 2) - last_width, dir, UNCOLORED);
+			CreateWall(10, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, SOUTH, UNCOLORED);
 		}
 		cube.size.Set(width, 1, lenght);
 		App->scene_intro->actual_pos.z -= lenght / 2;
@@ -498,11 +512,19 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - lenght / 2);
 	}
 	ret = AddBody(cube, 0);
-	App->scene_intro->Cubes.add(cube);
+	if (color == UNCOLORED)
+		App->scene_intro->Cubes.add(cube);
+	else if (color == RED)
+		App->scene_intro->Red_Obstacles.add(cube);
+	else if (color == GREEN)
+		App->scene_intro->Green_Obstacles.add(cube);
+	else if (color == BLUE)
+		App->scene_intro->Blue_Obstacles.add(cube);
+
 	return ret;
 }
 
-PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width, int x, int z, Direction dir, obstacle_color color, float angle, vec3 axis)
+PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width, int x, int y, int z, Direction dir, obstacle_color color, float angle, vec3 axis)
 {
 	PhysBody3D* ret;
 	Cube cube;
@@ -511,21 +533,21 @@ PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width,
 		cube.size.Set(lenght, height, width);
 	else if (dir == EAST || dir == WEST)
 		cube.size.Set(width, height, lenght);
-		
-	cube.SetPos(x, height / 2, z);
+
+	cube.SetPos(x, y, z);
 	if (angle != 0)
 		cube.SetRotation(angle, axis);
 
 	switch (color)
 	{
 	case RED:
-		App->scene_intro->Red_Walls.add(cube);
+		App->scene_intro->Red_Obstacles.add(cube);
 		break;
 	case GREEN:
-		App->scene_intro->Green_Walls.add(cube);
+		App->scene_intro->Green_Obstacles.add(cube);
 		break;
 	case BLUE:
-		App->scene_intro->Blue_Walls.add(cube);
+		App->scene_intro->Blue_Obstacles.add(cube);
 		break;
 	case UNCOLORED:
 		App->scene_intro->Uncolored_Walls.add(cube);

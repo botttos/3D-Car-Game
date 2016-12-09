@@ -38,7 +38,7 @@ public:
 	p2List<PhysBody3D*> Map;
 	p2List<Cube> Cubes;		//Need to render them
 	p2List<Cube> Uncolored_Walls;
-	p2List<Cube> Red_Walls;
-	p2List<Cube> Green_Walls;
-	p2List<Cube> Blue_Walls;
+	p2List<Cube> Red_Obstacles;
+	p2List<Cube> Green_Obstacles;
+	p2List<Cube> Blue_Obstacles;
 };
