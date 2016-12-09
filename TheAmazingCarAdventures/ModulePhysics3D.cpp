@@ -416,9 +416,10 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			if (angle >= 45)
 				angle = 45;
-			//cube.SetRotation(angle, vec3(1, 0, 0));.
-			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + (lenght / sin(angle)), App->scene_intro->actual_pos.z);
-			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y + (lenght/sin(angle)), App->scene_intro->actual_pos.z);
+			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y , App->scene_intro->actual_pos.z);
+			cube.SetRotation(angle, vec3(0, 0, 1));// - ((lenght / 2) * cos(angle))  + ((lenght / 2) * sin(angle))
+			cube.SetPos(App->scene_intro->actual_pos.x - ((lenght / 2) * cos(angle)), App->scene_intro->actual_pos.y + ((lenght / 2) * sin(angle)), App->scene_intro->actual_pos.z);
+			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y + (lenght / sin(angle)), App->scene_intro->actual_pos.z);
 		}
 		else
 		{
