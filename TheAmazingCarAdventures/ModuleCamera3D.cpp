@@ -46,7 +46,7 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	btVector3 var;
+	/*btVector3 var;
 	float x, y, z;
 	App->player->vehicle->GetPos(&x, &y, &z);
 	LookAt({ x, y, z });
@@ -62,7 +62,7 @@ update_status ModuleCamera3D::Update(float dt)
 		float toAdd = distanceToVehicle - maxDist;
 		Position.x -= toAdd*sin(angle);
 		Position.z -= toAdd*cos(angle);
-	}
+	}*/
 	// Modify camera manually
 	vec3 newPos(0, 0, 0);
 	float speed = 10.0f * dt;

@@ -37,10 +37,16 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(50, EAST, NORTH, 10, 20));*/
 
 	Map.add(App->physics->CreateRoad(50, EAST, WEST, 0, 20));
-	Map.add(App->physics->CreateWall(10, 20, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));
+	Map.add(App->physics->CreateWall(10, 20, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));	//first wall
 	Map.add(App->physics->CreateRoad(50, EAST, WEST, 0, 20));
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20, 0, RED));
+	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20, true, RED, 0));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20));
+	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20, false, UNCOLORED, 30));
+	Map.add(App->physics->CreateRoad(50, NORTH, EAST, 20, 20));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20, true, BLUE, 0));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20, false, UNCOLORED, 10));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20));
 
 
 	/*Cube cube;
@@ -70,10 +76,6 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	/*Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();*/
-
 	return UPDATE_CONTINUE;
 }
 
