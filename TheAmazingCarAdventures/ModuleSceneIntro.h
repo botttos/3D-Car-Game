@@ -37,10 +37,14 @@ public:
 	vec3 actual_pos;
 	p2List<PhysBody3D*> Map;
 	p2List<Cube> Cubes;
-	p2List<Cube> Uncolored_Walls;
-	p2List<Cube> Red_Obstacles;
-	p2List<Cube> Green_Obstacles;
-	p2List<Cube> Blue_Obstacles;
+	p2List<Cube> Uncolored_Cubes;
+	p2List<Cube> Red_Cubes;
+	p2List<Cube> Green_Cubes;
+	p2List<Cube> Blue_Cubes;
+	p2List<Sphere> Red_Spheres;
+	p2List<Sphere> Green_Spheres;
+	p2List<Sphere> Blue_Spheres;
+	p2List<Sphere> Uncolored_Spheres;
 	p2List<PhysBody3D*> Red_bodies;
 	p2List<PhysBody3D*> Blue_bodies;
 	p2List<PhysBody3D*> Green_bodies;

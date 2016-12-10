@@ -59,7 +59,7 @@ public:
 
 	PhysBody3D* CreateRoad(float lenght, Direction dir, Direction prev_dir, int last_widht, int width, bool is_trap = false, obstacle_color color = UNCOLORED, float angle = 0);
 	PhysBody3D* CreateWall(float height, float lenght, float width, int x, int y, int z, Direction dir, obstacle_color color, float angle = 0, vec3 axis = (0, 0, 0));
-
+	PhysBody3D* CreateDemolitionBall(int x, int y, int z, float radius, float mass = 1.0f, obstacle_color color = UNCOLORED);
 private:
 
 	bool debug;

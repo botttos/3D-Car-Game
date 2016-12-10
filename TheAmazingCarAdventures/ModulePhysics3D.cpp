@@ -141,7 +141,13 @@ update_status ModulePhysics3D::Update(float dt)
 		item->data.Render();
 	}
 
-	for (p2List_item<Cube>* item = App->scene_intro->Uncolored_Walls.getFirst(); item; item = item->next)
+	for (p2List_item<Cube>* item = App->scene_intro->Uncolored_Cubes.getFirst(); item; item = item->next)
+	{
+		//item->data.color = Color({0,255,255});
+		item->data.color = Black;
+		item->data.Render();
+	}
+	for (p2List_item<Sphere>* item = App->scene_intro->Uncolored_Spheres.getFirst(); item; item = item->next)
 	{
 		//item->data.color = Color({0,255,255});
 		item->data.color = Black;
@@ -149,7 +155,12 @@ update_status ModulePhysics3D::Update(float dt)
 	}
 	if (App->player->red_off == false)
 	{
-		for (p2List_item<Cube>* item = App->scene_intro->Red_Obstacles.getFirst(); item; item = item->next)
+		for (p2List_item<Cube>* item = App->scene_intro->Red_Cubes.getFirst(); item; item = item->next)
+		{
+			item->data.color = Red;
+			item->data.Render();
+		}
+		for (p2List_item<Sphere>* item = App->scene_intro->Red_Spheres.getFirst(); item; item = item->next)
 		{
 			item->data.color = Red;
 			item->data.Render();
@@ -157,7 +168,12 @@ update_status ModulePhysics3D::Update(float dt)
 	}
 	if (App->player->green_off == false)
 	{
-		for (p2List_item<Cube>* item = App->scene_intro->Green_Obstacles.getFirst(); item; item = item->next)
+		for (p2List_item<Cube>* item = App->scene_intro->Green_Cubes.getFirst(); item; item = item->next)
+		{
+			item->data.color = Green;
+			item->data.Render();
+		}
+		for (p2List_item<Sphere>* item = App->scene_intro->Green_Spheres.getFirst(); item; item = item->next)
 		{
 			item->data.color = Green;
 			item->data.Render();
@@ -165,7 +181,12 @@ update_status ModulePhysics3D::Update(float dt)
 	}
 	if (App->player->blue_off == false)
 	{
-		for (p2List_item<Cube>* item = App->scene_intro->Blue_Obstacles.getFirst(); item; item = item->next)
+		for (p2List_item<Cube>* item = App->scene_intro->Blue_Cubes.getFirst(); item; item = item->next)
+		{
+			item->data.color = Blue;
+			item->data.Render();
+		}
+		for (p2List_item<Sphere>* item = App->scene_intro->Blue_Spheres.getFirst(); item; item = item->next)
 		{
 			item->data.color = Blue;
 			item->data.Render();
@@ -664,17 +685,17 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		App->scene_intro->Cubes.add(cube);
 	else if (color == RED)
 	{
-		App->scene_intro->Red_Obstacles.add(cube);
+		App->scene_intro->Red_Cubes.add(cube);
 		App->scene_intro->Red_bodies.add(ret);
 	}
 	else if (color == GREEN)
 	{
-		App->scene_intro->Green_Obstacles.add(cube);
+		App->scene_intro->Green_Cubes.add(cube);
 		App->scene_intro->Green_bodies.add(ret);
 	}
 	else if (color == BLUE)
 	{
-		App->scene_intro->Blue_Obstacles.add(cube);
+		App->scene_intro->Blue_Cubes.add(cube);
 		App->scene_intro->Blue_bodies.add(ret);
 	}
 	return ret;
@@ -697,20 +718,55 @@ PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width,
 	switch (color)
 	{
 	case RED:
-		App->scene_intro->Red_Obstacles.add(cube);
+		App->scene_intro->Red_Cubes.add(cube);
 		break;
 	case GREEN:
-		App->scene_intro->Green_Obstacles.add(cube);
+		App->scene_intro->Green_Cubes.add(cube);
 		break;
 	case BLUE:
-		App->scene_intro->Blue_Obstacles.add(cube);
+		App->scene_intro->Blue_Cubes.add(cube);
 		break;
 	case UNCOLORED:
-		App->scene_intro->Uncolored_Walls.add(cube);
+		App->scene_intro->Uncolored_Cubes.add(cube);
 		break;
 	}
 
 	ret = AddBody(cube, 0);
+	if (color == RED)
+		App->scene_intro->Red_bodies.add(ret);
+	else if (color == BLUE)
+		App->scene_intro->Blue_bodies.add(ret);
+	else if (color == GREEN)
+		App->scene_intro->Green_bodies.add(ret);
+
+	return ret;
+}
+
+PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float radius, float mass, obstacle_color color)
+{
+	PhysBody3D* ret;
+	Sphere sphere;
+
+	sphere.radius = radius;
+	sphere.SetPos(x, y, z);
+
+	switch (color)
+	{
+	case RED:
+		App->scene_intro->Red_Spheres.add(sphere);
+		break;
+	case GREEN:
+		App->scene_intro->Green_Spheres.add(sphere);
+		break;
+	case BLUE:
+		App->scene_intro->Blue_Spheres.add(sphere);
+		break;
+	case UNCOLORED:
+		App->scene_intro->Uncolored_Spheres.add(sphere);
+		break;
+	}
+
+	ret = AddBody(sphere, 0);	//TODO make this not a rigid body.
 	if (color == RED)
 		App->scene_intro->Red_bodies.add(ret);
 	else if (color == BLUE)
