@@ -39,14 +39,28 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(50, EAST, WEST, 0, 20));
 	Map.add(App->physics->CreateWall(10, 20, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));	//first wall
 	Map.add(App->physics->CreateRoad(50, EAST, WEST, 0, 20));
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20, true, RED, 0));
+	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20, true, RED));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20, false, UNCOLORED, 30));
 	Map.add(App->physics->CreateRoad(50, NORTH, EAST, 20, 20));
-	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20, true, BLUE, 0));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20, true, BLUE));
 	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20));
 	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20, false, UNCOLORED, 10));
 	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20));
+	Map.add(App->physics->CreateRoad(50, EAST, NORTH, 20, 20));
+	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20));
+	Map.add(App->physics->CreateRoad(50, SOUTH, EAST, 20, 20));
+	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20));
+	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20, false, UNCOLORED, 15));
+	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20));
+	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20, true, GREEN));
+	Map.add(App->physics->CreateRoad(200, SOUTH, SOUTH, 20, 20));
+	Map.add(App->physics->CreateRoad(50, WEST, SOUTH, 20, 20));
+	Map.add(App->physics->CreateRoad(50, WEST, WEST, 20, 20));
+	Map.add(App->physics->CreateRoad(50, WEST, WEST, 20, 20, false, UNCOLORED, 10));
+	Map.add(App->physics->CreateRoad(50, WEST, WEST, 20, 20));
+	Map.add(App->physics->CreateRoad(50, WEST, WEST, 20, 20, true, GREEN));
+	Map.add(App->physics->CreateRoad(50, WEST, WEST, 20, 20));
 
 
 	/*Cube cube;
