@@ -25,4 +25,9 @@ public:
 	float turn;
 	float acceleration;
 	float brake;
+
+public:
+	bool red_off;
+	bool blue_off;
+	bool green_off;
 };

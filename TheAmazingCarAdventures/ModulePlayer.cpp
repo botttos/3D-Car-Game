@@ -18,6 +18,10 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
+	red_off = false;
+	blue_off = false;
+	green_off = false;
+
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
@@ -136,6 +140,27 @@ update_status ModulePlayer::Update(float dt)
 	{
 		brake = BRAKE_POWER;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN && red_off == false)
+	{
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
+		{
+			item->data->SetAsSensor(true);
+		}
+		red_off = true;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
+		{
+			item->data->SetAsSensor(false);
+		}
+		red_off = false;
+		blue_off = false;
+		green_off = false;
+	}
+
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
