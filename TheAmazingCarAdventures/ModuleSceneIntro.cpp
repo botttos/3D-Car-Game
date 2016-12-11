@@ -27,6 +27,7 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 0, 20));
 	Map.add(App->physics->CreateWall(10, 20, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));		//first wall
 	Map.add(App->physics->CreateRoad(10, EAST, EAST, 0, 20));
+	Map.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z - 10, 3, 10.0f, GREEN));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20, true, RED));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20));
 	Map.add(App->physics->CreateWall(10, 20, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));	//second wall
@@ -82,6 +83,27 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	p2List_item<Sphere>* spheres = App->scene_intro->Red_Spheres.getFirst();
+	for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_Spheres_bodies.getFirst(); item; item = item->next)
+	{
+		item->data->GetTransform(&spheres->data.transform);
+		spheres = spheres->next;
+	}
+
+	spheres = App->scene_intro->Blue_Spheres.getFirst();
+	for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_Spheres_bodies.getFirst(); item; item = item->next)
+	{
+		item->data->GetTransform(&spheres->data.transform);
+		spheres = spheres->next;
+	}
+
+	spheres = App->scene_intro->Green_Spheres.getFirst();
+	for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_Spheres_bodies.getFirst(); item; item = item->next)
+	{
+		item->data->GetTransform(&spheres->data.transform);
+		spheres = spheres->next;
+	}
+
 	return UPDATE_CONTINUE;
 }
 
