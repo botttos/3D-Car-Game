@@ -25,12 +25,13 @@ bool ModuleSceneIntro::Start()
 	actual_pos.z = 0;
 
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 0, 20));
-	Map.add(App->physics->CreateWall(10, 20, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));	//first wall
+	Map.add(App->physics->CreateWall(10, 20, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));		//first wall
 	Map.add(App->physics->CreateRoad(10, EAST, EAST, 0, 20));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20, true, RED));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20));
+	Map.add(App->physics->CreateWall(10, 20, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));	//second wall
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20, false, UNCOLORED, 30));
-	Map.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z -10, 3, 1.0f, RED));
+	Map.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z -10, 3, 10.0f, RED));
 	Map.add(App->physics->CreateRoad(50, NORTH, EAST, 20, 20));
 	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20, true, BLUE));
 	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20));

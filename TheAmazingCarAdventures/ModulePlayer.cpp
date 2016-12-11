@@ -101,7 +101,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 2, 7);
+	vehicle->SetPos(0, 0.5f, 7);
 	
 	return true;
 }
@@ -162,6 +162,10 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
 			item->data->SetAsSensor(true);
 
+		//need to apply force so they can pass the sensor under them... (?)
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_Spheres_bodies.getFirst(); item; item = item->next)
+			item->data->Push(0, 50.0, 0);
+
 		red_off = true;
 		blue_off = false;
 		green_off = false;
@@ -171,6 +175,10 @@ update_status ModulePlayer::Update(float dt)
 	{
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_bodies.getFirst(); item; item = item->next)
 			item->data->SetAsSensor(true);
+
+		//need to apply force so they can pass the sensor under them... (?)
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_Spheres_bodies.getFirst(); item; item = item->next)
+			item->data->Push(0, 50.0, 0);
 
 		blue_off = true;
 		red_off = false;
@@ -182,15 +190,24 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
 			item->data->SetAsSensor(true);
 
+		//need to apply force so they can pass the sensor under them... (?)
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_Spheres_bodies.getFirst(); item; item = item->next)
+			item->data->Push(0, 50.0, 0);
+
 		green_off = true;
 		red_off = false;
 		blue_off = false;
 	}
-
-
+	
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
+
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+	{
+		vehicle->SetPos(0, 0.5f, 7);
+		vehicle->Brake(BRAKE_POWER*2);
+	}
 
 	vehicle->Render();
 
