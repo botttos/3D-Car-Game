@@ -160,11 +160,15 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN && red_off == false)
 	{
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
+		{
 			item->data->SetAsSensor(true);
-
-		//need to apply force so they can pass the sensor under them... (?)
+					}
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_Spheres_bodies.getFirst(); item; item = item->next)
-			item->data->Push(0, 25.0, 0);
+		{
+			btRigidBody* temp = item->data->GetRigidBody();
+			temp->activate(true);
+		}
+			
 
 		red_off = true;
 		blue_off = false;
@@ -176,9 +180,11 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_bodies.getFirst(); item; item = item->next)
 			item->data->SetAsSensor(true);
 
-		////need to apply force so they can pass the sensor under them... (?)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_Spheres_bodies.getFirst(); item; item = item->next)
-			item->data->Push(0, 25.0, 0);
+		{
+			btRigidBody* temp = item->data->GetRigidBody();
+			temp->activate(true);
+		}
 
 		blue_off = true;
 		red_off = false;
@@ -190,9 +196,11 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
 			item->data->SetAsSensor(true);
 
-		//need to apply force so they can pass the sensor under them... (?)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_Spheres_bodies.getFirst(); item; item = item->next)
-			item->data->Push(0, 25.0, 0);
+		{
+			btRigidBody* temp = item->data->GetRigidBody();
+			temp->activate(true);
+		}
 
 		green_off = true;
 		red_off = false;

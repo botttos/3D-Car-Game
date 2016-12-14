@@ -75,3 +75,8 @@ bool PhysBody3D::IsSensor() const
 {
 	return is_sensor;
 }
+
+btRigidBody * PhysBody3D::GetRigidBody()
+{
+	return body;
+}
