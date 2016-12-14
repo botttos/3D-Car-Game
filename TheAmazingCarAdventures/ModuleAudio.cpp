@@ -1,4 +1,4 @@
-#include "Globals.h"
+	#include "Globals.h"
 #include "Application.h"
 #include "ModuleAudio.h"
 
@@ -41,6 +41,9 @@ bool ModuleAudio::Init()
 		ret = true;
 	}
 
+	background_music = Load_music("sounds/Running_in_the_90s.ogg");
+	Mix_PlayMusic(background_music, 0);
+
 	return ret;
 }
 
@@ -66,6 +69,17 @@ bool ModuleAudio::CleanUp()
 	Mix_Quit();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 	return true;
+}
+
+//Load Music
+Mix_Music* const ModuleAudio::Load_music(const char *path)
+{
+	Mix_Music* music = Mix_LoadMUS(path);
+	audio[last_audio++] = music;
+
+	LOG("Loading Music\n");
+
+	return music;
 }
 
 // Play a music file

@@ -16,6 +16,9 @@ public:
 	bool Init();
 	bool CleanUp();
 
+	//Load music
+	Mix_Music* const ModuleAudio::Load_music(const char *path);
+
 	// Play a music file
 	bool PlayMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
 
@@ -29,6 +32,10 @@ private:
 
 	Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
+
+	Mix_Music* audio[2];
+	uint last_audio = 0;
+	Mix_Music* background_music = nullptr;
 };
 
 #endif // __ModuleAudio_H__
