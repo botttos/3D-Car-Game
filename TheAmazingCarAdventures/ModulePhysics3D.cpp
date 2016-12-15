@@ -138,19 +138,20 @@ update_status ModulePhysics3D::Update(float dt)
 
 	for (p2List_item<Cube>* item = App->scene_intro->Cubes.getFirst(); item; item = item->next)
 	{
+		item->data.color = Black;
 		item->data.Render();
 	}
 
 	for (p2List_item<Cube>* item = App->scene_intro->Uncolored_Cubes.getFirst(); item; item = item->next)
 	{
 		//item->data.color = Color({0,255,255});
-		item->data.color = Black;
+		item->data.color = White;
 		item->data.Render();
 	}
 	for (p2List_item<Sphere>* item = App->scene_intro->Uncolored_Spheres.getFirst(); item; item = item->next)
 	{
 		//item->data.color = Color({0,255,255});
-		item->data.color = Black;
+		item->data.color = White;
 		item->data.Render();
 	}
 	if (App->player->red_off == false)
