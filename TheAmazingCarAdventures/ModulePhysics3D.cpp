@@ -138,7 +138,7 @@ update_status ModulePhysics3D::Update(float dt)
 
 	for (p2List_item<Cube>* item = App->scene_intro->Cubes.getFirst(); item; item = item->next)
 	{
-		item->data.color = Black;
+		item->data.color = {100,100,100,1};
 		item->data.Render();
 	}
 

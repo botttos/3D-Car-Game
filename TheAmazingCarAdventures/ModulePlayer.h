@@ -30,4 +30,7 @@ public:
 	bool red_off;
 	bool blue_off;
 	bool green_off;
+
+private:
+	btRigidBody* chassis_vehicle;
 };
