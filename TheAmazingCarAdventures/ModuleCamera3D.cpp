@@ -24,12 +24,12 @@ bool ModuleCamera3D::Start()
 {
 	LOG("Setting up the camera");
 	//Start camera position
-	X = vec3(10.0f, 0.0f, 0.0f);
-	Y = vec3(0.0f, 10.0f, 0.0f);
-	Z = vec3(0.0f, 0.0f, 10.0f);
+	X = vec3(1.0f, 0.0f, 0.0f);
+	Y = vec3(0.0f, 1.0f, 0.0f);
+	Z = vec3(0.0f, 0.0f, 1.0f);
 
-	Position = vec3(0.0f, 10.0f, -10.0f);
-	Reference = vec3(10.0f, 0.0f, 0.0f);
+	Position = vec3(0.0f, 7.0f, 0.0f);
+	Reference = vec3(0.0f, 0.0f, 0.0f);
 	bool ret = true;
 
 	return ret;
@@ -46,13 +46,23 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	btVector3 var;
+	mat4x4 mat;
+	App->player->vehicle->GetTransform(&mat);
+
+	Position = mat.translation();
+
+	X = vec3{ mat[0],mat[1],mat[2] };
+	Y = vec3{ mat[4], mat[5], mat[6] };
+	Z = vec3{ mat[8], mat[9],mat[10] };
+	vec3 VehicleLocation = { mat[12], mat[13] + viewVector.y +4, mat[14] };
+	Look((VehicleLocation)-Z * 15, VehicleLocation, false);
+
 	float x, y, z;
 	App->player->vehicle->GetPos(&x, &y, &z);
 	LookAt({ x, y, z });
 
 	btVector3 distanceVec(Position.x - x, Position.y - y, Position.z - z);
-	float distanceToVehicle = distanceVec.length();
+	float distanceToVehicle = distanceVec.length() + 5;
 
 	if (distanceToVehicle != maxDist)
 	{
@@ -61,8 +71,14 @@ update_status ModuleCamera3D::Update(float dt)
 		float angle = atan2(data.m_floats[0], data.m_floats[2]);
 		float toAdd = distanceToVehicle - maxDist;
 		Position.x -= toAdd*sin(angle);
+		Position.y += toAdd*sin(angle);
 		Position.z -= toAdd*cos(angle);
 	}
+
+	// Recalculate matrix -------------
+	CalculateViewMatrix();
+
+
 	// Modify camera manually
 	vec3 newPos(0, 0, 0);
 	float speed = 10.0f * dt;
