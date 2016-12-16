@@ -46,7 +46,7 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	/*mat4x4 mat;
+	mat4x4 mat;
 	App->player->vehicle->GetTransform(&mat);
 
 	Position = mat.translation();
@@ -56,7 +56,6 @@ update_status ModuleCamera3D::Update(float dt)
 	Z = vec3{ mat[8], mat[9],mat[10] };
 	vec3 VehicleLocation = { mat[12], mat[13] + viewVector.y +4, mat[14] };
 	Look((VehicleLocation)-Z * 15, VehicleLocation, false);
-
 	float x, y, z;
 	App->player->vehicle->GetPos(&x, &y, &z);
 	LookAt({ x, y, z });
@@ -78,7 +77,7 @@ update_status ModuleCamera3D::Update(float dt)
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
 
-	*/
+	
 	// Modify camera manually
 	vec3 newPos(0, 0, 0);
 	float speed = 10.0f * dt;
