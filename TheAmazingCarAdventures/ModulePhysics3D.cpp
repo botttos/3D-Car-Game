@@ -304,6 +304,32 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
 	return pbody;
 }
 
+PhysBody3D* ModulePhysics3D::AddNonRigidBody(const Cube& cube, float mass)
+{
+	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x*0.5f, cube.size.y*0.5f, cube.size.z*0.5f));
+	shapes.add(colShape);
+
+	btTransform startTransform;
+	startTransform.setFromOpenGLMatrix(&cube.transform);
+
+	btVector3 localInertia(0, 0, 0);
+	if (mass != 0.f)
+		colShape->calculateLocalInertia(mass, localInertia);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+	motions.add(myMotionState);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
+
+	btRigidBody* body = new btRigidBody(rbInfo);
+	PhysBody3D* pbody = new PhysBody3D(body);
+
+	body->setUserPointer(pbody);
+	world->addRigidBody(body);
+	bodies.add(pbody);
+
+	return pbody;
+}
+
 // ---------------------------------------------------------
 PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass)
 {
@@ -625,7 +651,7 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 			App->scene_intro->actual_pos.z += last_width / 2;
 			CreateWall(WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - lenght / 2, dir, UNCOLORED);
 			CreateWall(WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - ((lenght - last_width) / 2) - last_width, dir, UNCOLORED);
-			CreateWall(WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, NORTH, UNCOLORED);
+			CreateWall(WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1, NORTH, UNCOLORED);
 		}
 		else if (prev_dir == SOUTH)
 		{
@@ -787,6 +813,21 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float ra
 	else if (color == GREEN)
 		App->scene_intro->Green_Spheres_bodies.add(ret);
 
+	return ret;
+}
+
+PhysBody3D * ModulePhysics3D::CreateWallSensor(float lenght, float width, int x, int y, int z, Direction dir)
+{
+	PhysBody3D* ret;
+	Cube cube;
+
+	if (dir == NORTH || dir == SOUTH)
+		cube.size.Set(lenght, 3, width);
+	else if (dir == EAST || dir == WEST)
+		cube.size.Set(width, 3, lenght);
+
+	cube.SetPos(x, y, z);
+	ret = AddNonRigidBody(cube, 0);
 	return ret;
 }
 

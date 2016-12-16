@@ -51,4 +51,5 @@ public:
 	p2List<PhysBody3D*> Red_Spheres_bodies;
 	p2List<PhysBody3D*> Blue_Spheres_bodies;
 	p2List<PhysBody3D*> Green_Spheres_bodies;
+	p2List<PhysBody3D*> checkpoints;
 };

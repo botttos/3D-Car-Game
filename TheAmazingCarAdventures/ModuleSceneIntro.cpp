@@ -24,23 +24,25 @@ bool ModuleSceneIntro::Start()
 	actual_pos.y = 0;
 	actual_pos.z = 0;
 
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 0, 20));
-	Map.add(App->physics->CreateWall(10, 20, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));		//first wall
-	Map.add(App->physics->CreateRoad(10, EAST, EAST, 0, 20));
-	Map.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z - 10, 3, 10.0f, GREEN));
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20, true, RED));
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20));
-	Map.add(App->physics->CreateWall(10, 20, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));	//second wall
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20, false, UNCOLORED, 30));
-	Map.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z -10, 3, 10.0f, RED));
-	Map.add(App->physics->CreateRoad(50, NORTH, EAST, 20, 20));
-	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20, true, BLUE));
-	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20));
-	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20, false, UNCOLORED, 10));
-	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20));
-	Map.add(App->physics->CreateRoad(50, EAST, NORTH, 20, 20));
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 20, 20));
-	Map.add(App->physics->CreateRoad(50, SOUTH, EAST, 20, 20));
+	Map.add(App->physics->CreateRoad(70, EAST, EAST, 0, 30));
+	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z-10, NORTH));	//1rst sensor
+	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));		//first wall
+	Map.add(App->physics->CreateRoad(10, EAST, EAST, 0, 30));
+	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30, true, RED));
+	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30));
+	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));	//second wall
+	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30, false, UNCOLORED, 30));
+	Map.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z - 10, 3, 10.0f, RED));
+	Map.add(App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 10, actual_pos.z - 10, 3, 10.0f, RED));
+	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH));	//1rst sensor
+	Map.add(App->physics->CreateRoad(50, NORTH, EAST, 30, 30));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30, true, BLUE));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30, false, UNCOLORED, 10));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30));
+	Map.add(App->physics->CreateRoad(50, WEST, NORTH, 30, 30));
+	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 30));
+	/*Map.add(App->physics->CreateRoad(50, SOUTH, EAST, 20, 20));
 	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20));
 	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20, false, UNCOLORED, 15));
 	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20));
@@ -54,7 +56,7 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 20, 20));
 	Map.add(App->physics->CreateRoad(50, NORTH, WEST, 20, 20));
 	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20));
-
+	*/
 
 	/*Cube cube;
 	cube.size.Set(50, 1, 50);
@@ -69,6 +71,13 @@ bool ModuleSceneIntro::Start()
 	cube2.SetRotation(45, vec3(1, 0, 0));
 	App->physics->AddBody(cube2);
 	Cubes.add(cube2);*/
+
+	for (p2List_item<PhysBody3D*>* item = App->scene_intro->checkpoints.getFirst(); item; item = item->next)
+	{
+		item->data->SetAsSensor(true);
+		item->data->collision_listeners.add(this);
+	}
+
 
 	return ret;
 }
@@ -110,5 +119,8 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	if (body2 == pb_chassis && body1 == checkpoints.getFirst()->data)
+	{
+		int i;
+	}
 }
-
