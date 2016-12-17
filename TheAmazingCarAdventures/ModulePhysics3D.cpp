@@ -55,17 +55,6 @@ bool ModulePhysics3D::Start()
 	world->setGravity(GRAVITY);
 	vehicle_raycaster = new btDefaultVehicleRaycaster(world);
 
-	// Big plane as ground
-	/*{
-		btCollisionShape* colShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
-
-		btDefaultMotionState* myMotionState = new btDefaultMotionState();
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(0.0f, myMotionState, colShape);
-
-		btRigidBody* body = new btRigidBody(rbInfo);
-		world->addRigidBody(body);
-	}*/
-
 	return true;
 }
 
@@ -793,12 +782,15 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float ra
 	{
 	case RED:
 		App->scene_intro->Red_Spheres.add(sphere);
+		App->scene_intro->Red_Spheres_positions.add(vec3(x, y, z));
 		break;
 	case GREEN:
 		App->scene_intro->Green_Spheres.add(sphere);
+		App->scene_intro->Green_Spheres_positions.add(vec3(x, y, z));
 		break;
 	case BLUE:
 		App->scene_intro->Blue_Spheres.add(sphere);
+		App->scene_intro->Blue_Spheres_positions.add(vec3(x, y, z));
 		break;
 	case UNCOLORED:
 		App->scene_intro->Uncolored_Spheres.add(sphere);

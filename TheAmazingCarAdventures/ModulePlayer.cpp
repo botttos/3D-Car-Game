@@ -218,6 +218,45 @@ update_status ModulePlayer::Update(float dt)
 		//TODO: ASK ERIC 4 INFO
 		//App->scene_intro->pb_chassis->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
 		//App->scene_intro->pb_chassis->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+
+		p2List_item<vec3>* position_red_item = App->scene_intro->Red_Spheres_positions.getFirst();
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_Spheres_bodies.getFirst(); item; item = item->next, position_red_item = position_red_item->next)
+		{
+			item->data->SetPos(position_red_item->data.x, position_red_item->data.y, position_red_item->data.z);
+			item->data->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+			item->data->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		}
+
+		p2List_item<vec3>* position_blue_item = App->scene_intro->Blue_Spheres_positions.getFirst();
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_Spheres_bodies.getFirst(); item; item = item->next, position_blue_item = position_blue_item->next)
+		{
+			item->data->SetPos(position_blue_item->data.x, position_blue_item->data.y, position_blue_item->data.z);
+			item->data->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+			item->data->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		}
+
+		p2List_item<vec3>* position_green_item = App->scene_intro->Green_Spheres_positions.getFirst();
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_Spheres_bodies.getFirst(); item; item = item->next, position_green_item = position_green_item->next)
+		{
+			item->data->SetPos(position_green_item->data.x, position_green_item->data.y, position_green_item->data.z);
+			item->data->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+			item->data->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		}
+
+		//reset color filter
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
+			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_bodies.getFirst(); item; item = item->next)
+			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
+			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+
+		red_off = false;
+		blue_off = false;
+		green_off = false;
+		//--
 	}
 
 	vehicle->Render();
