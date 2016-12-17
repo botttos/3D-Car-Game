@@ -174,6 +174,12 @@ update_status ModulePlayer::Update(float dt)
 		red_off = true;
 		blue_off = false;
 		green_off = false;
+
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_bodies.getFirst(); item; item = item->next)
+			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
+			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && blue_off == false)
@@ -190,6 +196,12 @@ update_status ModulePlayer::Update(float dt)
 		blue_off = true;
 		red_off = false;
 		green_off = false;
+
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
+			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
+			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN && green_off == false)
@@ -206,6 +218,12 @@ update_status ModulePlayer::Update(float dt)
 		green_off = true;
 		red_off = false;
 		blue_off = false;
+
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
+			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_bodies.getFirst(); item; item = item->next)
+			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 	}
 	
 	vehicle->ApplyEngineForce(acceleration);
