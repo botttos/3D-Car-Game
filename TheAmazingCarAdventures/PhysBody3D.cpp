@@ -4,7 +4,9 @@
 
 // =================================================
 PhysBody3D::PhysBody3D(btRigidBody* body) : body(body)
-{}
+{
+	body->setUserPointer(this);
+}
 
 // ---------------------------------------------------------
 PhysBody3D::~PhysBody3D()
@@ -21,7 +23,7 @@ void PhysBody3D::Push(float x, float y, float z)
 // ---------------------------------------------------------
 void PhysBody3D::GetTransform(float* matrix) const
 {
-	if(body != NULL && matrix != NULL)
+	if (body != NULL && matrix != NULL)
 	{
 		body->getWorldTransform().getOpenGLMatrix(matrix);
 	}
@@ -30,23 +32,12 @@ void PhysBody3D::GetTransform(float* matrix) const
 // ---------------------------------------------------------
 void PhysBody3D::SetTransform(const float* matrix) const
 {
-	if(body != NULL && matrix != NULL)
+	if (body != NULL && matrix != NULL)
 	{
 		btTransform t;
 		t.setFromOpenGLMatrix(matrix);
 		body->setWorldTransform(t);
 	}
-}
-
-void PhysBody3D::GetPos(float* x, float* y, float* z)
-{
-	btTransform t = body->getWorldTransform();
-	btVector3 pos = t.getOrigin();
-	btVector3FloatData posFloat;
-	pos.serializeFloat(posFloat);
-	*x = posFloat.m_floats[0];
-	*y = posFloat.m_floats[1];
-	*z = posFloat.m_floats[2];
 }
 
 // ---------------------------------------------------------
@@ -68,6 +59,17 @@ void PhysBody3D::SetAsSensor(bool is_sensor)
 		else
 			body->setCollisionFlags(body->getCollisionFlags() &~btCollisionObject::CF_NO_CONTACT_RESPONSE);
 	}
+}
+
+void PhysBody3D::GetPos(float* x, float* y, float* z)
+{
+	btTransform t = body->getWorldTransform();
+	btVector3 pos = t.getOrigin();
+	btVector3FloatData posFloat;
+	pos.serializeFloat(posFloat);
+	*x = posFloat.m_floats[0];
+	*y = posFloat.m_floats[1];
+	*z = posFloat.m_floats[2];
 }
 
 // ---------------------------------------------------------
