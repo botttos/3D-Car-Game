@@ -85,6 +85,39 @@ bool ModuleSceneIntro::Start()
 		item->data->collision_listeners.add(this);
 	}
 
+	//RED
+	for (p2List_item<Cube>* item = Red_Cubes.getFirst(); item; item = item->next)
+		item->data.color = Red;
+
+	for (p2List_item<Sphere>* item = Red_Spheres.getFirst(); item; item = item->next)
+		item->data.color = Red;
+	//--
+
+	//BLUE
+	for (p2List_item<Cube>* item = Blue_Cubes.getFirst(); item; item = item->next)
+		item->data.color = Blue;
+
+	for (p2List_item<Sphere>* item = Blue_Spheres.getFirst(); item; item = item->next)
+		item->data.color = Blue;
+	//--
+
+	//GREEN
+	for (p2List_item<Cube>* item = Green_Cubes.getFirst(); item; item = item->next)
+		item->data.color = Green;
+
+	for (p2List_item<Sphere>* item = Green_Spheres.getFirst(); item; item = item->next)
+		item->data.color = Green;
+	//--
+
+	for (p2List_item<Sphere>* item = Uncolored_Spheres.getFirst(); item; item = item->next)
+		item->data.color = White;
+	//item->data.color = Color({0,255,255});
+
+	for (p2List_item<Cube>* item = Cubes.getFirst(); item; item = item->next)
+		item->data.color = { 100, 100, 100, 1 };	//paint road
+
+	for (p2List_item<Cube>* item = Uncolored_Cubes.getFirst(); item; item = item->next)
+		item->data.color = White;		//paint walls
 	return ret;
 }
 
@@ -99,34 +132,79 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	p2List_item<Sphere>* spheres = App->scene_intro->Red_Spheres.getFirst();
-	for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_Spheres_bodies.getFirst(); item; item = item->next)
+	//TRANSFORMATIONS
+	p2List_item<Sphere>* spheres = Red_Spheres.getFirst();
+	for (p2List_item<PhysBody3D*>* item = Red_Spheres_bodies.getFirst(); item; item = item->next)
 	{
 		item->data->GetTransform(&spheres->data.transform);
 		spheres = spheres->next;
 	}
 
-	spheres = App->scene_intro->Blue_Spheres.getFirst();
-	for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_Spheres_bodies.getFirst(); item; item = item->next)
+	spheres = Blue_Spheres.getFirst();
+	for (p2List_item<PhysBody3D*>* item = Blue_Spheres_bodies.getFirst(); item; item = item->next)
 	{
 		item->data->GetTransform(&spheres->data.transform);
 		spheres = spheres->next;
 	}
 
-	spheres = App->scene_intro->Green_Spheres.getFirst();
-	for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_Spheres_bodies.getFirst(); item; item = item->next)
+	spheres = Green_Spheres.getFirst();
+	for (p2List_item<PhysBody3D*>* item = Green_Spheres_bodies.getFirst(); item; item = item->next)
 	{
 		item->data->GetTransform(&spheres->data.transform);
 		spheres = spheres->next;
 	}
+	//--
+
+	for (p2List_item<Cube>* item = Cubes.getFirst(); item; item = item->next)
+		item->data.Render();
+
+	for (p2List_item<Cube>* item = Uncolored_Cubes.getFirst(); item; item = item->next)
+		item->data.Render();
+
+	for (p2List_item<Sphere>* item = Uncolored_Spheres.getFirst(); item; item = item->next)
+		item->data.Render();
+
+	//RED
+	if (App->player->red_off == false)
+	{
+		for (p2List_item<Cube>* item = Red_Cubes.getFirst(); item; item = item->next)
+			item->data.Render();
+
+		for (p2List_item<Sphere>* item = Red_Spheres.getFirst(); item; item = item->next)
+			item->data.Render();
+	}
+	//--
+
+	//GREEN
+	if (App->player->green_off == false)
+	{
+		for (p2List_item<Cube>* item = Green_Cubes.getFirst(); item; item = item->next)
+			item->data.Render();
+
+		for (p2List_item<Sphere>* item = Green_Spheres.getFirst(); item; item = item->next)
+			item->data.Render();
+
+	}
+	//--
+
+	//BLUE
+	if (App->player->blue_off == false)
+	{
+		for (p2List_item<Cube>* item = Blue_Cubes.getFirst(); item; item = item->next)
+			item->data.Render();
+
+		for (p2List_item<Sphere>* item = Blue_Spheres.getFirst(); item; item = item->next)
+			item->data.Render();
+	}
+	//--
 
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body2 == App->player->vehicle)
+	if (body2 = App->player->vehicle)
 	{
-		int i;
+		LOG("ayy lmao");
 	}
 }

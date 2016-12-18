@@ -125,64 +125,6 @@ update_status ModulePhysics3D::Update(float dt)
 		}
 	}
 
-	for (p2List_item<Cube>* item = App->scene_intro->Cubes.getFirst(); item; item = item->next)
-	{
-		item->data.color = {100, 100, 100, 1};	//paint road
-		item->data.Render();
-	}
-
-	for (p2List_item<Cube>* item = App->scene_intro->Uncolored_Cubes.getFirst(); item; item = item->next)
-	{
-		//item->data.color = Color({0,255,255});
-		item->data.color = White;		//paint walls
-		item->data.Render();
-	}
-	for (p2List_item<Sphere>* item = App->scene_intro->Uncolored_Spheres.getFirst(); item; item = item->next)
-	{
-		//item->data.color = Color({0,255,255});
-		item->data.color = White;
-		item->data.Render();
-	}
-	if (App->player->red_off == false)
-	{
-		for (p2List_item<Cube>* item = App->scene_intro->Red_Cubes.getFirst(); item; item = item->next)
-		{
-			item->data.color = Red;
-			item->data.Render();
-		}
-		for (p2List_item<Sphere>* item = App->scene_intro->Red_Spheres.getFirst(); item; item = item->next)
-		{
-			item->data.color = Red;
-			item->data.Render();
-		}
-	}
-	if (App->player->green_off == false)
-	{
-		for (p2List_item<Cube>* item = App->scene_intro->Green_Cubes.getFirst(); item; item = item->next)
-		{
-			item->data.color = Green;
-			item->data.Render();
-		}
-		for (p2List_item<Sphere>* item = App->scene_intro->Green_Spheres.getFirst(); item; item = item->next)
-		{
-			item->data.color = Green;
-			item->data.Render();
-		}
-	}
-	if (App->player->blue_off == false)
-	{
-		for (p2List_item<Cube>* item = App->scene_intro->Blue_Cubes.getFirst(); item; item = item->next)
-		{
-			item->data.color = Blue;
-			item->data.Render();
-		}
-		for (p2List_item<Sphere>* item = App->scene_intro->Blue_Spheres.getFirst(); item; item = item->next)
-		{
-			item->data.color = Blue;
-			item->data.Render();
-		}
-	}
-
 	return UPDATE_CONTINUE;
 }
 
