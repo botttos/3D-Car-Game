@@ -67,6 +67,8 @@ public:
 	p2List<PhysBody3D*> Green_Spheres_bodies;
 	p2List<vec3> Green_Spheres_positions;
 
+	p2List<PhysBody3D*> All_Spheres_bodies;
+
 	p2List<PhysBody3D*> checkpoints;
 	p2List<bool> checkpoints_bools;
 	uint checkpoints_num = 0;

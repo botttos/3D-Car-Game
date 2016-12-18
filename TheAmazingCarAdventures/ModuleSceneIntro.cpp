@@ -66,22 +66,6 @@ bool ModuleSceneIntro::Start()
 
 
 
-	/*Map.add(App->physics->CreateRoad(50, SOUTH, EAST, 20, 20));
-	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20));
-	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20, false, UNCOLORED, 15));
-	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20));
-	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20, true, GREEN));
-	Map.add(App->physics->CreateRoad(200, SOUTH, SOUTH, 20, 20));
-	Map.add(App->physics->CreateRoad(50, WEST, SOUTH, 20, 20));
-	Map.add(App->physics->CreateRoad(50, WEST, WEST, 20, 20));
-	Map.add(App->physics->CreateRoad(50, WEST, WEST, 20, 20, false, UNCOLORED, 10));
-	Map.add(App->physics->CreateRoad(50, WEST, WEST, 20, 20));
-	Map.add(App->physics->CreateRoad(50, WEST, WEST, 20, 20, true, GREEN));
-	Map.add(App->physics->CreateRoad(50, WEST, WEST, 20, 20));
-	Map.add(App->physics->CreateRoad(50, NORTH, WEST, 20, 20));
-	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 20, 20));
-	*/
-
 	/*Cube cube;
 	cube.size.Set(50, 1, 50);
 	cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 25);
@@ -96,13 +80,22 @@ bool ModuleSceneIntro::Start()
 	App->physics->AddBody(cube2);
 	Cubes.add(cube2);*/
 
-	for (p2List_item<PhysBody3D*>* item = App->scene_intro->checkpoints.getFirst(); item; item = item->next)
+	for (p2List_item<PhysBody3D*>* item = checkpoints.getFirst(); item; item = item->next)
 	{
 		item->data->SetAsSensor(true);
 		item->data->collision_listeners.add(this);
 		checkpoints_bools.add(false);
 		checkpoints_num++;
 	}
+
+	for (p2List_item<PhysBody3D*>* item = US_2nd_road_bodies.getFirst(); item; item = item->next)
+		item->data->collision_listeners.add(this);
+
+	for (p2List_item<PhysBody3D*>* item = US_3rd_road_bodies.getFirst(); item; item = item->next)
+		item->data->collision_listeners.add(this);
+
+	for (p2List_item<PhysBody3D*>* item = US_4th_road_bodies.getFirst(); item; item = item->next)
+		item->data->collision_listeners.add(this);
 
 	//RED
 	for (p2List_item<Cube>* item = Red_Cubes.getFirst(); item; item = item->next)
@@ -145,6 +138,24 @@ bool ModuleSceneIntro::Start()
 
 	for (p2List_item<Cube>* item = Uncolored_Cubes.getFirst(); item; item = item->next)
 		item->data.color = White;		//paint walls
+
+	for (p2List_item<PhysBody3D*>* item = US_2nd_road_bodies.getFirst(); item; item = item->next)
+		All_Spheres_bodies.add(item->data);
+
+	for (p2List_item<PhysBody3D*>* item = US_3rd_road_bodies.getFirst(); item; item = item->next)
+		All_Spheres_bodies.add(item->data);
+
+	for (p2List_item<PhysBody3D*>* item = US_4th_road_bodies.getFirst(); item; item = item->next)
+		All_Spheres_bodies.add(item->data);
+
+	for (p2List_item<PhysBody3D*>* item = Red_Spheres_bodies.getFirst(); item; item = item->next)
+		All_Spheres_bodies.add(item->data);
+
+	for (p2List_item<PhysBody3D*>* item = Blue_Spheres_bodies.getFirst(); item; item = item->next)
+		All_Spheres_bodies.add(item->data);
+
+	for (p2List_item<PhysBody3D*>* item = Green_Spheres_bodies.getFirst(); item; item = item->next)
+		All_Spheres_bodies.add(item->data);
 
 	return ret;
 }
@@ -267,15 +278,18 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body2 = App->player->vehicle)
+	if (body2 == App->player->vehicle && checkpoints.find(body1) != -1)
 	{
 		p2List_item<bool>* item_bools = checkpoints_bools.getFirst();
 		for (p2List_item<PhysBody3D*>* item = checkpoints.getFirst(); item; item = item->next, item_bools= item_bools->next)
 		{
 			if (body1 == item->data)
-			{
 				item_bools->data = true;
-			}
 		}
+	}
+	else if (body2 == App->player->vehicle && All_Spheres_bodies.find(body1) != -1)
+	{
+		LOG("car crashed against sphere");
+		//TODO: car lives?
 	}
 }
