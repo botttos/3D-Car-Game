@@ -174,7 +174,7 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 		
-		int act_road_num = 3; //TODO: CHANGE DEPENDING ON NUMBER OF SENSORS
+		int act_road_num = App->scene_intro->checkpoints_num;
 		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getLast(); item; item = item->prev)
 		{
 			if (item->data == true)
@@ -214,8 +214,6 @@ update_status ModulePlayer::Update(float dt)
 			btRigidBody* temp = item->data->GetRigidBody();
 			temp->activate(true);
 		}*/
-			
-
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && blue_off == false)
@@ -233,7 +231,7 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
-		int act_road_num = 3; //TODO: CHANGE DEPENDING ON NUMBER OF SENSORS
+		int act_road_num = App->scene_intro->checkpoints_num;
 		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getLast(); item; item = item->prev)
 		{
 			if (item->data == true)
@@ -284,7 +282,7 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 	
-		int act_road_num = 3; //TODO: CHANGE DEPENDING ON NUMBER OF SENSORS
+		int act_road_num = App->scene_intro->checkpoints_num;
 		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getLast(); item; item = item->prev)
 		{
 			if (item->data == true)
@@ -330,6 +328,10 @@ update_status ModulePlayer::Update(float dt)
 		//TODO: ASK ERIC 4 INFO
 		//App->scene_intro->pb_chassis->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
 		//App->scene_intro->pb_chassis->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+
+		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getFirst(); item; item = item->next)
+			item->data = false;
+
 
 		//2nd road
 		p2List_item<vec3>* position_item = App->scene_intro->US_2nd_road_positions.getFirst();

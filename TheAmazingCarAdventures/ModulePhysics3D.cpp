@@ -499,7 +499,7 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			if (prev_dir == SOUTH)
 			{
-				CreateWall(WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
+				CreateWall(WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
 				CreateWall(WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
 			}
 			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);

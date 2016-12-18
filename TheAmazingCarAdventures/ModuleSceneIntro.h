@@ -69,4 +69,5 @@ public:
 
 	p2List<PhysBody3D*> checkpoints;
 	p2List<bool> checkpoints_bools;
+	uint checkpoints_num = 0;
 };

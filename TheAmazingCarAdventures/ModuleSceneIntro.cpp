@@ -52,7 +52,19 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, EAST, GREEN));	//3rd wall
 	Map.add(App->physics->CreateRoad(50, WEST, NORTH, 30, 30));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 30));
-	US_3rd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z - 10, 3, BLUE, 3, 10.0f));
+	US_3rd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z, 3, BLUE, 3, 10.0f));
+	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 30));
+	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 30));
+	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 30));
+	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z, SOUTH));	//4th sensor
+	Map.add(App->physics->CreateRoad(50, SOUTH, WEST, 30, 30));
+	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
+	US_4th_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z, 3, GREEN, 4, 10.0f));
+	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
+	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
+	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x + 10, actual_pos.y + 3, actual_pos.z, WEST));	//5th sensor
+
+
 
 	/*Map.add(App->physics->CreateRoad(50, SOUTH, EAST, 20, 20));
 	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20));
@@ -89,6 +101,7 @@ bool ModuleSceneIntro::Start()
 		item->data->SetAsSensor(true);
 		item->data->collision_listeners.add(this);
 		checkpoints_bools.add(false);
+		checkpoints_num++;
 	}
 
 	//RED
