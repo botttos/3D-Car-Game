@@ -331,8 +331,6 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
 		vehicle->SetTransform(&initial_car_matrix);
 
-		timer.Start();
-
 		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getFirst(); item; item = item->next)
 			item->data = false;
 
@@ -344,6 +342,7 @@ update_status ModulePlayer::Update(float dt)
 	if (victory == true)
 	{
 		LOG("VICTORY");
+		//TODO: insert win sound
 		timer.Stop();
 		if (best_time == 0 || best_time > timer.Read())
 			best_time = timer.Read();
@@ -354,6 +353,25 @@ update_status ModulePlayer::Update(float dt)
 			item->data = false;
 
 		victory = false;
+	}
+
+	if (defeat == true)
+	{
+		LOG("DEFEAT");
+		//TODO: insert defeat / crash sound
+		timer.Stop();
+
+		App->scene_intro->ResetSpheres();
+
+		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getFirst(); item; item = item->next)
+			item->data = false;
+
+		defeat = false;
+
+		vehicle->SetPos(0, 0.5f, 7);
+		vehicle->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+		vehicle->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		vehicle->SetTransform(&initial_car_matrix);
 	}
 
 	char title[80];

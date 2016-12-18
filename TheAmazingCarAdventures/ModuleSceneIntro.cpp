@@ -25,7 +25,7 @@ bool ModuleSceneIntro::Start()
 	actual_pos.y = 0;
 	actual_pos.z = 0;
 
-	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 15, NORTH));	//1rst sensor
+	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 7, NORTH));	//1rst sensor
 	Map.add(App->physics->CreateRoad(70, EAST, EAST, 0, 30));
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));		//1rst wall
 	Map.add(App->physics->CreateRoad(10, EAST, EAST, 0, 30));
@@ -114,13 +114,12 @@ bool ModuleSceneIntro::Start()
 	for (p2List_item<Sphere>* item = US_4th_road.getFirst(); item; item = item->next)
 		item->data.color = White;
 	//--
-	//item->data.color = Color({0,255,255});
 
 	for (p2List_item<Cube>* item = Cubes.getFirst(); item; item = item->next)
-		item->data.color = { 100, 100, 100, 1 };	//paint road
+		item->data.color = { 0.95f, 0.7f, 0.4f };	//TODO: repaint road
 
 	for (p2List_item<Cube>* item = Uncolored_Cubes.getFirst(); item; item = item->next)
-		item->data.color = White;		//paint walls
+		item->data.color = { 0.8f, 0.85f, 0.9f };		//TODO: repaint walls
 
 	for (p2List_item<PhysBody3D*>* item = US_2nd_road_bodies.getFirst(); item; item = item->next)
 	{
@@ -286,8 +285,10 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	else if (body2 == App->player->vehicle && All_Spheres_bodies.find(body1) != -1)
 	{
 		LOG("car crashed against sphere");
-		//TODO: car lives?
+		App->player->defeat = true;
 	}
+
+	//TODO: add collision sound against: 	App->scene_intro->Red_bodies/Blue_bodies/Green_bodies; && App->scene_intro->Uncolored_Cubes
 }
 
 void ModuleSceneIntro::ResetSpheres()

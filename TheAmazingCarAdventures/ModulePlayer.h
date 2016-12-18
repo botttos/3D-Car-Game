@@ -33,6 +33,7 @@ public:
 	bool green_off;
 
 	bool victory = false;
+	bool defeat = false;
 	Timer timer;
 
 private:
