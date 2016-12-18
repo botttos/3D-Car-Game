@@ -103,6 +103,7 @@ bool ModulePlayer::Start()
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 0.5f, 7);
 
+	vehicle->GetTransform(&initial_car_matrix);
 	return true;
 }
 
@@ -326,9 +327,9 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
 	{
 		vehicle->SetPos(0, 0.5f, 7);
-		//TODO: ASK ERIC 4 INFO
-		//App->scene_intro->pb_chassis->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
-		//App->scene_intro->pb_chassis->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		vehicle->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+		vehicle->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		vehicle->SetTransform(&initial_car_matrix);
 
 		timer.Start();
 

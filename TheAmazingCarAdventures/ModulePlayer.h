@@ -38,4 +38,5 @@ public:
 private:
 	btRigidBody* chassis_vehicle;
 	Uint32 best_time = 0;
+	mat4x4 initial_car_matrix;
 };
