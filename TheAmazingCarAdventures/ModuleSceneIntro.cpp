@@ -281,10 +281,17 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (body2 == App->player->vehicle && checkpoints.find(body1) != -1)
 	{
 		p2List_item<bool>* item_bools = checkpoints_bools.getFirst();
-		for (p2List_item<PhysBody3D*>* item = checkpoints.getFirst(); item; item = item->next, item_bools= item_bools->next)
+		for (p2List_item<PhysBody3D*>* item = checkpoints.getFirst(); item; item = item->next, item_bools = item_bools->next)
 		{
 			if (body1 == item->data)
+			{
 				item_bools->data = true;
+				if (item->data == checkpoints.getFirst()->data)
+				{
+					App->player->timer.Start();
+					checkpoints_bools.getLast()->data = false;
+				}
+			}
 		}
 	}
 	else if (body2 == App->player->vehicle && All_Spheres_bodies.find(body1) != -1)

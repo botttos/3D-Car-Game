@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "Timer.h"
 
 struct PhysVehicle3D;
 
@@ -32,7 +33,9 @@ public:
 	bool green_off;
 
 	bool victory = false;
+	Timer timer;
 
 private:
 	btRigidBody* chassis_vehicle;
+	Uint32 best_time = 0;
 };

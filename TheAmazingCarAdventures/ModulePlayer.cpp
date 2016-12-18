@@ -102,6 +102,7 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 0.5f, 7);
+
 	return true;
 }
 
@@ -329,9 +330,10 @@ update_status ModulePlayer::Update(float dt)
 		//App->scene_intro->pb_chassis->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
 		//App->scene_intro->pb_chassis->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
 
+		timer.Start();
+
 		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getFirst(); item; item = item->next)
 			item->data = false;
-
 
 		//2nd road
 		p2List_item<vec3>* position_item = App->scene_intro->US_2nd_road_positions.getFirst();
@@ -406,10 +408,18 @@ update_status ModulePlayer::Update(float dt)
 	if (victory == true)
 	{
 		LOG("VICTORY");
+		timer.Stop();
+		if (best_time == 0 || best_time > timer.Read())
+			best_time = timer.Read();
+
+		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getFirst(); item; item = item->next)
+			item->data = false;
+
+		victory = false;
 	}
 
-	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
+	char title[120];
+	sprintf_s(title, "Speed: %.1f Km/h, Actual Time: %d, Best Time: %d", vehicle->GetKmh(), timer.Read() / 1000, best_time);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
