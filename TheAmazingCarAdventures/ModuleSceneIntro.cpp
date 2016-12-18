@@ -25,13 +25,11 @@ bool ModuleSceneIntro::Start()
 	actual_pos.y = 0;
 	actual_pos.z = 0;
 
+	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 15, NORTH));	//1rst sensor
 	Map.add(App->physics->CreateRoad(70, EAST, EAST, 0, 30));
-	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z-10, NORTH));	//1rst sensor
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));		//1rst wall
 	Map.add(App->physics->CreateRoad(10, EAST, EAST, 0, 30));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30, true, BLUE));
-	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 10, NORTH));	//1rst sensor
-	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 20, NORTH));	//1rst sensor
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30));
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));	//2nd wall
 	//Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30, false, UNCOLORED, 30));
@@ -39,18 +37,23 @@ bool ModuleSceneIntro::Start()
 	//Map.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z - 10, 3, 10.0f, RED));
 	//Map.add(App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 10, actual_pos.z - 10, 3, 10.0f, RED));
 	//checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH));	//1rst sensor
+	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z, NORTH));	//2nd sensor
 	Map.add(App->physics->CreateRoad(50, NORTH, EAST, 30, 30));
+	//checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x - 20, actual_pos.y + 3, actual_pos.z, EAST));	//2nd sensor
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, true, BLUE));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 20));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 15));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 10));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 5));
-	Map.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z - 10, 3, 10.0f, RED));
-	Map.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z, 3, 10.0f, RED));
+	US_2nd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z - 10, 3, RED, 2, 10.0f));
+	US_2nd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z, 3, GREEN, 2, 10.0f));	
 	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30));
+	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z, EAST));	//3rd sensor
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, EAST, GREEN));	//3rd wall
 	Map.add(App->physics->CreateRoad(50, WEST, NORTH, 30, 30));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 30));
+	US_3rd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z - 10, 3, BLUE, 3, 10.0f));
+
 	/*Map.add(App->physics->CreateRoad(50, SOUTH, EAST, 20, 20));
 	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20));
 	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 20, 20, false, UNCOLORED, 15));
@@ -112,8 +115,16 @@ bool ModuleSceneIntro::Start()
 		item->data.color = Green;
 	//--
 
-	for (p2List_item<Sphere>* item = Uncolored_Spheres.getFirst(); item; item = item->next)
+	//UNCOLORED
+	for (p2List_item<Sphere>* item = US_2nd_road.getFirst(); item; item = item->next)
 		item->data.color = White;
+
+	for (p2List_item<Sphere>* item = US_3rd_road.getFirst(); item; item = item->next)
+		item->data.color = White;
+
+	for (p2List_item<Sphere>* item = US_4th_road.getFirst(); item; item = item->next)
+		item->data.color = White;
+	//--
 	//item->data.color = Color({0,255,255});
 
 	for (p2List_item<Cube>* item = Cubes.getFirst(); item; item = item->next)
@@ -140,8 +151,11 @@ update_status ModuleSceneIntro::Update(float dt)
 	p2List_item<Sphere>* spheres = Red_Spheres.getFirst();
 	for (p2List_item<PhysBody3D*>* item = Red_Spheres_bodies.getFirst(); item; item = item->next)
 	{
-		item->data->GetTransform(&spheres->data.transform);
-		spheres = spheres->next;
+		if (checkpoints_bools.getFirst()->next->data == true)
+		{
+			item->data->GetTransform(&spheres->data.transform);
+			spheres = spheres->next;
+		}
 	}
 
 	spheres = Blue_Spheres.getFirst();
@@ -157,6 +171,27 @@ update_status ModuleSceneIntro::Update(float dt)
 		item->data->GetTransform(&spheres->data.transform);
 		spheres = spheres->next;
 	}
+
+	spheres = US_2nd_road.getFirst();
+	for (p2List_item<PhysBody3D*>* item = US_2nd_road_bodies.getFirst(); item; item = item->next)
+	{
+		item->data->GetTransform(&spheres->data.transform);
+		spheres = spheres->next;
+	}
+
+	spheres = US_3rd_road.getFirst();
+	for (p2List_item<PhysBody3D*>* item = US_3rd_road_bodies.getFirst(); item; item = item->next)
+	{
+		item->data->GetTransform(&spheres->data.transform);
+		spheres = spheres->next;
+	}
+
+	spheres = US_4th_road.getFirst();
+	for (p2List_item<PhysBody3D*>* item = US_4th_road_bodies.getFirst(); item; item = item->next)
+	{
+		item->data->GetTransform(&spheres->data.transform);
+		spheres = spheres->next;
+	}
 	//--
 
 	for (p2List_item<Cube>* item = Cubes.getFirst(); item; item = item->next)
@@ -165,8 +200,16 @@ update_status ModuleSceneIntro::Update(float dt)
 	for (p2List_item<Cube>* item = Uncolored_Cubes.getFirst(); item; item = item->next)
 		item->data.Render();
 
-	for (p2List_item<Sphere>* item = Uncolored_Spheres.getFirst(); item; item = item->next)
+	//UNCOLORED SPHERES
+	for (p2List_item<Sphere>* item = US_2nd_road.getFirst(); item; item = item->next)
 		item->data.Render();
+
+	for (p2List_item<Sphere>* item = US_3rd_road.getFirst(); item; item = item->next)
+		item->data.Render();
+
+	for (p2List_item<Sphere>* item = US_4th_road.getFirst(); item; item = item->next)
+		item->data.Render();
+	//--
 
 	//RED
 	if (App->player->red_off == false)

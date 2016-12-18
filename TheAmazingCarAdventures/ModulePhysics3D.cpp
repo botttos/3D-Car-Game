@@ -700,7 +700,7 @@ PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width,
 	return ret;
 }
 
-PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float radius, float mass, obstacle_color color)
+PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float radius, obstacle_color color, uint road, float mass)
 {
 	PhysBody3D* ret;
 
@@ -714,39 +714,37 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float ra
 	*/
 
 	if (color == RED)
-		CreateWall(radius * 2, radius * 2, 1, x, y - radius - 0.5f, z, NORTH, BLUE, 90, vec3(1, 0, 0));
-	if (color == BLUE)
-		CreateWall(radius * 2, radius * 2, 1, x, y - radius - 0.5f, z, NORTH, GREEN, 90, vec3(1, 0, 0));
-	if (color == GREEN)
 		CreateWall(radius * 2, radius * 2, 1, x, y - radius - 0.5f, z, NORTH, RED, 90, vec3(1, 0, 0));
+	if (color == BLUE)
+		CreateWall(radius * 2, radius * 2, 1, x, y - radius - 0.5f, z, NORTH, BLUE, 90, vec3(1, 0, 0));
+	if (color == GREEN)
+		CreateWall(radius * 2, radius * 2, 1, x, y - radius - 0.5f, z, NORTH, GREEN, 90, vec3(1, 0, 0));
 
-	switch (color)
+	switch (road)
 	{
-	case RED:
-		App->scene_intro->Red_Spheres.add(sphere);
-		App->scene_intro->Red_Spheres_positions.add(vec3(x, y, z));
+	case 2:
+		App->scene_intro->US_2nd_road.add(sphere);
+		App->scene_intro->US_2nd_road_positions.add(vec3(x, y, z));
 		break;
-	case GREEN:
-		App->scene_intro->Green_Spheres.add(sphere);
-		App->scene_intro->Green_Spheres_positions.add(vec3(x, y, z));
+	case 3:
+		App->scene_intro->US_3rd_road.add(sphere);
+		App->scene_intro->US_3rd_road_positions.add(vec3(x, y, z));
 		break;
-	case BLUE:
-		App->scene_intro->Blue_Spheres.add(sphere);
-		App->scene_intro->Blue_Spheres_positions.add(vec3(x, y, z));
-		break;
-	case UNCOLORED:
-		App->scene_intro->Uncolored_Spheres.add(sphere);
+	case 4:
+		App->scene_intro->US_4th_road.add(sphere);
+		App->scene_intro->US_4th_road_positions.add(vec3(x, y, z));
 		break;
 	}
 
 	ret = AddBody(sphere, mass);
+	/*
 	if (color == RED)
 		App->scene_intro->Red_Spheres_bodies.add(ret);
 	else if (color == BLUE)
 		App->scene_intro->Blue_Spheres_bodies.add(ret);
 	else if (color == GREEN)
 		App->scene_intro->Green_Spheres_bodies.add(ret);
-
+	*/
 	return ret;
 }
 

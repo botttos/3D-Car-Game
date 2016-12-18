@@ -163,14 +163,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
-
-		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_Spheres_bodies.getFirst(); item; item = item->next)
-		{
-			btRigidBody* temp = item->data->GetRigidBody();
-			temp->activate(true);
-		}
-			
-
+				
 		red_off = true;
 		blue_off = false;
 		green_off = false;
@@ -180,6 +173,49 @@ update_status ModulePlayer::Update(float dt)
 
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+		
+		int act_road_num = 3; //TODO: CHANGE DEPENDING ON NUMBER OF SENSORS
+		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getLast(); item; item = item->prev)
+		{
+			if (item->data == true)
+			{
+				switch (act_road_num)
+				{
+				case 4:
+					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_4th_road_bodies.getFirst(); item; item = item->next)
+					{
+						btRigidBody* temp = item->data->GetRigidBody();
+						temp->activate(true);
+					}
+					break;
+				case 3:
+					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_3rd_road_bodies.getFirst(); item; item = item->next)
+					{
+						btRigidBody* temp = item->data->GetRigidBody();
+						temp->activate(true);
+					}
+					break;
+				case 2:
+					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_2nd_road_bodies.getFirst(); item; item = item->next)
+					{
+						btRigidBody* temp = item->data->GetRigidBody();
+						temp->activate(true);
+					}
+					break;
+				case 1:
+					break;
+				}
+			}
+			act_road_num--;
+		}
+
+		/*for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_Spheres_bodies.getFirst(); item; item = item->next)
+		{
+			btRigidBody* temp = item->data->GetRigidBody();
+			temp->activate(true);
+		}*/
+			
+
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && blue_off == false)
@@ -187,12 +223,6 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
 		
-		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_Spheres_bodies.getFirst(); item; item = item->next)
-		{
-			btRigidBody* temp = item->data->GetRigidBody();
-			temp->activate(true);
-		}
-
 		blue_off = true;
 		red_off = false;
 		green_off = false;
@@ -202,18 +232,47 @@ update_status ModulePlayer::Update(float dt)
 
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+
+		int act_road_num = 3; //TODO: CHANGE DEPENDING ON NUMBER OF SENSORS
+		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getLast(); item; item = item->prev)
+		{
+			if (item->data == true)
+			{
+				switch (act_road_num)
+				{
+				case 4:
+					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_4th_road_bodies.getFirst(); item; item = item->next)
+					{
+						btRigidBody* temp = item->data->GetRigidBody();
+						temp->activate(true);
+					}
+					break;
+				case 3:
+					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_3rd_road_bodies.getFirst(); item; item = item->next)
+					{
+						btRigidBody* temp = item->data->GetRigidBody();
+						temp->activate(true);
+					}
+					break;
+				case 2:
+					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_2nd_road_bodies.getFirst(); item; item = item->next)
+					{
+						btRigidBody* temp = item->data->GetRigidBody();
+						temp->activate(true);
+					}
+					break;
+				case 1:
+					break;
+				}
+			}
+			act_road_num--;
+		}		
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN && green_off == false)
 	{
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
-
-		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_Spheres_bodies.getFirst(); item; item = item->next)
-		{
-			btRigidBody* temp = item->data->GetRigidBody();
-			temp->activate(true);
-		}
 
 		green_off = true;
 		red_off = false;
@@ -224,6 +283,41 @@ update_status ModulePlayer::Update(float dt)
 
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+	
+		int act_road_num = 3; //TODO: CHANGE DEPENDING ON NUMBER OF SENSORS
+		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getLast(); item; item = item->prev)
+		{
+			if (item->data == true)
+			{
+				switch (act_road_num)
+				{
+				case 4:
+					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_4th_road_bodies.getFirst(); item; item = item->next)
+					{
+						btRigidBody* temp = item->data->GetRigidBody();
+						temp->activate(true);
+					}
+					break;
+				case 3:
+					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_3rd_road_bodies.getFirst(); item; item = item->next)
+					{
+						btRigidBody* temp = item->data->GetRigidBody();
+						temp->activate(true);
+					}
+					break;
+				case 2:
+					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_2nd_road_bodies.getFirst(); item; item = item->next)
+					{
+						btRigidBody* temp = item->data->GetRigidBody();
+						temp->activate(true);
+					}
+					break;
+				case 1:
+					break;
+				}
+			}
+			act_road_num--;
+		}
 	}
 	
 	vehicle->ApplyEngineForce(acceleration);
@@ -236,6 +330,34 @@ update_status ModulePlayer::Update(float dt)
 		//TODO: ASK ERIC 4 INFO
 		//App->scene_intro->pb_chassis->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
 		//App->scene_intro->pb_chassis->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+
+		//2nd road
+		p2List_item<vec3>* position_item = App->scene_intro->US_2nd_road_positions.getFirst();
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_2nd_road_bodies.getFirst(); item; item = item->next, position_item = position_item->next)
+		{
+			item->data->SetPos(position_item->data.x, position_item->data.y, position_item->data.z);
+			item->data->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+			item->data->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		}
+
+		//3rd road
+		position_item = App->scene_intro->US_3rd_road_positions.getFirst();
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_3rd_road_bodies.getFirst(); item; item = item->next, position_item = position_item->next)
+		{
+			item->data->SetPos(position_item->data.x, position_item->data.y, position_item->data.z);
+			item->data->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+			item->data->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		}
+
+		//4th road
+		position_item = App->scene_intro->US_4th_road_positions.getFirst();
+		for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_4th_road_bodies.getFirst(); item; item = item->next, position_item = position_item->next)
+		{
+			item->data->SetPos(position_item->data.x, position_item->data.y, position_item->data.z);
+			item->data->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+			item->data->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		}
+		//--
 
 		p2List_item<vec3>* position_red_item = App->scene_intro->Red_Spheres_positions.getFirst();
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_Spheres_bodies.getFirst(); item; item = item->next, position_red_item = position_red_item->next)

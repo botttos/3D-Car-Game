@@ -44,7 +44,19 @@ public:
 	p2List<Sphere> Red_Spheres;
 	p2List<Sphere> Green_Spheres;
 	p2List<Sphere> Blue_Spheres;
-	p2List<Sphere> Uncolored_Spheres;
+
+	p2List<Sphere> US_2nd_road;
+	p2List<PhysBody3D*> US_2nd_road_bodies;
+	p2List<vec3> US_2nd_road_positions;
+
+	p2List<Sphere> US_3rd_road;
+	p2List<PhysBody3D*> US_3rd_road_bodies;
+	p2List<vec3> US_3rd_road_positions;
+
+	p2List<Sphere> US_4th_road;
+	p2List<PhysBody3D*> US_4th_road_bodies;
+	p2List<vec3> US_4th_road_positions;
+	
 	p2List<PhysBody3D*> Red_bodies;
 	p2List<PhysBody3D*> Blue_bodies;
 	p2List<PhysBody3D*> Green_bodies;
@@ -54,6 +66,7 @@ public:
 	p2List<vec3> Blue_Spheres_positions;
 	p2List<PhysBody3D*> Green_Spheres_bodies;
 	p2List<vec3> Green_Spheres_positions;
+
 	p2List<PhysBody3D*> checkpoints;
 	p2List<bool> checkpoints_bools;
 };
