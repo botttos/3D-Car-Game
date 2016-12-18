@@ -32,14 +32,9 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30, true, BLUE));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30));
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));	//2nd wall
-	//Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30, false, UNCOLORED, 30));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30));
-	//Map.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z - 10, 3, 10.0f, RED));
-	//Map.add(App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 10, actual_pos.z - 10, 3, 10.0f, RED));
-	//checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH));	//1rst sensor
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z, NORTH));	//2nd sensor
 	Map.add(App->physics->CreateRoad(50, NORTH, EAST, 30, 30));
-	//checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x - 20, actual_pos.y + 3, actual_pos.z, EAST));	//2nd sensor
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, true, BLUE));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 20));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 15));
@@ -63,22 +58,6 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
 	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x + 10, actual_pos.y + 3, actual_pos.z, WEST));	//5th sensor
-
-
-
-	/*Cube cube;
-	cube.size.Set(50, 1, 50);
-	cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 25);
-	App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 25);
-	App->physics->AddBody(cube);*/
-	//Cubes.add(cube);
-	//Map.add(App->physics->CreateWall(10, 50, 1, 0, 0, NORTH, GREEN));	//We will need to use actual_pos to help positioning walls
-	/*Cube cube2;
-	cube2.size.Set(50, 1, 50);
-	cube2.SetPos(0,0,0);
-	cube2.SetRotation(45, vec3(1, 0, 0));
-	App->physics->AddBody(cube2);
-	Cubes.add(cube2);*/
 
 	for (p2List_item<PhysBody3D*>* item = checkpoints.getFirst(); item; item = item->next)
 	{
@@ -140,14 +119,20 @@ bool ModuleSceneIntro::Start()
 		item->data.color = White;		//paint walls
 
 	for (p2List_item<PhysBody3D*>* item = US_2nd_road_bodies.getFirst(); item; item = item->next)
+	{
 		All_Spheres_bodies.add(item->data);
-
+		item->data->GetRigidBody()->forceActivationState(WANTS_DEACTIVATION);
+	}
 	for (p2List_item<PhysBody3D*>* item = US_3rd_road_bodies.getFirst(); item; item = item->next)
+	{
 		All_Spheres_bodies.add(item->data);
-
+		item->data->GetRigidBody()->forceActivationState(WANTS_DEACTIVATION);
+	}
 	for (p2List_item<PhysBody3D*>* item = US_4th_road_bodies.getFirst(); item; item = item->next)
+	{
 		All_Spheres_bodies.add(item->data);
-
+		item->data->GetRigidBody()->forceActivationState(WANTS_DEACTIVATION);
+	}
 	for (p2List_item<PhysBody3D*>* item = Red_Spheres_bodies.getFirst(); item; item = item->next)
 		All_Spheres_bodies.add(item->data);
 

@@ -707,18 +707,12 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float ra
 	Sphere sphere(radius);	
 	sphere.SetPos(x, y, z);
 
-	/*
-			RED		balls over		BLUE	cubes
-			BLUE	balls over		GREEN	cubes
-			GREEN	balls over		RED		cubes
-	*/
-
 	if (color == RED)
-		CreateWall(radius * 2, radius * 2, 1, x, y - radius - 0.5f, z, NORTH, RED, 90, vec3(1, 0, 0));
+		CreateWall(radius * 2, radius * 2, 1, x, y - radius, z, NORTH, RED, 90, vec3(1, 0, 0));
 	if (color == BLUE)
-		CreateWall(radius * 2, radius * 2, 1, x, y - radius - 0.5f, z, NORTH, BLUE, 90, vec3(1, 0, 0));
+		CreateWall(radius * 2, radius * 2, 1, x, y - radius, z, NORTH, BLUE, 90, vec3(1, 0, 0));
 	if (color == GREEN)
-		CreateWall(radius * 2, radius * 2, 1, x, y - radius - 0.5f, z, NORTH, GREEN, 90, vec3(1, 0, 0));
+		CreateWall(radius * 2, radius * 2, 1, x, y - radius, z, NORTH, GREEN, 90, vec3(1, 0, 0));
 
 	switch (road)
 	{
@@ -737,14 +731,6 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float ra
 	}
 
 	ret = AddBody(sphere, mass);
-	/*
-	if (color == RED)
-		App->scene_intro->Red_Spheres_bodies.add(ret);
-	else if (color == BLUE)
-		App->scene_intro->Blue_Spheres_bodies.add(ret);
-	else if (color == GREEN)
-		App->scene_intro->Green_Spheres_bodies.add(ret);
-	*/
 	return ret;
 }
 
