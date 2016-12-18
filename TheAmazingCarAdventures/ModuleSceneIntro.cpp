@@ -53,10 +53,14 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 30));
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z, SOUTH));	//4th sensor
 	Map.add(App->physics->CreateRoad(50, SOUTH, WEST, 30, 30));
-	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
-	US_4th_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z, 3, GREEN, 4, 10.0f));
-	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
-	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
+	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30, true, RED));
+	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 20));
+	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 15));
+	App->physics->CreateDemolitionTrap(actual_pos.x, actual_pos.y + 40, actual_pos.z, 3, GREEN, 4, 32, 25.0f);
+	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 10));
+	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 5));
+
+	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30));
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x + 10, actual_pos.y + 3, actual_pos.z, WEST));	//5th sensor
 
 	for (p2List_item<PhysBody3D*>* item = checkpoints.getFirst(); item; item = item->next)

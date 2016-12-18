@@ -62,6 +62,7 @@ public:
 	PhysBody3D* CreateWall(float height, float lenght, float width, int x, int y, int z, Direction dir, obstacle_color color, float angle = 0, vec3 axis = (0, 0, 0));
 	PhysBody3D* CreateDemolitionBall(int x, int y, int z, float radius, obstacle_color color = UNCOLORED, uint road = 2, float mass = 1.0f);
 	PhysBody3D* CreateWallSensor(float lenght, float width, int x, int y, int z, Direction dir);
+	PhysBody3D* CreateDemolitionTrap(int x, int y, int z, float radius, obstacle_color color, uint road, uint num_spheres, float mass);
 
 private:
 
