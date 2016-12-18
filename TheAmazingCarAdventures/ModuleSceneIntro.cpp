@@ -119,7 +119,7 @@ bool ModuleSceneIntro::Start()
 		item->data.color = { 0.95f, 0.7f, 0.4f };	//TODO: repaint road
 
 	for (p2List_item<Cube>* item = Uncolored_Cubes.getFirst(); item; item = item->next)
-		item->data.color = { 0.8f, 0.85f, 0.9f };		//TODO: repaint walls
+		item->data.color = { 0.8f, 0.85f, 0.9f };	//TODO: repaint walls
 
 	for (p2List_item<PhysBody3D*>* item = US_2nd_road_bodies.getFirst(); item; item = item->next)
 	{
