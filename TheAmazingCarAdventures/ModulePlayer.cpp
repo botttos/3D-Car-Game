@@ -279,6 +279,11 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 
+	if (victory == true)
+	{
+		LOG("VICTORY");
+	}
+
 	char title[80];
 	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
 	App->window->SetTitle(title);

@@ -30,13 +30,15 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));		//1rst wall
 	Map.add(App->physics->CreateRoad(10, EAST, EAST, 0, 30));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30, true, BLUE));
+	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 10, NORTH));	//1rst sensor
+	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 20, NORTH));	//1rst sensor
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30));
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));	//2nd wall
 	//Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30, false, UNCOLORED, 30));
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30));
 	//Map.add(App->physics->CreateDemolitionBall(actual_pos.x, actual_pos.y + 10, actual_pos.z - 10, 3, 10.0f, RED));
 	//Map.add(App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 10, actual_pos.z - 10, 3, 10.0f, RED));
-	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH));	//1rst sensor
+	//checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH));	//1rst sensor
 	Map.add(App->physics->CreateRoad(50, NORTH, EAST, 30, 30));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, true, BLUE));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 20));
@@ -83,6 +85,7 @@ bool ModuleSceneIntro::Start()
 	{
 		item->data->SetAsSensor(true);
 		item->data->collision_listeners.add(this);
+		checkpoints_bools.add(false);
 	}
 
 	//RED
@@ -118,6 +121,7 @@ bool ModuleSceneIntro::Start()
 
 	for (p2List_item<Cube>* item = Uncolored_Cubes.getFirst(); item; item = item->next)
 		item->data.color = White;		//paint walls
+
 	return ret;
 }
 
@@ -183,7 +187,6 @@ update_status ModuleSceneIntro::Update(float dt)
 
 		for (p2List_item<Sphere>* item = Green_Spheres.getFirst(); item; item = item->next)
 			item->data.Render();
-
 	}
 	//--
 
@@ -198,6 +201,11 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 	//--
 
+	//VICTORY?
+	if (checkpoints_bools.find(false) == -1)
+		App->player->victory = true;
+	//--
+
 	return UPDATE_CONTINUE;
 }
 
@@ -205,6 +213,13 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	if (body2 = App->player->vehicle)
 	{
-		LOG("ayy lmao");
+		p2List_item<bool>* item_bools = checkpoints_bools.getFirst();
+		for (p2List_item<PhysBody3D*>* item = checkpoints.getFirst(); item; item = item->next, item_bools= item_bools->next)
+		{
+			if (body1 == item->data)
+			{
+				item_bools->data = true;
+			}
+		}
 	}
 }

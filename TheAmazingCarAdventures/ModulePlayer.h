@@ -31,6 +31,8 @@ public:
 	bool blue_off;
 	bool green_off;
 
+	bool victory = false;
+
 private:
 	btRigidBody* chassis_vehicle;
 };
