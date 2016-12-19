@@ -101,7 +101,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 0.5f, 7);
+	vehicle->SetPos(0, 0.5f, 16);
 
 	vehicle->GetTransform(&initial_car_matrix);
 	return true;
@@ -326,7 +326,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
 	{
-		vehicle->SetPos(0, 0.5f, 7);
+		vehicle->SetPos(0, 0.5f, 16);
 		vehicle->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
 		vehicle->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
 		vehicle->SetTransform(&initial_car_matrix);
@@ -368,7 +368,7 @@ update_status ModulePlayer::Update(float dt)
 
 		defeat = false;
 
-		vehicle->SetPos(0, 0.5f, 7);
+		vehicle->SetPos(0, 0.5f, 16);
 		vehicle->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
 		vehicle->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
 		vehicle->SetTransform(&initial_car_matrix);
