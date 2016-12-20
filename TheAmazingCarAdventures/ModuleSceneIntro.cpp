@@ -50,6 +50,7 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateWall(10, 17, 1, actual_pos.x + 23, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));	//closing wall
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 65));
 	Map.add(App->physics->CreateWall(20, 65, 1, actual_pos.x, actual_pos.y, actual_pos.z + 25, NORTH, RED)); //4th wall
+	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	Map.add(App->physics->CreateWall(10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z + 10, NORTH, UNCOLORED)); //3rd road walls 1
 	Map.add(App->physics->CreateWall(10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 10, NORTH, UNCOLORED)); //3rd road walls 1.5
 	Map.add(App->physics->CreateWall(10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z - 30, NORTH, BLUE)); //3rd road walls 2
@@ -60,7 +61,8 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateWall(10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 130, NORTH, UNCOLORED)); //3rd road walls 4.5
 	//US_3rd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x + 15, actual_pos.y + 10, actual_pos.z, 3, RED, 3, 10.0f));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
-	Map.add(App->physics->CreateWall(20, 150, 1, actual_pos.x, actual_pos.y, actual_pos.z, EAST, UNCOLORED));	//midwall
+	Map.add(App->physics->CreateWall(20, 180, 1, actual_pos.x, actual_pos.y, actual_pos.z - 15, EAST, UNCOLORED));	//midwall
+	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	checkpoints.add(App->physics->CreateWallSensor(65, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 2, SOUTH));	//4th sensor
@@ -70,7 +72,7 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30, true, RED));
 	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 20));
 	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 15));
-	App->physics->CreateDemolitionTrap(actual_pos.x, actual_pos.y + 40, actual_pos.z, 3, GREEN, 4, 32, 25.0f);
+	App->physics->CreateDemolitionTrap(actual_pos.x, actual_pos.y + 20, actual_pos.z, 3, GREEN, 4, 32, 25.0f);
 	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 10));
 	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 5));
 	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30));
