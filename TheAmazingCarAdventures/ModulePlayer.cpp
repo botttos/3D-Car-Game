@@ -53,8 +53,6 @@ bool ModulePlayer::Start()
 	//Back Lights
 	car.chassis_offset[2].Set(-0.7, 1.2f, -2.3f);
 	car.chassis_offset[3].Set(0.7, 1.2f, -2.3f);
-	/*car.chassis_offset[5].Set(0, 1.5f, -2.25f);
-	car.chassis_offset[6].Set(0, 0.6f, -0.6f);*/
 
 	// Color
 	car.chassis_color = new vec3[car.num_chassis];
