@@ -116,13 +116,13 @@ update_status ModulePhysics3D::Update(float dt)
 			item = item->next;
 		}
 
-		/*if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			Sphere s(1);
 			s.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 			float force = 30.0f;
 			AddBody(s)->Push(-(App->camera->Z.x * force), -(App->camera->Z.y * force), -(App->camera->Z.z * force));
-		}*/
+		}
 	}
 
 	return UPDATE_CONTINUE;
@@ -699,7 +699,7 @@ PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width,
 		App->scene_intro->Blue_bodies.add(ret);
 	else if (color == GREEN)
 		App->scene_intro->Green_bodies.add(ret);
-
+	
 	return ret;
 }
 
@@ -745,11 +745,11 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionTrap(int x, int y, int z, float ra
 	PhysBody3D* ret;
 
 	if (color == RED)
-		CreateWall(radius * num_spheres, radius * num_spheres, 1, x, y - radius, z, NORTH, RED, 90, vec3(1, 0, 0));
+		CreateWall(radius * num_spheres/4, radius * num_spheres/4, 1, x, y - radius, z, NORTH, RED, 90, vec3(1, 0, 0));
 	if (color == BLUE)
-		CreateWall(radius * num_spheres, radius * num_spheres, 1, x, y - radius, z, NORTH, BLUE, 90, vec3(1, 0, 0));
+		CreateWall(radius * num_spheres/4, radius * num_spheres/4, 1, x, y - radius, z, NORTH, BLUE, 90, vec3(1, 0, 0));
 	if (color == GREEN)
-		CreateWall(radius * num_spheres, radius * num_spheres, 1, x, y - radius, z, NORTH, GREEN, 90, vec3(1, 0, 0));
+		CreateWall(radius * num_spheres/4, radius * num_spheres/4, 1, x, y - radius, z, NORTH, GREEN, 90, vec3(1, 0, 0));
 
 	for (int i = 0; i < num_spheres/4; i++)
 	{
@@ -855,10 +855,10 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionTrap(int x, int y, int z, float ra
 		}
 	}
 
-	CreateWall(radius * num_spheres, radius * num_spheres, 1, x, y + radius*(num_spheres - 1)/2, z - radius*num_spheres/2, NORTH, UNCOLORED);
-	CreateWall(radius * num_spheres, radius * num_spheres, 1, x, y + radius*(num_spheres - 1) / 2, z + radius*num_spheres / 2, NORTH, UNCOLORED);
-	CreateWall(radius * num_spheres, radius * num_spheres, 1, x + radius*num_spheres / 2, y + radius*(num_spheres - 1) / 2, z, EAST, UNCOLORED);
-	CreateWall(radius * num_spheres, radius * num_spheres, 1, x - radius*num_spheres / 2, y + radius*(num_spheres - 1) / 2, z, EAST, UNCOLORED);
+	CreateWall(radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1)/4 - 2, z - radius*num_spheres/8, NORTH, UNCOLORED);
+	CreateWall(radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1) /4 - 2, z + radius*num_spheres /8, NORTH, UNCOLORED);
+	CreateWall(radius * num_spheres/2, radius * num_spheres/4, 1, x + radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
+	CreateWall(radius * num_spheres/2, radius * num_spheres/4, 1, x - radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
 
 	return ret;
 }
