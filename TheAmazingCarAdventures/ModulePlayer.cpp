@@ -26,8 +26,48 @@ bool ModulePlayer::Start()
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
-	car.chassis_size.Set(2.5, 1.7, 4);
-	car.chassis_offset.Set(0, 1.7, 0);
+	// Piece
+	car.num_chassis = 5;
+	car.chassis_size = new vec3[car.num_chassis];
+	//Body
+	car.chassis_size[0].Set(2.5f, 1.7f, 2.0f); //Ancho, alto, largo
+	//Back body
+	car.chassis_size[4].Set(2.5f, 1.4f, 1.3f);
+	//Face body
+	car.chassis_size[1].Set(2.5f, 1.2f, 0.9f);
+	//Back Lights
+	car.chassis_size[2].Set(0.4, 0.3f, 0.2f);
+	car.chassis_size[3].Set(0.4, 0.3f, 0.2f);
+	
+	/*car.chassis_size[5].Set(2, 0.1f, 0.35f);
+	car.chassis_size[6].Set(1.5f, 0.35f, 1.85f);*/
+
+	// Position
+	car.chassis_offset = new vec3[car.num_chassis];
+	//Body
+	car.chassis_offset[0].Set(0.0f, 1.7f, -0.0f); //(,,-0.65f)
+	//Back body
+	car.chassis_offset[4].Set(0.0f, 1.5f, -1.64f); //Izquierda, arriba, atras
+	//Face body
+	car.chassis_offset[1].Set(0, 1.48f, 1.4f);
+	//Back Lights
+	car.chassis_offset[2].Set(-0.7, 1.2f, -2.3f);
+	car.chassis_offset[3].Set(0.7, 1.2f, -2.3f);
+	/*car.chassis_offset[5].Set(0, 1.5f, -2.25f);
+	car.chassis_offset[6].Set(0, 0.6f, -0.6f);*/
+
+	// Color
+	car.chassis_color = new vec3[car.num_chassis];
+	//Body
+	car.chassis_color[0] = { White.r, White.g, White.b };
+	//Back body
+	car.chassis_color[4] = { White.r, White.g, White.b };
+	//Face body
+	car.chassis_color[1] = { White.r, White.g, White.b };
+	//Back Lights
+	car.chassis_color[2] = { Gold.r, Gold.g, Gold.b };
+	car.chassis_color[3] = { Gold.r, Gold.g, Gold.b };
+
 	car.mass = 500.0f;
 	car.suspensionStiffness = 5.88f;
 	car.suspensionCompression = 0.83f;
@@ -43,8 +83,8 @@ bool ModulePlayer::Start()
 
 	// Don't change anything below this line ------------------
 
-	float half_width = car.chassis_size.x*0.5f;
-	float half_length = car.chassis_size.z*0.5f;
+	float half_width = 2.7 * 0.5f;
+	float half_length = 4 * 0.5f;
 	
 	vec3 direction(0,-1,0);
 	vec3 axis(-1,0,0);
