@@ -145,7 +145,7 @@ update_status ModulePlayer::Update(float dt)
 			brake = BRAKE_POWER;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 	{
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
@@ -161,7 +161,7 @@ update_status ModulePlayer::Update(float dt)
 		green_off = false;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN && red_off == false)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && red_off == false)
 	{
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
@@ -210,15 +210,9 @@ update_status ModulePlayer::Update(float dt)
 			}
 			act_road_num--;
 		}
-
-		/*for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_Spheres_bodies.getFirst(); item; item = item->next)
-		{
-			btRigidBody* temp = item->data->GetRigidBody();
-			temp->activate(true);
-		}*/
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && blue_off == false)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN && blue_off == false)
 	{
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
@@ -269,7 +263,7 @@ update_status ModulePlayer::Update(float dt)
 		}		
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN && green_off == false)
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && green_off == false)
 	{
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);

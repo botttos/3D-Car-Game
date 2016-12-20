@@ -28,16 +28,26 @@ bool ModuleSceneIntro::Start()
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 16, NORTH));	//1rst sensor
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));		//back start wall
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 0, 30));
-	Map.add(App->physics->CreateRoad(70, EAST, EAST, 0, 30));
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));		//1rst wall
-	Map.add(App->physics->CreateRoad(10, EAST, EAST, 0, 30));
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30, true, BLUE));
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 0, 30));
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30));
+	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -20));
+	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -15));
+	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -10));
+	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -5));
+	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));		//1rst wall
+	Map.add(App->physics->CreateRoad(10, EAST, EAST, 30, 30));
+	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30, true, RED));
+	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -15));
+	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -10));
+	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -5));
+	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, GREEN));		//1rst wall
+	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30));
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));	//2nd wall
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30));
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z, NORTH));	//2nd sensor
+
 	Map.add(App->physics->CreateRoad(50, NORTH, EAST, 30, 30));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30));
+	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, true, BLUE));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 20));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 15));
@@ -48,6 +58,7 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30));
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z, EAST));	//3rd sensor
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, EAST, GREEN));	//3rd wall
+
 	Map.add(App->physics->CreateRoad(30, WEST, NORTH, 30, 30));
 	Map.add(App->physics->CreateWall(10, 17, 1, actual_pos.x + 23, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));	//closing wall
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 65));
@@ -70,8 +81,12 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	checkpoints.add(App->physics->CreateWallSensor(65, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 2, SOUTH));	//4th sensor
 	Map.add(App->physics->CreateWall(10, 65, 1, actual_pos.x, actual_pos.y, actual_pos.z, SOUTH, BLUE));	//4th wall
+
 	Map.add(App->physics->CreateRoad(50, SOUTH, WEST, 65, 30));
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, WEST, GREEN));	//5th wall
+	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
+	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
+	Map.add(App->physics->CreateRoad(15, SOUTH, SOUTH, 30, 30));
 	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30, true, RED));
 	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 20));
 	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 15));
