@@ -86,6 +86,7 @@ bool ModuleSceneIntro::Start()
 	//Map.add(App->physics->CreateWall(12, 12, 12, actual_pos.x - 12, actual_pos.y, actual_pos.z+13, SOUTH, UNCOLORED));	//4th wall
 	cannon_ball = App->physics->CreateDemolitionBall(actual_pos.x - 24, actual_pos.y, actual_pos.z + 8, 5, UNCOLORED, 0, 10.0f);
 	cannon_ball->GetPos(&cannon_ball_init_pos.x, &cannon_ball_init_pos.y, &cannon_ball_init_pos.z);
+	cannon_sphere.color = Black;
 	cannon_ball->GetPosZ(&cannon_ball_z);
 	cannon_ball->collision_listeners.add(this);
 	Map.add(App->physics->CreateWall(10, 50, 1, actual_pos.x + 7, actual_pos.y, actual_pos.z, SOUTH, BLUE));	//4th wall
@@ -209,6 +210,9 @@ update_status ModuleSceneIntro::Update(float dt)
 		cannon_ball->Push(0, 0, 250);
 		cannon_ball_reached_sensor = false;
 	}
+
+	cannon_ball->GetTransform(&cannon_sphere.transform);
+	cannon_sphere.Render();
 
 	//TRANSFORMATIONS
 	p2List_item<Sphere>* spheres = Red_Spheres.getFirst();

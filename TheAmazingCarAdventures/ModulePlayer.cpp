@@ -23,6 +23,8 @@ bool ModulePlayer::Start()
 	blue_off = false;
 	green_off = false;
 
+	car_brake_fx = App->audio->LoadFx("sounds/brake.wav");
+
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
@@ -175,12 +177,15 @@ update_status ModulePlayer::Update(float dt)
 			turn -= TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		if (vehicle->GetKmh() <= 0)
 			acceleration = -MAX_ACCELERATION;
 		else
+		{
 			brake = BRAKE_POWER;
+			App->audio->PlayFx(car_brake_fx);
+		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)

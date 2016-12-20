@@ -40,4 +40,7 @@ private:
 	btRigidBody* chassis_vehicle;
 	float best_time = 0;
 	mat4x4 initial_car_matrix;
+
+public:
+	int car_brake_fx;
 };
