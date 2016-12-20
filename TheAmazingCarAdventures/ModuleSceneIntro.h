@@ -73,5 +73,11 @@ public:
 	p2List<bool> checkpoints_bools;
 	uint checkpoints_num = 0;
 
+	PhysBody3D* cannon_ball;
+	Sphere cannon_sphere;
+	float cannon_ball_z;
+	vec3 cannon_ball_init_pos;
+	PhysBody3D* sensor;
+	bool cannon_ball_reached_sensor = true;
 	void ResetSpheres();
 };

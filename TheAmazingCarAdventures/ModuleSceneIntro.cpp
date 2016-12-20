@@ -40,9 +40,9 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -10));
 	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -5));
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, GREEN));		//1rst wall
-	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30));
+	Map.add(App->physics->CreateRoad(30, EAST, EAST, 30, 30));
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));	//2nd wall
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30));
+	Map.add(App->physics->CreateRoad(40, EAST, EAST, 30, 30));
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z, NORTH));	//2nd sensor
 
 	Map.add(App->physics->CreateRoad(50, NORTH, EAST, 30, 30));
@@ -60,9 +60,12 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, EAST, GREEN));	//3rd wall
 
 	Map.add(App->physics->CreateRoad(30, WEST, NORTH, 30, 30));
+	sensor = App->physics->CreateWallSensor(10, 1, actual_pos.x - 25, actual_pos.y + 3, actual_pos.z - 2, NORTH);
+	sensor->SetAsSensor(true);
+	sensor->collision_listeners.add(this);
 	Map.add(App->physics->CreateWall(10, 17, 1, actual_pos.x + 23, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));	//closing wall
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 65));
-	Map.add(App->physics->CreateWall(20, 65, 1, actual_pos.x, actual_pos.y, actual_pos.z + 25, NORTH, RED)); //4th wall
+		//Map.add(App->physics->CreateWall(20, 65, 1, actual_pos.x, actual_pos.y, actual_pos.z + 25, NORTH, RED)); //4th wall
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	Map.add(App->physics->CreateWall(10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z + 10, NORTH, UNCOLORED)); //3rd road walls 1
 	Map.add(App->physics->CreateWall(10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 10, NORTH, UNCOLORED)); //3rd road walls 1.5
@@ -73,14 +76,19 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateWall(10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z - 110, NORTH, GREEN)); //3rd road walls 4
 	Map.add(App->physics->CreateWall(10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 130, NORTH, UNCOLORED)); //3rd road walls 4.5
 	Map.add(App->physics->CreateWall(10, 18, 1, actual_pos.x + 9, actual_pos.y, actual_pos.z - 150, NORTH, UNCOLORED)); //3rd road walls 5																												
-	//US_3rd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x + 15, actual_pos.y + 10, actual_pos.z, 3, RED, 3, 10.0f));
+		//US_3rd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x + 15, actual_pos.y + 10, actual_pos.z, 3, RED, 3, 10.0f));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	Map.add(App->physics->CreateWall(20, 180, 1, actual_pos.x, actual_pos.y, actual_pos.z - 15, EAST, UNCOLORED));	//midwall
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	checkpoints.add(App->physics->CreateWallSensor(65, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 2, SOUTH));	//4th sensor
-	Map.add(App->physics->CreateWall(10, 65, 1, actual_pos.x, actual_pos.y, actual_pos.z, SOUTH, BLUE));	//4th wall
+	//Map.add(App->physics->CreateWall(12, 12, 12, actual_pos.x - 12, actual_pos.y, actual_pos.z+13, SOUTH, UNCOLORED));	//4th wall
+	cannon_ball = App->physics->CreateDemolitionBall(actual_pos.x - 24, actual_pos.y, actual_pos.z + 8, 5, UNCOLORED, 0, 10.0f);
+	cannon_ball->GetPos(&cannon_ball_init_pos.x, &cannon_ball_init_pos.y, &cannon_ball_init_pos.z);
+	cannon_ball->GetPosZ(&cannon_ball_z);
+	cannon_ball->collision_listeners.add(this);
+	Map.add(App->physics->CreateWall(10, 50, 1, actual_pos.x + 7, actual_pos.y, actual_pos.z, SOUTH, BLUE));	//4th wall
 
 	Map.add(App->physics->CreateRoad(50, SOUTH, WEST, 65, 30));
 	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, WEST, GREEN));	//5th wall
@@ -192,6 +200,16 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	float z_cannon;
+	cannon_ball->GetPosZ(&z_cannon);
+	if (z_cannon == cannon_ball_z && cannon_ball_reached_sensor == true)
+	{//checkpoints_bools.getFirst()->next->next->data == true && 
+		//TODO: play cannon sound
+		cannon_ball->GetRigidBody()->activate(true);
+		cannon_ball->Push(0, 0, 250);
+		cannon_ball_reached_sensor = false;
+	}
+
 	//TRANSFORMATIONS
 	p2List_item<Sphere>* spheres = Red_Spheres.getFirst();
 	for (p2List_item<PhysBody3D*>* item = Red_Spheres_bodies.getFirst(); item; item = item->next)
@@ -319,6 +337,23 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{
 		LOG("car crashed against sphere");
 		App->player->defeat = true;
+	}
+
+	if (body2 == cannon_ball && body1 == sensor)
+	{
+		cannon_ball->SetPos(cannon_ball_init_pos.x, cannon_ball_init_pos.y, cannon_ball_init_pos.z);
+		cannon_ball->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		cannon_ball->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+		cannon_ball_reached_sensor = true;
+	}
+
+	if (body2 == App->player->vehicle && body1 == cannon_ball)
+	{
+		App->player->defeat = true;
+		cannon_ball->SetPos(cannon_ball_init_pos.x, cannon_ball_init_pos.y, cannon_ball_init_pos.z);
+		cannon_ball->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		cannon_ball->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+		cannon_ball_reached_sensor = true;
 	}
 
 	//TODO: add collision sound against: 	App->scene_intro->Red_bodies/Blue_bodies/Green_bodies; && App->scene_intro->Uncolored_Cubes

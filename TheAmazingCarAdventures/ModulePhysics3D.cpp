@@ -716,6 +716,9 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float ra
 
 	switch (road)
 	{
+	case 0:
+		App->scene_intro->cannon_sphere = sphere;
+		break;
 	case 2:
 		App->scene_intro->US_2nd_road.add(sphere);
 		App->scene_intro->US_2nd_road_positions.add(vec3(x, y, z));
