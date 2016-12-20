@@ -26,7 +26,22 @@ struct Color
 };
 
 extern Color Red;
+extern Color Orange;
+extern Color Gold;
+extern Color Lime;
 extern Color Green;
+extern Color LightMediumSeaGreeen;
+extern Color Cyan;
 extern Color Blue;
+extern Color DarkBlue;
+extern Color Violet;
+extern Color Purple;
+extern Color Magenta;
+extern Color SpringGreen;
 extern Color Black;
+extern Color Grey;
 extern Color White;
+extern Color Brown;
+extern Color LightColor;
+extern Color Indigo;
+extern Color Glass;
