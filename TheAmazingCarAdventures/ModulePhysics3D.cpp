@@ -699,9 +699,27 @@ PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width,
 		App->scene_intro->Blue_bodies.add(ret);
 	else if (color == GREEN)
 		App->scene_intro->Green_bodies.add(ret);
-	
+
 	return ret;
 }
+
+PhysBody3D* ModulePhysics3D::CreateWall(Cube& cube, float height, float lenght, float width, int x, int y, int z, Direction dir, obstacle_color color, float angle, vec3 axis)
+{
+	PhysBody3D* ret;
+
+	if (dir == NORTH || dir == SOUTH)
+		cube.size.Set(lenght, height, width);
+	else if (dir == EAST || dir == WEST)
+		cube.size.Set(width, height, lenght);
+
+	cube.SetPos(x, y, z);
+	if (angle != 0)
+		cube.SetRotation(angle, axis);
+
+	ret = AddBody(cube, 0);
+	return ret;
+}
+
 
 PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float radius, obstacle_color color, uint road, float mass)
 {
