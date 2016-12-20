@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "Primitive.h"
 
-#define MAX_SNAKE 2
+#define SCENE_INTRO_CUBES 200
 
 struct PhysBody3D;
 struct PhysMotor3D;
@@ -37,7 +37,7 @@ public:
 	vec3 actual_pos;
 	p2List<PhysBody3D*> Map;
 	p2List<Cube> Cubes;
-	p2List<Cube> Uncolored_Cubes;
+	Cube Uncolored_Cubes[SCENE_INTRO_CUBES];
 	p2List<Cube> Red_Cubes;
 	p2List<Cube> Green_Cubes;
 	p2List<Cube> Blue_Cubes;

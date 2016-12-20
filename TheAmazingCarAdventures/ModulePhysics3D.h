@@ -65,6 +65,8 @@ public:
 	PhysBody3D* CreateWallSensor(float lenght, float width, int x, int y, int z, Direction dir);
 	PhysBody3D* CreateDemolitionTrap(int x, int y, int z, float radius, obstacle_color color, uint road, uint num_spheres, float mass);
 
+	uint Cube_num = 0;
+
 private:
 
 	bool debug;

@@ -27,7 +27,7 @@ bool ModuleSceneIntro::Start()
 
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 16, NORTH));	//1rst sensor
 
-	Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));	//back start wall
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));	//back start wall
 	//Uncolored_Cubes.add(c1);
 	//Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));		//back start wall
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 0, 30));
@@ -76,27 +76,27 @@ bool ModuleSceneIntro::Start()
 	sensor = App->physics->CreateWallSensor(10, 1, actual_pos.x - 25, actual_pos.y + 3, actual_pos.z - 2, NORTH);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
-	Map.add(App->physics->CreateWall(10, 17, 1, actual_pos.x + 23, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));	//closing wall
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 17, 1, actual_pos.x + 23, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));	//closing wall
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 65));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
-	Map.add(App->physics->CreateWall(10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z + 50, NORTH, UNCOLORED)); //3rd road walls 0
-	Map.add(App->physics->CreateWall(10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z + 30, NORTH, UNCOLORED)); //3rd road walls 0.5
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z + 50, NORTH, UNCOLORED)); //3rd road walls 0
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z + 30, NORTH, UNCOLORED)); //3rd road walls 0.5
 	Cube c6;
 	Blue_bodies.add(App->physics->CreateWall(c6, 10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z + 10, NORTH, BLUE)); //3rd road walls 1
 	Blue_Cubes.add(c6);
-	Map.add(App->physics->CreateWall(10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 10, NORTH, UNCOLORED)); //3rd road walls 1.5
-	Map.add(App->physics->CreateWall(10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z - 30, NORTH, UNCOLORED)); //3rd road walls 2
-	Map.add(App->physics->CreateWall(10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 50, NORTH, UNCOLORED)); //3rd road walls 2.5
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 10, NORTH, UNCOLORED)); //3rd road walls 1.5
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z - 30, NORTH, UNCOLORED)); //3rd road walls 2
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 50, NORTH, UNCOLORED)); //3rd road walls 2.5
 	Cube c7;
 	Green_bodies.add(App->physics->CreateWall(c7, 10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z - 70, NORTH, GREEN)); //3rd road walls 3
 	Green_Cubes.add(c7);
-	Map.add(App->physics->CreateWall(10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 90, NORTH, UNCOLORED)); //3rd road walls 3.5
-	Map.add(App->physics->CreateWall(10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z - 110, NORTH, UNCOLORED)); //3rd road walls 4
-	Map.add(App->physics->CreateWall(10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 130, NORTH, UNCOLORED)); //3rd road walls 4.5
-	Map.add(App->physics->CreateWall(10, 18, 1, actual_pos.x + 9, actual_pos.y, actual_pos.z - 150, NORTH, UNCOLORED)); //3rd road walls 5																												
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 90, NORTH, UNCOLORED)); //3rd road walls 3.5
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z - 110, NORTH, UNCOLORED)); //3rd road walls 4
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 130, NORTH, UNCOLORED)); //3rd road walls 4.5
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 18, 1, actual_pos.x + 9, actual_pos.y, actual_pos.z - 150, NORTH, UNCOLORED)); //3rd road walls 5																												
 		//US_3rd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x + 15, actual_pos.y + 10, actual_pos.z, 3, RED, 3, 10.0f));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
-	Map.add(App->physics->CreateWall(20, 220, 1, actual_pos.x, actual_pos.y, actual_pos.z, EAST, UNCOLORED));	//midwall
+	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 20, 220, 1, actual_pos.x, actual_pos.y, actual_pos.z, EAST, UNCOLORED));	//midwall
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
 	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
@@ -183,8 +183,8 @@ bool ModuleSceneIntro::Start()
 	for (p2List_item<Cube>* item = Cubes.getFirst(); item; item = item->next)
 		item->data.color = { 0.95f, 0.7f, 0.4f };	//TODO: repaint road
 
-	for (p2List_item<Cube>* item = Uncolored_Cubes.getFirst(); item; item = item->next)
-		item->data.color = { 0.8f, 0.85f, 0.9f };	//TODO: repaint walls
+	for (int i = 0; i < SCENE_INTRO_CUBES; i++)
+		Uncolored_Cubes[i].color = { 0.8f, 0.85f, 0.9f };	//TODO: repaint walls
 
 	for (p2List_item<PhysBody3D*>* item = US_2nd_road_bodies.getFirst(); item; item = item->next)
 	{
@@ -287,8 +287,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	for (p2List_item<Cube>* item = Cubes.getFirst(); item; item = item->next)
 		item->data.Render();
 
-	for (p2List_item<Cube>* item = Uncolored_Cubes.getFirst(); item; item = item->next)
-		item->data.Render();
+	for (int i = 0; i < SCENE_INTRO_CUBES; i++)
+		Uncolored_Cubes[i].Render();
 
 	//UNCOLORED SPHERES
 	for (p2List_item<Sphere>* item = US_2nd_road.getFirst(); item; item = item->next)
