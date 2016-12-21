@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "ModulePlayer.h"
 #include "Primitive.h"
-#include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
 
 
@@ -28,63 +27,58 @@ bool ModulePlayer::Start()
 	win_fx = App->audio->LoadFx("sounds/Nice.wav");
 	crash_wall_fx = App->audio->LoadFx("sounds/car_wall_hit.wav");
 
-	VehicleInfo car;
-
 	// Car properties ----------------------------------------
 	// Piece
 	car.num_chassis = 8;
 	car.chassis_size = new vec3[car.num_chassis];
 	//Body
-	car.chassis_size[0].Set(2.5f, 1.7f, 2.0f); //Ancho, alto, largo
-	//Back body
-	car.chassis_size[4].Set(2.5f, 1.4f, 0.5f);
+	car.chassis_size[0].Set(2.5f, 1.7f, 2.0f); //W, H, L
+											   //Back body
+	car.chassis_size[1].Set(2.5f, 1.4f, 0.5f);
 	//Face body
-	car.chassis_size[1].Set(2.5f, 1.2f, 1.5f);
+	car.chassis_size[2].Set(2.5f, 1.2f, 1.5f);
 	//Back Colors
-	car.chassis_size[2].Set(0.4, 0.2f, 0.2f);
 	car.chassis_size[3].Set(0.4, 0.2f, 0.2f);
+	car.chassis_size[4].Set(0.4, 0.2f, 0.2f);
 	car.chassis_size[5].Set(0.4, 0.2f, 0.2f);
 	//Mudguard
 	car.chassis_size[6].Set(2.5f, 0.2f, 0.02f);
-	//Back Lights
-	/*car.chassis_size[2].Set(0.4f, 0.3f, 0.2f);
-	car.chassis_size[3].Set(0.4, 0.3f, 0.2f);*/
+	//Top
+	car.chassis_size[7].Set(1.5f, 0.02f, 1.3f);
 
 	// Position
 	car.chassis_offset = new vec3[car.num_chassis];
 	//Body
-	car.chassis_offset[0].Set(0.0f, 1.7f, -0.8f);
-	//Back body
-	car.chassis_offset[4].Set(0.0f, 1.5f, -2.05f); //Izquierda, arriba, atras
+	car.chassis_offset[0].Set(0.0f, 1.7f, -0.8f); //LEFT, UP, BACK
+												  //Back body
+	car.chassis_offset[1].Set(0.0f, 1.5f, -2.05f);
 	//Face body
-	car.chassis_offset[1].Set(0, 1.48f, 0.9f);
+	car.chassis_offset[2].Set(0, 1.48f, 0.9f);
 	//Back Colors
-	car.chassis_offset[2].Set(0.5, 2.4f, -1.8f);
-	car.chassis_offset[3].Set(0.0, 2.4f, -1.8f);
+	car.chassis_offset[3].Set(0.5, 2.4f, -1.8f);
+	car.chassis_offset[4].Set(0.0, 2.4f, -1.8f);
 	car.chassis_offset[5].Set(-0.5, 2.4f, -1.8f);
 	//Mudguard
-	car.chassis_offset[6].Set(0.0f, 1.6f, -2.3f);
-	//Back Lights
-	/*car.chassis_offset[2].Set(-0.8, 1.1f, -2.2f);
-	car.chassis_offset[3].Set(0.8, 1.1f, -2.2f);*/
+	car.chassis_offset[6].Set(0.0f, 0.9f, -2.3f);
+	//Top
+	car.chassis_offset[7].Set(0.0f, 2.58f, -0.8f);
 
 	// Color
 	car.chassis_color = new vec3[car.num_chassis];
 	//Body
 	car.chassis_color[0] = { White.r, White.g, White.b };
 	//Back body
-	car.chassis_color[4] = { White.r, White.g, White.b };
-	//Face body
 	car.chassis_color[1] = { White.r, White.g, White.b };
+	//Face body
+	car.chassis_color[2] = { White.r, White.g, White.b };
 	//Back Colors
-	car.chassis_color[2] = { Red.r, Red.g, Red.b };
-	car.chassis_color[3] = { Blue.r, Blue.g, Blue.b };
+	car.chassis_color[3] = { Red.r, Red.g, Red.b };
+	car.chassis_color[4] = { Blue.r, Blue.g, Blue.b };
 	car.chassis_color[5] = { Green.r, Green.g, Green.b };
 	//Mudguard
 	car.chassis_color[6] = { Black.r, Black.g, Black.b };
-	/*//Back Lights
-	car.chassis_color[2] = { Gold.r, Gold.g, Gold.b };
-	car.chassis_color[3] = { Gold.r, Gold.g, Gold.b };*/
+	//Top
+	car.chassis_color[7] = { Grey.r, Grey.g, Grey.b };
 
 	car.mass = 600.0f;
 	car.suspensionStiffness = 3.88f;
@@ -103,10 +97,10 @@ bool ModulePlayer::Start()
 
 	float half_width = 2.7 * 0.5f;
 	float half_length = 4 * 0.5f;
-	
-	vec3 direction(0,-1,0);
-	vec3 axis(-1,0,0);
-	
+
+	vec3 direction(0, -1, 0);
+	vec3 axis(-1, 0, 0);
+
 	car.num_wheels = 4;
 	car.wheels = new Wheel[4];
 
@@ -179,6 +173,7 @@ void ModulePlayer::ResetCar()
 	vehicle->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
 	vehicle->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
 	vehicle->SetTransform(&initial_car_matrix);
+	car.chassis_color[7] = { Grey.r, Grey.g, Grey.b };
 }
 
 // Update: draw background
@@ -240,6 +235,7 @@ update_status ModulePlayer::Update(float dt)
 		red_off = false;
 		blue_off = false;
 		green_off = false;
+		car.chassis_color[7] = { Grey.r, Grey.g, Grey.b };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && red_off == false)
@@ -284,6 +280,7 @@ update_status ModulePlayer::Update(float dt)
 			}
 			act_road_num--;
 		}
+		car.chassis_color[7] = { Red.r, Red.g, Red.b };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN && blue_off == false)
@@ -327,7 +324,8 @@ update_status ModulePlayer::Update(float dt)
 				}
 			}
 			act_road_num--;
-		}		
+		}
+		car.chassis_color[7] = { Blue.r, Blue.g, Blue.b };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && green_off == false)
@@ -372,6 +370,7 @@ update_status ModulePlayer::Update(float dt)
 			}
 			act_road_num--;
 		}
+		car.chassis_color[7] = { Green.r, Green.g, Green.b };
 	}
 	
 	vehicle->ApplyEngineForce(acceleration);

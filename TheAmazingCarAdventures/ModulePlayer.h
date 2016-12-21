@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "p2Point.h"
 #include "Timer.h"
+#include "PhysVehicle3D.h"
 
 struct PhysVehicle3D;
 
@@ -43,6 +44,7 @@ private:
 	float best_time = 0;
 	mat4x4 initial_car_matrix;
 	float car_y;
+	VehicleInfo car;
 
 public:
 	int car_brake_fx;

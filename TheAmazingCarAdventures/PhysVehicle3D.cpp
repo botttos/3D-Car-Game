@@ -5,8 +5,6 @@
 // ----------------------------------------------------------------------------
 VehicleInfo::~VehicleInfo()
 {
-	//if(wheels != NULL)
-		//delete wheels;
 }
 
 // ----------------------------------------------------------------------------
@@ -24,8 +22,7 @@ PhysVehicle3D::~PhysVehicle3D()
 void PhysVehicle3D::Render()
 {
 	Cylinder wheel;
-
-	wheel.color = SpringGreen;
+	wheel.color = Black;
 
 	for(int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
@@ -34,7 +31,6 @@ void PhysVehicle3D::Render()
 
 		vehicle->updateWheelTransform(i);
 		vehicle->getWheelInfo(i).m_worldTransform.getOpenGLMatrix(&wheel.transform);
-
 		wheel.Render();
 	}
 
@@ -44,6 +40,7 @@ void PhysVehicle3D::Render()
 		chassis.color.Set(info.chassis_color[i].x, info.chassis_color[i].y, info.chassis_color[i].z);
 		chassis.size = { info.chassis_size[i].x, info.chassis_size[i].y, info.chassis_size[i].z };
 		vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
+		
 		btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 		btVector3 offset(info.chassis_offset[i].x, info.chassis_offset[i].y, info.chassis_offset[i].z);
 		offset = offset.rotate(q.getAxis(), q.getAngle());
@@ -51,7 +48,6 @@ void PhysVehicle3D::Render()
 		chassis.transform.M[12] += offset.getX();
 		chassis.transform.M[13] += offset.getY();
 		chassis.transform.M[14] += offset.getZ();
-
 		chassis.Render();
 	}
 }
