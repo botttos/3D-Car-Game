@@ -31,29 +31,41 @@ bool ModulePlayer::Start()
 
 	// Car properties ----------------------------------------
 	// Piece
-	car.num_chassis = 5;
+	car.num_chassis = 8;
 	car.chassis_size = new vec3[car.num_chassis];
 	//Body
 	car.chassis_size[0].Set(2.5f, 1.7f, 2.0f); //Ancho, alto, largo
 	//Back body
-	car.chassis_size[4].Set(2.5f, 1.4f, 0.4f);
+	car.chassis_size[4].Set(2.5f, 1.4f, 0.5f);
 	//Face body
-	car.chassis_size[1].Set(2.5f, 1.2f, 1.4f);
+	car.chassis_size[1].Set(2.5f, 1.2f, 1.5f);
+	//Back Colors
+	car.chassis_size[2].Set(0.4, 0.2f, 0.2f);
+	car.chassis_size[3].Set(0.4, 0.2f, 0.2f);
+	car.chassis_size[5].Set(0.4, 0.2f, 0.2f);
+	//Mudguard
+	car.chassis_size[6].Set(2.5f, 0.2f, 0.02f);
 	//Back Lights
-	car.chassis_size[2].Set(0.4, 0.3f, 0.2f);
-	car.chassis_size[3].Set(0.4, 0.3f, 0.2f);
+	/*car.chassis_size[2].Set(0.4f, 0.3f, 0.2f);
+	car.chassis_size[3].Set(0.4, 0.3f, 0.2f);*/
 
 	// Position
 	car.chassis_offset = new vec3[car.num_chassis];
 	//Body
 	car.chassis_offset[0].Set(0.0f, 1.7f, -0.8f);
 	//Back body
-	car.chassis_offset[4].Set(0.0f, 1.5f, -2.00f); //Izquierda, arriba, atras
+	car.chassis_offset[4].Set(0.0f, 1.5f, -2.05f); //Izquierda, arriba, atras
 	//Face body
 	car.chassis_offset[1].Set(0, 1.48f, 0.9f);
+	//Back Colors
+	car.chassis_offset[2].Set(0.5, 2.4f, -1.8f);
+	car.chassis_offset[3].Set(0.0, 2.4f, -1.8f);
+	car.chassis_offset[5].Set(-0.5, 2.4f, -1.8f);
+	//Mudguard
+	car.chassis_offset[6].Set(0.0f, 1.6f, -2.3f);
 	//Back Lights
-	car.chassis_offset[2].Set(-0.7, 1.2f, -2.2f);
-	car.chassis_offset[3].Set(0.7, 1.2f, -2.2f);
+	/*car.chassis_offset[2].Set(-0.8, 1.1f, -2.2f);
+	car.chassis_offset[3].Set(0.8, 1.1f, -2.2f);*/
 
 	// Color
 	car.chassis_color = new vec3[car.num_chassis];
@@ -63,9 +75,15 @@ bool ModulePlayer::Start()
 	car.chassis_color[4] = { White.r, White.g, White.b };
 	//Face body
 	car.chassis_color[1] = { White.r, White.g, White.b };
-	//Back Lights
+	//Back Colors
+	car.chassis_color[2] = { Red.r, Red.g, Red.b };
+	car.chassis_color[3] = { Blue.r, Blue.g, Blue.b };
+	car.chassis_color[5] = { Green.r, Green.g, Green.b };
+	//Mudguard
+	car.chassis_color[6] = { Black.r, Black.g, Black.b };
+	/*//Back Lights
 	car.chassis_color[2] = { Gold.r, Gold.g, Gold.b };
-	car.chassis_color[3] = { Gold.r, Gold.g, Gold.b };
+	car.chassis_color[3] = { Gold.r, Gold.g, Gold.b };*/
 
 	car.mass = 600.0f;
 	car.suspensionStiffness = 3.88f;
@@ -178,10 +196,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		//if(acceleration < MAX_ACCELERATION)
 		acceleration = MAX_ACCELERATION + 800;
-		/*if (vehicle->GetKmh() <= 40)
-			acceleration = MAX_ACCELERATION*20;*/
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
