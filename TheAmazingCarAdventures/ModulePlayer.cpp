@@ -423,7 +423,7 @@ update_status ModulePlayer::Update(float dt)
 
 	char title[100];
 	float time = (float)timer.Read() / 1000.0f;
-	sprintf_s(title, "Speed: %.1f Km/h, Actual Time: %.2f, Best Time: %.2f, Creators Best Time: 32.87", vehicle->GetKmh(), time , best_time / 1000.0f);
+	sprintf_s(title, "Speed: %.1f Km/h, Actual Time: %.2f, Best Time: %.2f, Creators Best Time: 31.54", vehicle->GetKmh(), time , best_time / 1000.0f);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;

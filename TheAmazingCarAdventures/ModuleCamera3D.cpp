@@ -81,7 +81,7 @@ update_status ModuleCamera3D::Update(float dt)
 		CalculateViewMatrix();
 	}
 	// Modify camera manually
-	vec3 newPos(0, 0, 0);
+	/*vec3 newPos(0, 0, 0);
 	float speed = 10.0f * dt;
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 100.0f * dt;
@@ -149,7 +149,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
-
+	*/
 	return UPDATE_CONTINUE;
 }
 

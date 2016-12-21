@@ -1,4 +1,4 @@
-# The amazing car adventures
+# Sop 'em up
 Made with Bullet physics library.
 
 ###Creators:
@@ -7,11 +7,13 @@ Made with Bullet physics library.
   
 ##The Game:
 
-The amazing car adventures is a racing game where the player changes the scenario in order to pass the obstacles or make the path easier if done quickly enough.
+Sop 'em up is a racing game where the player changes the scenario in order to pass the obstacles or make the path easier if done quickly enough.
 
 Version 1.0:
 
 First map completed.
+
+ Caution: There is a bug that happens aproximately 40% of times in the release mode which causes the spheres to activate at any time when they shouldn't, this is caused by Bullet automatic activation.
 
 ##Controls:
 

@@ -237,7 +237,7 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	float z_cannon;
 	cannon_ball->GetPosZ(&z_cannon);
-	if (z_cannon == cannon_ball_z && cannon_ball_reached_sensor == true && checkpoints_bools.getFirst()->next->next->data == true)
+	if (z_cannon == cannon_ball_z && cannon_ball_reached_sensor == true)
 	{
 		App->audio->PlayFx(cannon_tp_fx);
 		cannon_ball->GetRigidBody()->activate(true);
@@ -373,7 +373,6 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	}
 	else if (body2 == App->player->vehicle && All_Spheres_bodies.find(body1) != -1)
 	{
-		//TODO: insert defeat / crash sound
 		App->audio->PlayFx(App->player->crash_sphere_fx);
 		App->player->defeat = true;
 	}
