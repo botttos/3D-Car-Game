@@ -36,7 +36,7 @@ bool ModulePlayer::Start()
 	//Back body
 	car.chassis_size[4].Set(2.5f, 1.4f, 1.3f);
 	//Face body
-	car.chassis_size[1].Set(2.5f, 1.2f, 0.9f);
+	car.chassis_size[1].Set(2.5f, 1.2f, 1.4f);
 	//Back Lights
 	car.chassis_size[2].Set(0.4, 0.3f, 0.2f);
 	car.chassis_size[3].Set(0.4, 0.3f, 0.2f);
@@ -48,7 +48,7 @@ bool ModulePlayer::Start()
 	//Back body
 	car.chassis_offset[4].Set(0.0f, 1.5f, -1.64f); //Izquierda, arriba, atras
 	//Face body
-	car.chassis_offset[1].Set(0, 1.48f, 1.6f);
+	car.chassis_offset[1].Set(0, 1.48f, 0.9f);
 	//Back Lights
 	car.chassis_offset[2].Set(-0.7, 1.2f, -2.3f);
 	car.chassis_offset[3].Set(0.7, 1.2f, -2.3f);
@@ -160,7 +160,7 @@ update_status ModulePlayer::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		//if(acceleration < MAX_ACCELERATION)
-		acceleration = MAX_ACCELERATION + 500;
+		acceleration = MAX_ACCELERATION + 800;
 		/*if (vehicle->GetKmh() <= 40)
 			acceleration = MAX_ACCELERATION*20;*/
 	}
