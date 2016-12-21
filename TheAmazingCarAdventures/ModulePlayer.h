@@ -51,4 +51,5 @@ public:
 	int change_color_fx;
 	int win_fx;
 	int crash_wall_fx;
+	int crash_sphere_fx;
 };

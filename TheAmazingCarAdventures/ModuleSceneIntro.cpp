@@ -373,7 +373,8 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	}
 	else if (body2 == App->player->vehicle && All_Spheres_bodies.find(body1) != -1)
 	{
-		LOG("car crashed against sphere");
+		//TODO: insert defeat / crash sound
+		App->audio->PlayFx(App->player->crash_sphere_fx);
 		App->player->defeat = true;
 	}
 
@@ -394,7 +395,6 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		cannon_ball_reached_sensor = true;
 	}
 
-	//TODO: add collision sound against: 	
 	if (body2 == App->player->vehicle)
 	{
 		for (int i = 0; i < SCENE_INTRO_U_CUBES; i++)

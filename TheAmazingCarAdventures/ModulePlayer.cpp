@@ -408,7 +408,6 @@ update_status ModulePlayer::Update(float dt)
 	if (defeat == true)
 	{
 		LOG("DEFEAT");
-		//TODO: insert defeat / crash sound
 		timer.Stop();
 
 		App->scene_intro->ResetSpheres();
