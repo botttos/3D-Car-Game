@@ -43,7 +43,7 @@ bool ModuleAudio::Init()
 
 	background_music = Load_music("sounds/Running_in_the_90s.ogg");
 	Mix_PlayMusic(background_music, -1);
-	Mix_VolumeMusic(50);
+	Mix_VolumeMusic(35);
 
 	return ret;
 }

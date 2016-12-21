@@ -43,4 +43,6 @@ private:
 
 public:
 	int car_brake_fx;
+	int change_color_fx;
+	int win_fx;
 };

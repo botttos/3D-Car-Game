@@ -24,6 +24,8 @@ bool ModulePlayer::Start()
 	green_off = false;
 
 	car_brake_fx = App->audio->LoadFx("sounds/brake.wav");
+	change_color_fx = App->audio->LoadFx("sounds/change_walls.wav");
+	win_fx = App->audio->LoadFx("sounds/Nice.wav");
 
 	VehicleInfo car;
 
@@ -191,6 +193,8 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 	{
+		App->audio->PlayFx(change_color_fx);
+
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
@@ -210,7 +214,7 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
 				
-		//TODO: add (click?) sound
+		App->audio->PlayFx(change_color_fx);
 
 		red_off = true;
 		blue_off = false;
@@ -254,6 +258,8 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Blue_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
 		
+		App->audio->PlayFx(change_color_fx);
+
 		blue_off = true;
 		red_off = false;
 		green_off = false;
@@ -295,6 +301,8 @@ update_status ModulePlayer::Update(float dt)
 	{
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Green_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
+
+		App->audio->PlayFx(change_color_fx);
 
 		green_off = true;
 		red_off = false;
@@ -355,7 +363,7 @@ update_status ModulePlayer::Update(float dt)
 	if (victory == true)
 	{
 		LOG("VICTORY");
-		//TODO: insert win sound
+		App->audio->PlayFx(win_fx);
 		timer.Stop();
 		if (best_time == 0 || best_time > timer.Read())
 			best_time = timer.Read();
