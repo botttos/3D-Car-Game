@@ -36,7 +36,7 @@ bool ModulePlayer::Start()
 	//Body
 	car.chassis_size[0].Set(2.5f, 1.7f, 2.0f); //Ancho, alto, largo
 	//Back body
-	car.chassis_size[4].Set(2.5f, 1.4f, 1.3f);
+	car.chassis_size[4].Set(2.5f, 1.4f, 0.4f);
 	//Face body
 	car.chassis_size[1].Set(2.5f, 1.2f, 1.4f);
 	//Back Lights
@@ -48,12 +48,12 @@ bool ModulePlayer::Start()
 	//Body
 	car.chassis_offset[0].Set(0.0f, 1.7f, -0.8f);
 	//Back body
-	car.chassis_offset[4].Set(0.0f, 1.5f, -1.64f); //Izquierda, arriba, atras
+	car.chassis_offset[4].Set(0.0f, 1.5f, -2.00f); //Izquierda, arriba, atras
 	//Face body
 	car.chassis_offset[1].Set(0, 1.48f, 0.9f);
 	//Back Lights
-	car.chassis_offset[2].Set(-0.7, 1.2f, -2.3f);
-	car.chassis_offset[3].Set(0.7, 1.2f, -2.3f);
+	car.chassis_offset[2].Set(-0.7, 1.2f, -2.2f);
+	car.chassis_offset[3].Set(0.7, 1.2f, -2.2f);
 
 	// Color
 	car.chassis_color = new vec3[car.num_chassis];
