@@ -235,32 +235,6 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
 	return pbody;
 }
 
-PhysBody3D* ModulePhysics3D::AddNonRigidBody(const Cube& cube, float mass)
-{
-	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x*0.5f, cube.size.y*0.5f, cube.size.z*0.5f));
-	shapes.add(colShape);
-
-	btTransform startTransform;
-	startTransform.setFromOpenGLMatrix(&cube.transform);
-
-	btVector3 localInertia(0, 0, 0);
-	if (mass != 0.f)
-		colShape->calculateLocalInertia(mass, localInertia);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-	motions.add(myMotionState);
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
-
-	btRigidBody* body = new btRigidBody(rbInfo);
-	PhysBody3D* pbody = new PhysBody3D(body);
-
-	body->setUserPointer(pbody);
-	world->addRigidBody(body);
-	bodies.add(pbody);
-
-	return pbody;
-}
-
 // ---------------------------------------------------------
 PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass)
 {
@@ -391,17 +365,17 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			App->scene_intro->actual_pos.x -= last_width / 2;
 			App->scene_intro->actual_pos.z += width / 2;
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x + ((lenght - last_width) / 2) + last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, width + 2, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x + ((lenght - last_width) / 2) + last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, width + 2, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
 		}
 		else if (prev_dir == WEST)
 		{
 			App->scene_intro->actual_pos.x -= last_width / 2;
 			App->scene_intro->actual_pos.z -= width / 2;
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x + ((lenght - last_width) / 2) + last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, WEST, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x + ((lenght - last_width) / 2) + last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, WEST, UNCOLORED);
 		}
 		cube.size.Set(lenght, 1, width);
 		App->scene_intro->actual_pos.x += lenght / 2;
@@ -411,13 +385,13 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 				angle = 20;
 			cube.SetPos(App->scene_intro->actual_pos.x - (lenght / 2) * (1 - cos(DEGTORAD * angle)), App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z);
 			cube.SetRotation(angle, vec3(0, 0, 1));
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED, angle, vec3(0,0,1));
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED, angle, vec3(0, 0, 1));
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED, angle, vec3(0,0,1));
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED, angle, vec3(0, 0, 1));
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x + (lenght / 2) * (cos(DEGTORAD * angle)) - (lenght / 2)*(1 - cos(DEGTORAD*angle)), App->scene_intro->actual_pos.y + ((lenght)* sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z);
 		}
 		else if (is_trap == true && prev_dir == NORTH)
 		{
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght - 1, width, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght - 1, width, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
 			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 			Cube low_cube1;
 			low_cube1.size.Set(lenght, 1, width);
@@ -428,8 +402,8 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 			low_cube2.size.Set(lenght, 1, width);
 			low_cube2.SetPos(App->scene_intro->actual_pos.x - lenght * (1 - cos(DEGTORAD * 20)), App->scene_intro->actual_pos.y - (sin(DEGTORAD * 20) * lenght), App->scene_intro->actual_pos.z);
 			AddBody(low_cube2, 0);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z +1+ width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z +1+ width / 2, dir, UNCOLORED);
 			App->scene_intro->Cubes.add(low_cube1);
 			App->scene_intro->Cubes.add(low_cube2);
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
@@ -438,8 +412,8 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			if (prev_dir == NORTH)
 			{
-				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
-				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
+				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
 			}
 			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
@@ -455,17 +429,17 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			App->scene_intro->actual_pos.x += last_width / 2;
 			App->scene_intro->actual_pos.z += width / 2;
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x - ((lenght - last_width) / 2) - last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, width + 2, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x - ((lenght - last_width) / 2) - last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, width + 2, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
 		}
 		else if (prev_dir == WEST)
 		{
 			App->scene_intro->actual_pos.x += last_width / 2;
 			App->scene_intro->actual_pos.z -= width / 2;
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x - ((lenght - last_width) / 2) - last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, WEST, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x - ((lenght - last_width) / 2) - last_width, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, WEST, UNCOLORED);
 		}
 		cube.size.Set(lenght, 1, width);
 		App->scene_intro->actual_pos.x -= lenght / 2;
@@ -475,13 +449,13 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 				angle = 20;
 			cube.SetPos(App->scene_intro->actual_pos.x + (lenght / 2) * (1 - cos(DEGTORAD * angle)), App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z);
 			cube.SetRotation(-angle, vec3(0, 0, 1));
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED, -angle, vec3(0, 0, 1));
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED, -angle, vec3(0, 0, 1));
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED, -angle, vec3(0, 0, 1));
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED, -angle, vec3(0, 0, 1));
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x - (lenght / 2) * (cos(DEGTORAD * angle)) + (lenght / 2)*(1 - cos(DEGTORAD*angle)), App->scene_intro->actual_pos.y + ((lenght)* sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z);
 		}
 		else if (is_trap == true && prev_dir == SOUTH)
 		{
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght, width, 1, App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght, width, 1, App->scene_intro->actual_pos.x + lenght / 2, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z, EAST, UNCOLORED);
 			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 			Cube low_cube1;
 			low_cube1.size.Set(lenght, 1, width);
@@ -492,8 +466,8 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 			low_cube2.size.Set(lenght, 1, width);
 			low_cube2.SetPos(App->scene_intro->actual_pos.x + lenght * (1 - cos(DEGTORAD * 20)), App->scene_intro->actual_pos.y - (sin(DEGTORAD * 20) * lenght), App->scene_intro->actual_pos.z);
 			AddBody(low_cube2, 0);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
 			App->scene_intro->Cubes.add(low_cube1);
 			App->scene_intro->Cubes.add(low_cube2);
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
@@ -502,8 +476,8 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			if (prev_dir == SOUTH)
 			{
-				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
-				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
+				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 + width / 2, dir, UNCOLORED);
+				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - width / 2, dir, UNCOLORED);
 			}
 			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x - lenght / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
@@ -518,17 +492,17 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			App->scene_intro->actual_pos.x += width / 2;
 			App->scene_intro->actual_pos.z -= last_width / 2;
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + ((lenght - last_width) / 2) + last_width, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, NORTH, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + ((lenght - last_width) / 2) + last_width, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, NORTH, UNCOLORED);
 		}
 		else if (prev_dir == SOUTH)
 		{
 			App->scene_intro->actual_pos.x -= width / 2;
 			App->scene_intro->actual_pos.z -= last_width / 2;
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + ((lenght - last_width) / 2) + last_width, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, SOUTH, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + ((lenght - last_width) / 2) + last_width, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, SOUTH, UNCOLORED);
 		}
 
 		cube.size.Set(width, 1, lenght);
@@ -539,14 +513,14 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 				angle = 20;
 			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z - (lenght / 2) * (1 - cos(DEGTORAD * angle)));
 			cube.SetRotation(-angle, vec3(1, 0, 0));
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z, dir, UNCOLORED, -angle, vec3(1, 0, 0));
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z, dir, UNCOLORED, -angle, vec3(1, 0, 0));
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z, dir, UNCOLORED, -angle, vec3(1, 0, 0));
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z, dir, UNCOLORED, -angle, vec3(1, 0, 0));
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght)* sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z + (lenght / 2) * (cos(DEGTORAD * angle)) - (lenght / 2)*(1 - cos(DEGTORAD*angle)));
 		}
 		
 		else if (is_trap == true && prev_dir == EAST)
 		{
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght/2, App->scene_intro->actual_pos.z - lenght/2, NORTH, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght/2, App->scene_intro->actual_pos.z - lenght/2, NORTH, UNCOLORED);
 			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 			Cube low_cube1;
 			low_cube1.size.Set(width, 1, lenght);
@@ -557,8 +531,8 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 			low_cube2.size.Set(width, 1, lenght);
 			low_cube2.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - (sin(DEGTORAD * 20) * lenght), App->scene_intro->actual_pos.z - lenght * (1 - cos(DEGTORAD * 20)));
 			AddBody(low_cube2, 0);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght+10, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y-lenght/2, App->scene_intro->actual_pos.z, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght+10, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y-lenght/2, App->scene_intro->actual_pos.z, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght+10, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y-lenght/2, App->scene_intro->actual_pos.z, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght+10, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y-lenght/2, App->scene_intro->actual_pos.z, dir, UNCOLORED);
 			App->scene_intro->Cubes.add(low_cube1);
 			App->scene_intro->Cubes.add(low_cube2);
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2);
@@ -567,8 +541,8 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			if (prev_dir == EAST)
 			{
-				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, dir, UNCOLORED);
-				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, dir, UNCOLORED);
+				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, dir, UNCOLORED);
+				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, dir, UNCOLORED);
 			}
 			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + lenght / 2);
@@ -583,17 +557,17 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			App->scene_intro->actual_pos.x += width / 2;
 			App->scene_intro->actual_pos.z += last_width / 2;
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - lenght / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - ((lenght - last_width) / 2) - last_width, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1, NORTH, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - lenght / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - ((lenght - last_width) / 2) - last_width, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1, NORTH, UNCOLORED);
 		}
 		else if (prev_dir == SOUTH)
 		{
 			App->scene_intro->actual_pos.x -= width / 2;
 			App->scene_intro->actual_pos.z += last_width / 2;
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght + 2, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 - lenght / 2, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - ((lenght - last_width) / 2) - last_width, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z+1, SOUTH, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght + 2, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z + 1 - lenght / 2, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght - last_width, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - ((lenght - last_width) / 2) - last_width, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z+1, SOUTH, UNCOLORED);
 		}
 		cube.size.Set(width, 1, lenght);
 		App->scene_intro->actual_pos.z -= lenght / 2;
@@ -604,14 +578,14 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 				angle = 20;
 			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z + (lenght / 2) * (1 - cos(DEGTORAD * angle)));
 			cube.SetRotation(angle, vec3(1, 0, 0));
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z, dir, UNCOLORED, angle, vec3(1, 0, 0));
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z, dir, UNCOLORED, angle, vec3(1, 0, 0));
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z, dir, UNCOLORED, angle, vec3(1, 0, 0));
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y + ((lenght / 2) * sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z, dir, UNCOLORED, angle, vec3(1, 0, 0));
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y + ((lenght)* sin(DEGTORAD*angle)), App->scene_intro->actual_pos.z - (lenght / 2) * (cos(DEGTORAD * angle)) + (lenght / 2)*(1 - cos(DEGTORAD*angle)));
 		}
 
 		else if (is_trap == true && prev_dir == WEST)
 		{
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z + lenght / 2, NORTH, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght, width, 1, App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z + lenght / 2, NORTH, UNCOLORED);
 			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 			Cube low_cube1;
 			low_cube1.size.Set(width, 1, lenght);
@@ -622,8 +596,8 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 			low_cube2.size.Set(width, 1, lenght);
 			low_cube2.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y - (sin(DEGTORAD * 20) * lenght), App->scene_intro->actual_pos.z + lenght * (1 - cos(DEGTORAD * 20)));
 			AddBody(low_cube2, 0);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z, dir, UNCOLORED);
-			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z, dir, UNCOLORED);
+			CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], lenght + 10, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y - lenght / 2, App->scene_intro->actual_pos.z, dir, UNCOLORED);
 			App->scene_intro->Cubes.add(low_cube1);
 			App->scene_intro->Cubes.add(low_cube2);
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - lenght / 2);
@@ -632,8 +606,8 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 		{
 			if (prev_dir == WEST)
 			{
-				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, dir, UNCOLORED);
-				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, dir, UNCOLORED);
+				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x + width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, dir, UNCOLORED);
+				CreateWall(App->scene_intro->Uncolored_Cubes[App->physics->Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[App->physics->Cube_num], WALLS_HEIGHT, lenght, 1, App->scene_intro->actual_pos.x - width / 2, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z, dir, UNCOLORED);
 			}
 			cube.SetPos(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z);
 			App->scene_intro->actual_pos.Set(App->scene_intro->actual_pos.x, App->scene_intro->actual_pos.y, App->scene_intro->actual_pos.z - lenght / 2);
@@ -662,7 +636,40 @@ PhysBody3D* ModulePhysics3D::CreateRoad(float lenght, Direction dir, Direction p
 	return ret;
 }
 
-PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width, int x, int y, int z, Direction dir, obstacle_color color, float angle, vec3 axis)
+void ModulePhysics3D::CreateWall(Cube& cube,  PhysBody3D** body, float height, float lenght, float width, int x, int y, int z, Direction dir, obstacle_color color, float angle, vec3 axis)
+{
+	if (dir == NORTH || dir == SOUTH)
+		cube.size.Set(lenght, height, width);
+	else if (dir == EAST || dir == WEST)
+		cube.size.Set(width, height, lenght);
+
+	cube.SetPos(x, y, z);
+	if (angle != 0)
+		cube.SetRotation(angle, axis);
+
+	*body = AddBody(cube, 0);
+	Cube_num++;
+}
+
+PhysBody3D* ModulePhysics3D::CreateWall(Cube& cube, float height, float lenght, float width, int x, int y, int z, Direction dir, obstacle_color color, float angle, vec3 axis)
+{
+	PhysBody3D* ret;
+
+	if (dir == NORTH || dir == SOUTH)
+		cube.size.Set(lenght, height, width);
+	else if (dir == EAST || dir == WEST)
+		cube.size.Set(width, height, lenght);
+
+	cube.SetPos(x, y, z);
+	if (angle != 0)
+		cube.SetRotation(angle, axis);
+
+	ret = AddBody(cube, 0);
+	//Cube_num++;
+	return ret;
+}
+
+PhysBody3D * ModulePhysics3D::CreateWall(float height, float lenght, float width, int x, int y, int z, Direction dir, obstacle_color color, float angle, vec3 axis)
 {
 	PhysBody3D* ret;
 	Cube cube;
@@ -687,9 +694,6 @@ PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width,
 	case BLUE:
 		App->scene_intro->Blue_Cubes.add(cube);
 		break;
-	case UNCOLORED:
-		//App->scene_intro->Uncolored_Cubes[0] = cube;
-		break;
 	}
 
 	ret = AddBody(cube, 0);
@@ -700,24 +704,6 @@ PhysBody3D* ModulePhysics3D::CreateWall(float height, float lenght, float width,
 	else if (color == GREEN)
 		App->scene_intro->Green_bodies.add(ret);
 
-	return ret;
-}
-
-PhysBody3D* ModulePhysics3D::CreateWall(Cube& cube, float height, float lenght, float width, int x, int y, int z, Direction dir, obstacle_color color, float angle, vec3 axis)
-{
-	PhysBody3D* ret;
-
-	if (dir == NORTH || dir == SOUTH)
-		cube.size.Set(lenght, height, width);
-	else if (dir == EAST || dir == WEST)
-		cube.size.Set(width, height, lenght);
-
-	cube.SetPos(x, y, z);
-	if (angle != 0)
-		cube.SetRotation(angle, axis);
-
-	ret = AddBody(cube, 0);
-	Cube_num++;
 	return ret;
 }
 
@@ -875,10 +861,10 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionTrap(int x, int y, int z, float ra
 		}
 	}
 
-	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1)/4 - 2, z - radius*num_spheres/8, NORTH, UNCOLORED);
-	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1) /4 - 2, z + radius*num_spheres /8, NORTH, UNCOLORED);
-	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x + radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
-	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x - radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
+	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1)/4 - 2, z - radius*num_spheres/8, NORTH, UNCOLORED);
+	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1) /4 - 2, z + radius*num_spheres /8, NORTH, UNCOLORED);
+	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x + radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
+	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x - radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
 
 	return ret;
 }
@@ -895,7 +881,7 @@ PhysBody3D * ModulePhysics3D::CreateWallSensor(float lenght, float width, int x,
 		cube.size.Set(width, 10, lenght);
 
 	cube.SetPos(x, y, z);
-	ret = AddNonRigidBody(cube, 0);
+	ret = AddBody(cube, 0);
 	return ret;
 }
 

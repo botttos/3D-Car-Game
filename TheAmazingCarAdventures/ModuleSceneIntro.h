@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "Primitive.h"
 
-#define SCENE_INTRO_CUBES 200
+#define SCENE_INTRO_U_CUBES 103
 
 struct PhysBody3D;
 struct PhysMotor3D;
@@ -37,7 +37,8 @@ public:
 	vec3 actual_pos;
 	p2List<PhysBody3D*> Map;
 	p2List<Cube> Cubes;
-	Cube Uncolored_Cubes[SCENE_INTRO_CUBES];
+	Cube Uncolored_Cubes[SCENE_INTRO_U_CUBES];
+	PhysBody3D* Uncolored_Cubes_Bodies[SCENE_INTRO_U_CUBES];
 	p2List<Cube> Red_Cubes;
 	p2List<Cube> Green_Cubes;
 	p2List<Cube> Blue_Cubes;
