@@ -83,4 +83,5 @@ public:
 	void ResetSpheres();
 
 	int cannon_tp_fx;
+	Timer crash_time;
 };

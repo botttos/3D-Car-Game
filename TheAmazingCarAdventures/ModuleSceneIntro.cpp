@@ -19,6 +19,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 	cannon_tp_fx = App->audio->LoadFx("sounds/cannon_shot.wav");
 
+	crash_time.Start();
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -398,8 +399,11 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{
 		for (int i = 0; i < SCENE_INTRO_U_CUBES; i++)
 		{
-			if (Uncolored_Cubes_Bodies[i] == body1)
-			App->audio->PlayFx(App->player->crash_wall_fx);
+			if (Uncolored_Cubes_Bodies[i] == body1 && crash_time.Read() > 2000)
+			{
+				App->audio->PlayFx(App->player->crash_wall_fx);
+				crash_time.Start();
+			}
 		}
 	}
 }
