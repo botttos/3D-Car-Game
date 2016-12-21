@@ -230,24 +230,15 @@ update_status ModulePlayer::Update(float dt)
 				{
 				case 4:
 					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_4th_road_bodies.getFirst(); item; item = item->next)
-					{
-						btRigidBody* temp = item->data->GetRigidBody();
-						temp->activate(true);
-					}
+						item->data->GetRigidBody()->activate(true);
 					break;
 				case 3:
 					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_3rd_road_bodies.getFirst(); item; item = item->next)
-					{
-						btRigidBody* temp = item->data->GetRigidBody();
-						temp->activate(true);
-					}
+						item->data->GetRigidBody()->activate(true);					
 					break;
 				case 2:
 					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_2nd_road_bodies.getFirst(); item; item = item->next)
-					{
-						btRigidBody* temp = item->data->GetRigidBody();
-						temp->activate(true);
-					}
+						item->data->GetRigidBody()->activate(true);					
 					break;
 				case 1:
 					break;
@@ -281,24 +272,15 @@ update_status ModulePlayer::Update(float dt)
 				{
 				case 4:
 					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_4th_road_bodies.getFirst(); item; item = item->next)
-					{
-						btRigidBody* temp = item->data->GetRigidBody();
-						temp->activate(true);
-					}
+						item->data->GetRigidBody()->activate(true);
 					break;
 				case 3:
 					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_3rd_road_bodies.getFirst(); item; item = item->next)
-					{
-						btRigidBody* temp = item->data->GetRigidBody();
-						temp->activate(true);
-					}
+						item->data->GetRigidBody()->activate(true);
 					break;
 				case 2:
 					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_2nd_road_bodies.getFirst(); item; item = item->next)
-					{
-						btRigidBody* temp = item->data->GetRigidBody();
-						temp->activate(true);
-					}
+						item->data->GetRigidBody()->activate(true);
 					break;
 				case 1:
 					break;
@@ -332,24 +314,15 @@ update_status ModulePlayer::Update(float dt)
 				{
 				case 4:
 					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_4th_road_bodies.getFirst(); item; item = item->next)
-					{
-						btRigidBody* temp = item->data->GetRigidBody();
-						temp->activate(true);
-					}
+						item->data->GetRigidBody()->activate(true);
 					break;
 				case 3:
 					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_3rd_road_bodies.getFirst(); item; item = item->next)
-					{
-						btRigidBody* temp = item->data->GetRigidBody();
-						temp->activate(true);
-					}
+						item->data->GetRigidBody()->activate(true);
 					break;
 				case 2:
 					for (p2List_item<PhysBody3D*>* item = App->scene_intro->US_2nd_road_bodies.getFirst(); item; item = item->next)
-					{
-						btRigidBody* temp = item->data->GetRigidBody();
-						temp->activate(true);
-					}
+						item->data->GetRigidBody()->activate(true);
 					break;
 				case 1:
 					break;
