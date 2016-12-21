@@ -46,46 +46,48 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	/*mat4x4 mat;
-	App->player->vehicle->GetTransform(&mat);
+	if (fixed_camera == true)
+	{
+		mat4x4 mat;
+		App->player->vehicle->GetTransform(&mat);
 
-	Position = mat.translation();
+		Position = mat.translation();
 
-	X = vec3{ mat[0],mat[1],mat[2] };
-	Y = vec3{ mat[4], mat[5], mat[6] };
-	Z = vec3{ mat[8], mat[9],mat[10] };
-	vec3 VehicleLocation = { mat[12], mat[13] + viewVector.y +6, mat[14] };
-	
-	float textx, texty, textz;
-	App->player->vehicle->GetPos(&Position.x, &Position.y, &Position.z);
-	btVector3 btFrom(Position.x, Position.y, Position.z);
-	btVector3 btTo(Position.x, -5000.0f, Position.z);
-	btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+		X = vec3{ mat[0],mat[1],mat[2] };
+		Y = vec3{ mat[4], mat[5], mat[6] };
+		Z = vec3{ mat[8], mat[9],mat[10] };
+		vec3 VehicleLocation = { mat[12], mat[13] + viewVector.y + 6, mat[14] };
 
-	if (res.hasHit() == false) {
-		Look((VehicleLocation)-Z * 15, VehicleLocation, false);
-		float x, y, z;
-		App->player->vehicle->GetPos(&x, &y, &z);
-		LookAt({ x, y, z });
+		float textx, texty, textz;
+		App->player->vehicle->GetPos(&Position.x, &Position.y, &Position.z);
+		btVector3 btFrom(Position.x, Position.y, Position.z);
+		btVector3 btTo(Position.x, -5000.0f, Position.z);
+		btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
 
-		btVector3 distanceVec(Position.x - x, Position.y - y, Position.z - z);
-		float distanceToVehicle = distanceVec.length() + 5;
+		if (res.hasHit() == false) {
+			Look((VehicleLocation)-Z * 15, VehicleLocation, false);
+			float x, y, z;
+			App->player->vehicle->GetPos(&x, &y, &z);
+			LookAt({ x, y, z });
 
-		if (distanceToVehicle != maxDist)
-		{
-			btVector3FloatData data;
-			distanceVec.serializeFloat(data);
-			float angle = atan2(data.m_floats[0], data.m_floats[2]);
-			float toAdd = distanceToVehicle - maxDist;
-			Position.x -= toAdd*sin(angle);
-			Position.y += toAdd*sin(angle);
-			Position.z -= toAdd*cos(angle);
+			btVector3 distanceVec(Position.x - x, Position.y - y, Position.z - z);
+			float distanceToVehicle = distanceVec.length() + 5;
+
+			if (distanceToVehicle != maxDist)
+			{
+				btVector3FloatData data;
+				distanceVec.serializeFloat(data);
+				float angle = atan2(data.m_floats[0], data.m_floats[2]);
+				float toAdd = distanceToVehicle - maxDist;
+				Position.x -= toAdd*sin(angle);
+				Position.y += toAdd*sin(angle);
+				Position.z -= toAdd*cos(angle);
+			}
 		}
-	}
 
-	// Recalculate matrix -------------
-	CalculateViewMatrix();
-	*/
+		// Recalculate matrix -------------
+		CalculateViewMatrix();
+	}
 	// Modify camera manually
 	vec3 newPos(0, 0, 0);
 	float speed = 10.0f * dt;
@@ -101,6 +103,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * 3*speed;
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * 3*speed;
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT) fixed_camera = false;
 
 	Position += newPos;
 	Reference += newPos;
