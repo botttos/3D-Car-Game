@@ -24,7 +24,7 @@ bool ModulePlayer::Start()
 	green_off = false;
 
 	car_brake_fx = App->audio->LoadFx("sounds/brake.wav");
-	change_color_fx = App->audio->LoadFx("sounds/change_walls.wav");
+	change_color_fx = App->audio->LoadFx("sounds/change_color.wav");
 	win_fx = App->audio->LoadFx("sounds/Nice.wav");
 
 	VehicleInfo car;

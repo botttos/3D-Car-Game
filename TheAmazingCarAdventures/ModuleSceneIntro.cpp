@@ -17,8 +17,8 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-
-	cannon_tp_fx = App->audio->LoadFx("sounds/cannon_teleport.wav");
+	//TODO:add cannon sound
+	//cannon_tp_fx = App->audio->LoadFx("sounds/.wav");
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
