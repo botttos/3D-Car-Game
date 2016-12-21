@@ -18,6 +18,8 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	cannon_tp_fx = App->audio->LoadFx("sounds/cannon_teleport.wav");
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -227,7 +229,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	cannon_ball->GetPosZ(&z_cannon);
 	if (z_cannon == cannon_ball_z && cannon_ball_reached_sensor == true)
 	{//checkpoints_bools.getFirst()->next->next->data == true && 
-		//TODO: play cannon sound
+		App->audio->PlayFx(cannon_tp_fx);
 		cannon_ball->GetRigidBody()->activate(true);
 		cannon_ball->Push(0, 0, 550);
 		cannon_ball_reached_sensor = false;

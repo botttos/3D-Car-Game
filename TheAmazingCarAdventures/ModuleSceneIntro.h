@@ -80,4 +80,6 @@ public:
 	PhysBody3D* sensor;
 	bool cannon_ball_reached_sensor = true;
 	void ResetSpheres();
+
+	int cannon_tp_fx;
 };
