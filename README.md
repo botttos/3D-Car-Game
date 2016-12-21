@@ -7,7 +7,7 @@ Version 1.0:
 
 First map completed.
 
-Controls:
+##Controls:
 
 UP: Gives gas to the car.
 
@@ -28,10 +28,11 @@ Number 3: Makes every GREEN object dissapear. Makes every other colored object a
 Number 4: Makes every colored object appear.
 
 
-Victory condition: Reach the end of the circuit in the lowest time you can! You will listen a "Nice" sound when you get there and your time will reset. If you completed the circuit with less time than your best, the new best time will appear in the window title.
+##Victory condition:
+Reach the end of the circuit in the lowest time you can! You will listen a "Nice" sound when you get there and your time will reset. If you completed the circuit with less time than your best, the new best time will appear in the window title.
 There is also our best time, try to beat it!
 
-Lose conditions:
+##Lose conditions:
 - Getting hit by a ball.
 - Get out of the map.
 - Knock the car over (in this case you have to reset the game manually with key N).
