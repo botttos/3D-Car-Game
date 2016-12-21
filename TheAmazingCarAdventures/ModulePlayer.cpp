@@ -40,18 +40,15 @@ bool ModulePlayer::Start()
 	//Back Lights
 	car.chassis_size[2].Set(0.4, 0.3f, 0.2f);
 	car.chassis_size[3].Set(0.4, 0.3f, 0.2f);
-	
-	/*car.chassis_size[5].Set(2, 0.1f, 0.35f);
-	car.chassis_size[6].Set(1.5f, 0.35f, 1.85f);*/
 
 	// Position
 	car.chassis_offset = new vec3[car.num_chassis];
 	//Body
-	car.chassis_offset[0].Set(0.0f, 1.7f, -0.0f); //(,,-0.65f)
+	car.chassis_offset[0].Set(0.0f, 1.7f, -0.8f);
 	//Back body
 	car.chassis_offset[4].Set(0.0f, 1.5f, -1.64f); //Izquierda, arriba, atras
 	//Face body
-	car.chassis_offset[1].Set(0, 1.48f, 1.4f);
+	car.chassis_offset[1].Set(0, 1.48f, 1.6f);
 	//Back Lights
 	car.chassis_offset[2].Set(-0.7, 1.2f, -2.3f);
 	car.chassis_offset[3].Set(0.7, 1.2f, -2.3f);
@@ -68,8 +65,8 @@ bool ModulePlayer::Start()
 	car.chassis_color[2] = { Gold.r, Gold.g, Gold.b };
 	car.chassis_color[3] = { Gold.r, Gold.g, Gold.b };
 
-	car.mass = 500.0f;
-	car.suspensionStiffness = 5.88f;
+	car.mass = 600.0f;
+	car.suspensionStiffness = 3.88f;
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
@@ -162,7 +159,10 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
+		//if(acceleration < MAX_ACCELERATION)
 		acceleration = MAX_ACCELERATION + 500;
+		/*if (vehicle->GetKmh() <= 40)
+			acceleration = MAX_ACCELERATION*20;*/
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -180,7 +180,7 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		if (vehicle->GetKmh() <= 0)
-			acceleration = -MAX_ACCELERATION;
+			acceleration = -MAX_ACCELERATION-800;
 		else
 		{
 			brake = BRAKE_POWER;

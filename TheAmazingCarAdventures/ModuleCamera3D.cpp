@@ -103,7 +103,18 @@ update_status ModuleCamera3D::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * 3*speed;
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * 3*speed;
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT) fixed_camera = false;
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT) 
+	{
+		if (fixed_camera == true)
+		{
+			fixed_camera = false;
+		}
+		else
+		{
+			fixed_camera = true;
+		}
+		
+	}
 
 	Position += newPos;
 	Reference += newPos;
