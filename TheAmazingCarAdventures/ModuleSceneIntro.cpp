@@ -187,20 +187,14 @@ bool ModuleSceneIntro::Start()
 		Uncolored_Cubes[i].color = { 0.8f, 0.85f, 0.9f };	//TODO: repaint walls
 
 	for (p2List_item<PhysBody3D*>* item = US_2nd_road_bodies.getFirst(); item; item = item->next)
-	{
 		All_Spheres_bodies.add(item->data);
-		item->data->GetRigidBody()->forceActivationState(WANTS_DEACTIVATION);
-	}
+
 	for (p2List_item<PhysBody3D*>* item = US_3rd_road_bodies.getFirst(); item; item = item->next)
-	{
 		All_Spheres_bodies.add(item->data);
-		item->data->GetRigidBody()->forceActivationState(WANTS_DEACTIVATION);
-	}
+
 	for (p2List_item<PhysBody3D*>* item = US_4th_road_bodies.getFirst(); item; item = item->next)
-	{
 		All_Spheres_bodies.add(item->data);
-		item->data->GetRigidBody()->forceActivationState(WANTS_DEACTIVATION);
-	}
+
 	for (p2List_item<PhysBody3D*>* item = Red_Spheres_bodies.getFirst(); item; item = item->next)
 		All_Spheres_bodies.add(item->data);
 

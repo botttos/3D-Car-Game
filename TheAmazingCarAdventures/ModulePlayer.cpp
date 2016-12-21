@@ -209,6 +209,8 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<PhysBody3D*>* item = App->scene_intro->Red_bodies.getFirst(); item; item = item->next)
 			item->data->GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
 				
+		//TODO: add (click?) sound
+
 		red_off = true;
 		blue_off = false;
 		green_off = false;

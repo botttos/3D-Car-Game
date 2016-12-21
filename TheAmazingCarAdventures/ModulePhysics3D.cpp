@@ -756,6 +756,7 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float ra
 	}
 
 	ret = AddBody(sphere, mass);
+	ret->GetRigidBody()->forceActivationState(WANTS_DEACTIVATION);
 	return ret;
 }
 
@@ -874,10 +875,10 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionTrap(int x, int y, int z, float ra
 		}
 	}
 
-	CreateWall(radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1)/4 - 2, z - radius*num_spheres/8, NORTH, UNCOLORED);
-	CreateWall(radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1) /4 - 2, z + radius*num_spheres /8, NORTH, UNCOLORED);
-	CreateWall(radius * num_spheres/2, radius * num_spheres/4, 1, x + radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
-	CreateWall(radius * num_spheres/2, radius * num_spheres/4, 1, x - radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
+	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1)/4 - 2, z - radius*num_spheres/8, NORTH, UNCOLORED);
+	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1) /4 - 2, z + radius*num_spheres /8, NORTH, UNCOLORED);
+	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x + radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
+	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x - radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
 
 	return ret;
 }
