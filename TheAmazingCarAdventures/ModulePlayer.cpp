@@ -26,6 +26,7 @@ bool ModulePlayer::Start()
 	change_color_fx = App->audio->LoadFx("sounds/change_color.wav");
 	win_fx = App->audio->LoadFx("sounds/Nice.wav");
 	crash_wall_fx = App->audio->LoadFx("sounds/car_wall_hit.wav");
+	crash_sphere_fx = App->audio->LoadFx("sounds/crash_sphere.wav");
 
 	// Car properties ----------------------------------------
 	// Piece
