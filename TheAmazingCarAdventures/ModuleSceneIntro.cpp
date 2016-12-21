@@ -28,8 +28,6 @@ bool ModuleSceneIntro::Start()
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 16, NORTH));	//1rst sensor
 
 	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));	//back start wall
-	//Uncolored_Cubes.add(c1);
-	//Map.add(App->physics->CreateWall(10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));		//back start wall
 	Map.add(App->physics->CreateRoad(50, EAST, EAST, 0, 30));
 	Cube c1;
 	Red_bodies.add(App->physics->CreateWall(c1, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));		//1rst wall
@@ -69,10 +67,10 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 20));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 15));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 10));
+	US_2nd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x - 20, actual_pos.y + 15, actual_pos.z - 10, 3, RED, 2, 10.0f));
+	US_2nd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x - 20, actual_pos.y + 15, actual_pos.z, 3, GREEN, 2, 10.0f));
+	US_2nd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x - 20, actual_pos.y + 15, actual_pos.z + 10, 3, BLUE, 2, 10.0f));
 	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 5));
-	US_2nd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x - 5, actual_pos.y + 10, actual_pos.z - 10, 3, RED, 2, 10.0f));
-	US_2nd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x - 5, actual_pos.y + 10, actual_pos.z, 3, GREEN, 2, 10.0f));
-	US_2nd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x - 5, actual_pos.y + 10, actual_pos.z + 10, 3, BLUE, 2, 10.0f));
 	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30));
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z, EAST));	//3rd sensor
 	Cube c7;
@@ -231,7 +229,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	{//checkpoints_bools.getFirst()->next->next->data == true && 
 		//TODO: play cannon sound
 		cannon_ball->GetRigidBody()->activate(true);
-		cannon_ball->Push(0, 0, 250);
+		cannon_ball->Push(0, 0, 550);
 		cannon_ball_reached_sensor = false;
 	}
 
