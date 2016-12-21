@@ -36,10 +36,13 @@ public:
 	bool defeat = false;
 	Timer timer;
 
+	void ResetCar();
+
 private:
 	btRigidBody* chassis_vehicle;
 	float best_time = 0;
 	mat4x4 initial_car_matrix;
+	float car_y;
 
 public:
 	int car_brake_fx;

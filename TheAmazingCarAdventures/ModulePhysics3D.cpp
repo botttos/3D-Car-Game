@@ -890,9 +890,9 @@ PhysBody3D * ModulePhysics3D::CreateWallSensor(float lenght, float width, int x,
 	Cube cube;
 
 	if (dir == NORTH || dir == SOUTH)
-		cube.size.Set(lenght, 3, width);
+		cube.size.Set(lenght, 10, width);
 	else if (dir == EAST || dir == WEST)
-		cube.size.Set(width, 3, lenght);
+		cube.size.Set(width, 10, lenght);
 
 	cube.SetPos(x, y, z);
 	ret = AddNonRigidBody(cube, 0);

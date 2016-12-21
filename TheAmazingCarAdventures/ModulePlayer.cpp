@@ -154,10 +154,27 @@ bool ModulePlayer::CleanUp()
 	return true;
 }
 
+void ModulePlayer::ResetCar()
+{
+	vehicle->SetPos(0, 0.5f, 16);
+	vehicle->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+	vehicle->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+	vehicle->SetTransform(&initial_car_matrix);
+}
+
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
+
+	if (vehicle->GetPosY() <= -50)
+	{
+		ResetCar();
+		App->scene_intro->ResetSpheres();
+
+		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getFirst(); item; item = item->next)
+			item->data = false;
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
@@ -347,10 +364,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
 	{
-		vehicle->SetPos(0, 0.5f, 16);
-		vehicle->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
-		vehicle->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
-		vehicle->SetTransform(&initial_car_matrix);
+		ResetCar();
 
 		for (p2List_item<bool>* item = App->scene_intro->checkpoints_bools.getFirst(); item; item = item->next)
 			item->data = false;
@@ -389,10 +403,7 @@ update_status ModulePlayer::Update(float dt)
 
 		defeat = false;
 
-		vehicle->SetPos(0, 0.5f, 16);
-		vehicle->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
-		vehicle->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
-		vehicle->SetTransform(&initial_car_matrix);
+		ResetCar();
 	}
 
 	char title[80];

@@ -72,6 +72,16 @@ void PhysBody3D::GetPos(float* x, float* y, float* z)
 	*z = posFloat.m_floats[2];
 }
 
+float PhysBody3D::GetPosY()
+{
+	btTransform t = body->getWorldTransform();
+	btVector3 pos = t.getOrigin();
+	btVector3FloatData posFloat;
+	pos.serializeFloat(posFloat);
+	float y = posFloat.m_floats[1];
+	return y;
+}
+
 void PhysBody3D::GetPosZ(float* z)
 {
 	btTransform t = body->getWorldTransform();
