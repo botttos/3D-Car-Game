@@ -17,8 +17,7 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-	//TODO:add cannon sound
-	//cannon_tp_fx = App->audio->LoadFx("sounds/.wav");
+	cannon_tp_fx = App->audio->LoadFx("sounds/cannon_shot.wav");
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
@@ -30,61 +29,63 @@ bool ModuleSceneIntro::Start()
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 5, actual_pos.z + 16, NORTH));	//1rst sensor
 
 	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));	//back start wall
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 0, 30));
+	App->physics->CreateRoad(50, EAST, EAST, 0, 30);
 	Cube c1;
 	Red_bodies.add(App->physics->CreateWall(c1, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));		//1rst wall
 	Red_Cubes.add(c1);
 
-	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -20));
-	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -15));
-	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -10));
-	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -5));
+	App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -20);
+	App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -15);
+	App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -10);
+	App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -5);
 	Cube c2;
 	Blue_bodies.add(App->physics->CreateWall(c2, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));		//1rst wall
 	Blue_Cubes.add(c2);
-	Map.add(App->physics->CreateRoad(10, EAST, EAST, 30, 30));
-	Map.add(App->physics->CreateRoad(50, EAST, EAST, 30, 30, true, RED));
-	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -15));
-	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -10));
-	Map.add(App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -5));
+	App->physics->CreateRoad(10, EAST, EAST, 30, 30);
+	App->physics->CreateRoad(50, EAST, EAST, 30, 30, true, RED);
+	App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -15);
+	App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -10);
+	App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -5);
 	Cube c3;
 	Green_bodies.add(App->physics->CreateWall(c3, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, GREEN));		//1rst wall
 	Green_Cubes.add(c3);
-	Map.add(App->physics->CreateRoad(30, EAST, EAST, 30, 30));
+	App->physics->CreateRoad(30, EAST, EAST, 30, 30);
 	Cube c4;
 	Blue_bodies.add(App->physics->CreateWall(c4, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, BLUE));	//2nd wall
 	Blue_Cubes.add(c4);
-	Map.add(App->physics->CreateRoad(40, EAST, EAST, 30, 30));
+	App->physics->CreateRoad(40, EAST, EAST, 30, 30);
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 5, actual_pos.z, NORTH));	//2nd sensor
 
-	Map.add(App->physics->CreateRoad(50, NORTH, EAST, 30, 30));
-	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30));
+	App->physics->CreateRoad(50, NORTH, EAST, 30, 30);
+	App->physics->CreateRoad(50, NORTH, NORTH, 30, 30);
 	Cube c5;
 	Red_bodies.add(App->physics->CreateWall(c5, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, EAST, RED));	//3rd wall
-	Red_Cubes.add(c5);	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30));
+	Red_Cubes.add(c5);	
+	App->physics->CreateRoad(50, NORTH, NORTH, 30, 30);
 	Cube c6;
 	Green_bodies.add(App->physics->CreateWall(c6, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, EAST, GREEN));	//3rd wall
-	Green_Cubes.add(c6);	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30));
-	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, true, BLUE));
-	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 20));
-	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 15));
-	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 10));
+	Green_Cubes.add(c6);	
+	App->physics->CreateRoad(50, NORTH, NORTH, 30, 30);
+	App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, true, BLUE);
+	App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 20);
+	App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 15);
+	App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 10);
 	US_2nd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x - 20, actual_pos.y + 15, actual_pos.z - 10, 3, RED, 2, 10.0f));
 	US_2nd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x - 20, actual_pos.y + 15, actual_pos.z, 3, GREEN, 2, 10.0f));
 	US_2nd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x - 20, actual_pos.y + 15, actual_pos.z + 10, 3, BLUE, 2, 10.0f));
-	Map.add(App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 5));
-	Map.add(App->physics->CreateRoad(50, NORTH, NORTH, 30, 30));
+	App->physics->CreateRoad(20, NORTH, NORTH, 30, 30, false, UNCOLORED, 5);
+	App->physics->CreateRoad(50, NORTH, NORTH, 30, 30);
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 5, actual_pos.z, EAST));	//3rd sensor
 	Cube c7;
 	Blue_bodies.add(App->physics->CreateWall(c7, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, EAST, BLUE));	//3rd wall
 	Blue_Cubes.add(c7);
-	Map.add(App->physics->CreateRoad(30, WEST, NORTH, 30, 30));
+	App->physics->CreateRoad(30, WEST, NORTH, 30, 30);
 	sensor = App->physics->CreateWallSensor(10, 1, actual_pos.x - 25, actual_pos.y + 3, actual_pos.z - 2, NORTH);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
 	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 17, 1, actual_pos.x + 23, actual_pos.y, actual_pos.z, NORTH, UNCOLORED));	//closing wall
-	Map.add(App->physics->CreateRoad(50, WEST, WEST, 30, 65));
-	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
+	App->physics->CreateRoad(50, WEST, WEST, 30, 65);
+	App->physics->CreateRoad(50, WEST, WEST, 65, 65);
 	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z + 50, NORTH, UNCOLORED)); //3rd road walls 0
 	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z + 30, NORTH, UNCOLORED)); //3rd road walls 0.5
 	Cube c8;
@@ -103,14 +104,12 @@ bool ModuleSceneIntro::Start()
 	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 35, 1, actual_pos.x, actual_pos.y, actual_pos.z - 110, NORTH, UNCOLORED)); //3rd road walls 4
 	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 18, 1, actual_pos.x + 25, actual_pos.y, actual_pos.z - 130, NORTH, UNCOLORED)); //3rd road walls 4.5
 	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 18, 1, actual_pos.x + 9, actual_pos.y, actual_pos.z - 150, NORTH, UNCOLORED)); //3rd road walls 5																												
-		//US_3rd_road_bodies.add(App->physics->CreateDemolitionBall(actual_pos.x + 15, actual_pos.y + 10, actual_pos.z, 3, RED, 3, 10.0f));
-	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
+	App->physics->CreateRoad(50, WEST, WEST, 65, 65);
 	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 20, 220, 1, actual_pos.x, actual_pos.y, actual_pos.z, EAST, UNCOLORED));	//midwall
-	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
-	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
-	Map.add(App->physics->CreateRoad(50, WEST, WEST, 65, 65));
+	App->physics->CreateRoad(50, WEST, WEST, 65, 65);
+	App->physics->CreateRoad(50, WEST, WEST, 65, 65);
+	App->physics->CreateRoad(50, WEST, WEST, 65, 65);
 	checkpoints.add(App->physics->CreateWallSensor(65, 1, actual_pos.x, actual_pos.y + 5, actual_pos.z + 2, SOUTH));	//4th sensor
-	//Map.add(App->physics->CreateWall(12, 12, 12, actual_pos.x - 12, actual_pos.y, actual_pos.z+13, SOUTH, UNCOLORED));	//4th wall
 	cannon_ball = App->physics->CreateDemolitionBall(actual_pos.x - 24, actual_pos.y + 4, actual_pos.z + 8, 5, UNCOLORED, 0, 10.0f);
 	cannon_ball->GetPos(&cannon_ball_init_pos.x, &cannon_ball_init_pos.y, &cannon_ball_init_pos.z);
 	cannon_sphere.color = Black;
@@ -119,26 +118,26 @@ bool ModuleSceneIntro::Start()
 	Cube c10;
 	Red_bodies.add(App->physics->CreateWall(c10, 10, 50, 1, actual_pos.x + 7, actual_pos.y, actual_pos.z, SOUTH, RED));	//4th wall
 	Red_Cubes.add(c10);
-	Map.add(App->physics->CreateRoad(50, SOUTH, WEST, 65, 30));
+	App->physics->CreateRoad(50, SOUTH, WEST, 65, 30);
 	
 	Cube c11;
 	Green_bodies.add(App->physics->CreateWall(c11, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, WEST, GREEN));
 	Green_Cubes.add(c11);
 
-	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
+	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
 	Cube c12;
 	Green_bodies.add(App->physics->CreateWall(c12, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, WEST, GREEN));
 	Green_Cubes.add(c12);
-	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
-	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30));
-	Map.add(App->physics->CreateRoad(15, SOUTH, SOUTH, 30, 30));
-	Map.add(App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30, true, RED));
-	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 20));
+	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
+	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
+	App->physics->CreateRoad(15, SOUTH, SOUTH, 30, 30);
+	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30, true, RED);
+	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 20);
 	App->physics->CreateDemolitionTrap(actual_pos.x, actual_pos.y + 20, actual_pos.z, 3, GREEN, 4, 32, 25.0f);
-	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 15));
-	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 10));
-	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 5));
-	Map.add(App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30));
+	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 15);
+	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 10);
+	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 5);
+	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30);
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x + 10, actual_pos.y + 5, actual_pos.z, WEST));	//5th sensor
 	Map.add(App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], 10, 15, 1, actual_pos.x, actual_pos.y, actual_pos.z - 8, EAST, UNCOLORED));	//midwall
 
@@ -217,6 +216,9 @@ bool ModuleSceneIntro::Start()
 
 	for (p2List_item<PhysBody3D*>* item = Green_Spheres_bodies.getFirst(); item; item = item->next)
 		All_Spheres_bodies.add(item->data);
+
+	for (p2List_item<PhysBody3D*>* item = Map.getFirst(); item; item = item->next)
+		item->data->collision_listeners.add(this);
 
 	return ret;
 }
@@ -391,7 +393,11 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		cannon_ball_reached_sensor = true;
 	}
 
-	//TODO: add collision sound against: 	App->scene_intro->Red_bodies/Blue_bodies/Green_bodies; && App->scene_intro->Uncolored_Cubes
+	//TODO: add collision sound against: 	
+	if (body2 == App->player->vehicle && Map.find(body1) != -1)
+	{
+		App->audio->PlayFx(App->player->crash_wall_fx);
+	}
 }
 
 void ModuleSceneIntro::ResetSpheres()

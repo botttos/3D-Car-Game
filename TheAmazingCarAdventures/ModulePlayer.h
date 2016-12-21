@@ -48,4 +48,5 @@ public:
 	int car_brake_fx;
 	int change_color_fx;
 	int win_fx;
+	int crash_wall_fx;
 };
