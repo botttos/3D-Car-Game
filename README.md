@@ -1,6 +1,12 @@
 # The amazing car adventures
 Made with Bullet physics library.
 
+###Creators:
+  - Marc Latorre (https://github.com/marclafr).
+  - Francisco Ruiz (https://github.com/ValencianoFran).
+  
+##The Game:
+
 The amazing car adventures is a racing game where the player changes the scenario in order to pass the obstacles or make the path easier if done quickly enough.
 
 Version 1.0:
