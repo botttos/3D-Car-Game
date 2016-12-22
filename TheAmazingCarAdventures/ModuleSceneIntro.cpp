@@ -143,13 +143,13 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 10);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 5);
 	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 10, 3, 1, actual_pos.x + 8, actual_pos.y, actual_pos.z + 10, WEST, UNCOLORED);	//receptor3
-	cannon_ball2 = App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 4, actual_pos.z + 10, 5, UNCOLORED, 6, 10.0f);
+	cannon_ball2 = App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 4, actual_pos.z + 10, 7, UNCOLORED, 6, 10.0f);
 	cannon_ball2->GetPos(&cannon_ball2_init_pos.x, &cannon_ball2_init_pos.y, &cannon_ball2_init_pos.z);
 	cannon_sphere2.color = Indigo;
 	cannon_ball2->GetPosX(&cannon_ball2_x);
 	cannon_ball2->collision_listeners.add(this);
 	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 10, 3, 1, actual_pos.x + 8, actual_pos.y, actual_pos.z - 8, WEST, UNCOLORED);	//receptor3
-	cannon_ball3 = App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 4, actual_pos.z - 8, 5, UNCOLORED, 7, 10.0f);
+	cannon_ball3 = App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 4, actual_pos.z - 8, 7, UNCOLORED, 7, 10.0f);
 	cannon_ball3->GetPos(&cannon_ball3_init_pos.x, &cannon_ball3_init_pos.y, &cannon_ball3_init_pos.z);
 	cannon_sphere3.color = Indigo;
 	cannon_ball3->GetPosX(&cannon_ball3_x);
@@ -282,7 +282,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	cannon_ball3->GetPosX(&x_cannon3);
 	if (x_cannon3 == cannon_ball3_x && cannon_ball3_reached_sensor == true)
 	{
-		if (delay_c3.Read() > 500)
+		if (delay_c3.Read() > 800)
 		{
 			App->audio->PlayFx(cannon_tp_fx);
 			cannon_ball3->GetRigidBody()->activate(true);
