@@ -193,7 +193,15 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		acceleration = MAX_ACCELERATION + 800;
+		//acceleration = MAX_ACCELERATION + 800;
+
+		if (vehicle->GetKmh() >= 2.5f)
+			acceleration = MAX_ACCELERATION;
+		else
+		{
+			brake = -BRAKE_POWER;
+			//App->audio->PlayFx(car_brake_fx);
+		}
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -212,7 +220,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		float vel = vehicle->GetKmh();
 		if (vehicle->GetKmh() <= 2.5f)
-			acceleration = -MAX_ACCELERATION-800;
+			acceleration = -MAX_ACCELERATION;
 		else
 		{
 			brake = BRAKE_POWER;
