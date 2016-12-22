@@ -80,6 +80,7 @@ update_status ModuleCamera3D::Update(float dt)
 		// Recalculate matrix -------------
 		CalculateViewMatrix();
 	}
+	
 	// Modify camera manually
 	vec3 newPos(0, 0, 0);
 	float speed = 10.0f * dt;

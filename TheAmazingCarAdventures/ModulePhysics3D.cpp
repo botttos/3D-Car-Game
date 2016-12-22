@@ -17,7 +17,7 @@
 
 ModulePhysics3D::ModulePhysics3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	debug = true;
+	debug = false;
 
 	collision_conf = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collision_conf);
@@ -751,130 +751,6 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float ra
 	ret->GetRigidBody()->forceActivationState(WANTS_DEACTIVATION);
 	return ret;
 }
-
-PhysBody3D * ModulePhysics3D::CreateDemolitionTrap(int x, int y, int z, float radius, obstacle_color color, uint road, uint num_spheres, float mass)
-{
-	PhysBody3D* ret;
-
-	if (color == RED)
-		CreateWall(radius * num_spheres/4, radius * num_spheres/4, 1, x, y - radius, z, NORTH, RED, 90, vec3(1, 0, 0));
-	if (color == BLUE)
-		CreateWall(radius * num_spheres/4, radius * num_spheres/4, 1, x, y - radius, z, NORTH, BLUE, 90, vec3(1, 0, 0));
-	if (color == GREEN)
-		CreateWall(radius * num_spheres/4, radius * num_spheres/4, 1, x, y - radius, z, NORTH, GREEN, 90, vec3(1, 0, 0));
-
-	for (int i = 0; i < num_spheres/4; i++)
-	{
-		Sphere sphere(radius);
-		sphere.SetPos(x + radius, y+radius*2*i, z + radius);
-		ret = AddBody(sphere, mass);
-
-		switch (road)
-		{
-		case 2:
-			App->scene_intro->US_2nd_road.add(sphere);
-			App->scene_intro->US_2nd_road_positions.add(vec3(x + radius, y + radius * 2 * i, z + radius));
-			App->scene_intro->US_2nd_road_bodies.add(ret);
-			break;
-		case 3:
-			App->scene_intro->US_3rd_road.add(sphere);
-			App->scene_intro->US_3rd_road_positions.add(vec3(x + radius, y + radius * 2 * i, z + radius));
-			App->scene_intro->US_3rd_road_bodies.add(ret);
-			break;
-		case 4:
-			App->scene_intro->US_4th_road.add(sphere);
-			App->scene_intro->US_4th_road_positions.add(vec3(x + radius, y + radius * 2 * i, z + radius));
-			App->scene_intro->US_4th_road_bodies.add(ret);
-			break;
-		}
-	}
-
-	for (int i = 0; i < num_spheres / 4; i++)
-	{
-		Sphere sphere(radius);
-		sphere.SetPos(x - radius, y + radius * 2 * i, z + radius);
-		ret = AddBody(sphere, mass);
-
-		switch (road)
-		{
-		case 2:
-			App->scene_intro->US_2nd_road.add(sphere);
-			App->scene_intro->US_2nd_road_positions.add(vec3(x - radius, y + radius * 2 * i, z + radius));
-			App->scene_intro->US_2nd_road_bodies.add(ret);
-			break;
-		case 3:
-			App->scene_intro->US_3rd_road.add(sphere);
-			App->scene_intro->US_3rd_road_positions.add(vec3(x - radius, y + radius * 2 * i, z + radius));
-			App->scene_intro->US_3rd_road_bodies.add(ret);
-			break;
-		case 4:
-			App->scene_intro->US_4th_road.add(sphere);
-			App->scene_intro->US_4th_road_positions.add(vec3(x - radius, y + radius * 2 * i, z + radius));
-			App->scene_intro->US_4th_road_bodies.add(ret);
-			break;
-		}
-	}
-
-	for (int i = 0; i < num_spheres / 4; i++)
-	{
-		Sphere sphere(radius);
-		sphere.SetPos(x + radius, y + radius * 2 * i, z - radius);
-		ret = AddBody(sphere, mass);
-
-		switch (road)
-		{
-		case 2:
-			App->scene_intro->US_2nd_road.add(sphere);
-			App->scene_intro->US_2nd_road_positions.add(vec3(x + radius, y + radius * 2 * i, z - radius));
-			App->scene_intro->US_2nd_road_bodies.add(ret);
-			break;
-		case 3:
-			App->scene_intro->US_3rd_road.add(sphere);
-			App->scene_intro->US_3rd_road_positions.add(vec3(x + radius, y + radius * 2 * i, z - radius));
-			App->scene_intro->US_3rd_road_bodies.add(ret);
-			break;
-		case 4:
-			App->scene_intro->US_4th_road.add(sphere);
-			App->scene_intro->US_4th_road_positions.add(vec3(x + radius, y + radius * 2 * i, z - radius));
-			App->scene_intro->US_4th_road_bodies.add(ret);
-			break;
-		}
-	}
-
-	for (int i = 0; i < num_spheres / 4; i++)
-	{
-		Sphere sphere(radius);
-		sphere.SetPos(x - radius, y + radius * 2 * i, z - radius);
-		ret = AddBody(sphere, mass);
-
-		switch (road)
-		{
-		case 2:
-			App->scene_intro->US_2nd_road.add(sphere);
-			App->scene_intro->US_2nd_road_positions.add(vec3(x - radius, y + radius * 2 * i, z - radius));
-			App->scene_intro->US_2nd_road_bodies.add(ret);
-			break;
-		case 3:
-			App->scene_intro->US_3rd_road.add(sphere);
-			App->scene_intro->US_3rd_road_positions.add(vec3(x - radius, y + radius * 2 * i, z - radius));
-			App->scene_intro->US_3rd_road_bodies.add(ret);
-			break;
-		case 4:
-			App->scene_intro->US_4th_road.add(sphere);
-			App->scene_intro->US_4th_road_positions.add(vec3(x - radius, y + radius * 2 * i, z - radius));
-			App->scene_intro->US_4th_road_bodies.add(ret);
-			break;
-		}
-	}
-
-	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1)/4 - 2, z - radius*num_spheres/8, NORTH, UNCOLORED);
-	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x, y + radius*(num_spheres - 1) /4 - 2, z + radius*num_spheres /8, NORTH, UNCOLORED);
-	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x + radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
-	CreateWall(App->scene_intro->Uncolored_Cubes[Cube_num], &App->scene_intro->Uncolored_Cubes_Bodies[Cube_num], radius * num_spheres/2, radius * num_spheres/4, 1, x - radius*num_spheres / 8, y + radius*(num_spheres - 1) / 4 - 2, z, EAST, UNCOLORED);
-
-	return ret;
-}
-
 
 PhysBody3D * ModulePhysics3D::CreateWallSensor(float lenght, float width, int x, int y, int z, Direction dir)
 {
