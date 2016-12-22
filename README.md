@@ -19,7 +19,11 @@ New background color.
 
 Less steep roads --> better car stability.
 
-Bug is not completely solved, but is not relevant anymore.
+Bugs:
+
+Bug where spheres did'nt activate in order is not completely solved, but is not relevant anymore.
+
+It's way not usual, but sometimes, at the game the car starts shaking for some time. It doesn't affect the gameplay tho, it's only visual.
 
 ###Version 1.0:
 
