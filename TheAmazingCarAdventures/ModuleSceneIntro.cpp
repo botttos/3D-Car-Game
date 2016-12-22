@@ -27,6 +27,11 @@ bool ModuleSceneIntro::Start()
 	actual_pos.y = 0;
 	actual_pos.z = 0;
 
+	ground.size.Set(1000, 1, 1000);
+	ground.SetPos(0, -40, 0);
+	ground.color = Cyan;
+	
+
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 5, actual_pos.z + 16, NORTH));	//1rst sensor
 
 	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 20, 30, 1, actual_pos.x, actual_pos.y + 5, actual_pos.z, NORTH, UNCOLORED);	//back start wall
@@ -269,6 +274,8 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	ground.Render();
+
 	float z_cannon;
 	cannon_ball->GetPosZ(&z_cannon);
 	if (z_cannon == cannon_ball_z && cannon_ball_reached_sensor == true)
