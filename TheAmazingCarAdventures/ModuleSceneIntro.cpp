@@ -152,7 +152,23 @@ bool ModuleSceneIntro::Start()
 	cannon_ball3->collision_listeners.add(this);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30);
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x + 10, actual_pos.y + 10, actual_pos.z, WEST));	//5th sensor
-	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 20, 14, 1, actual_pos.x, actual_pos.y, actual_pos.z - 8, EAST, UNCOLORED);	//endwall
+	
+	//E
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 7, 1, 1, actual_pos.x + 1, actual_pos.y + 6, actual_pos.z + 1, EAST, UNCOLORED);	//end char wall
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 1, 3, 1, actual_pos.x + 1, actual_pos.y + 10, actual_pos.z, EAST, UNCOLORED);	//end char wall
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 1, 2, 1, actual_pos.x + 1, actual_pos.y + 6, actual_pos.z, EAST, UNCOLORED);	//end char wall
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 1, 3, 1, actual_pos.x + 1, actual_pos.y + 2, actual_pos.z, EAST, UNCOLORED);	//end char wall
+	//N																																													
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 9, 1, 1, actual_pos.x + 1, actual_pos.y + 6, actual_pos.z - 4, EAST, UNCOLORED);	//end char wall
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 9, 1, 1, actual_pos.x + 1, actual_pos.y + 6, actual_pos.z - 6, EAST, UNCOLORED, 27, vec3(1,0,0));	//end char wall
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 9, 1, 1, actual_pos.x + 1, actual_pos.y + 6, actual_pos.z - 8, EAST, UNCOLORED);	//end char wall
+	//D
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 9, 1, 1, actual_pos.x + 1, actual_pos.y + 6, actual_pos.z - 10, EAST, UNCOLORED);	//end char wall
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 5, 1, 1, actual_pos.x + 1, actual_pos.y + 9, actual_pos.z - 12, EAST, UNCOLORED, 55, vec3(1, 0, 0));	//end char wall
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 5, 1, 1, actual_pos.x + 1, actual_pos.y + 3, actual_pos.z - 12, EAST, UNCOLORED, -55, vec3(1, 0, 0));	//end char wall
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 4, 1, 1, actual_pos.x + 1, actual_pos.y + 6, actual_pos.z - 14, EAST, UNCOLORED);	//end char wall
+	//--
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 20, 16, 1, actual_pos.x, actual_pos.y, actual_pos.z - 7, EAST, UNCOLORED);	//endwall
 
 	for (p2List_item<PhysBody3D*>* item = checkpoints.getFirst(); item; item = item->next)
 	{
@@ -209,8 +225,11 @@ bool ModuleSceneIntro::Start()
 	for (p2List_item<Cube>* item = Cubes.getFirst(); item; item = item->next)
 		item->data.color = { 0.95f, 0.7f, 0.4f };	//TODO: repaint road
 
-	for (int i = 0; i < SCENE_INTRO_U_CUBES; i++)
+	for (int i = 0; i < SCENE_INTRO_U_CUBES - 12; i++)
 		Uncolored_Cubes[i].color = { 0.8f, 0.85f, 0.9f };	//TODO: repaint walls
+
+	for (int i = SCENE_INTRO_U_CUBES - 12; i < SCENE_INTRO_U_CUBES; i++)	 //END letters
+		Uncolored_Cubes[i].color = White;	//TODO: repaint walls
 	Uncolored_Cubes[SCENE_INTRO_U_CUBES - 1].color = Black; //TODO: Background changed? change color if not.
 
 	for (p2List_item<PhysBody3D*>* item = US_2nd_road_bodies.getFirst(); item; item = item->next)
