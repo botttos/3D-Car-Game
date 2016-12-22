@@ -113,7 +113,7 @@ bool ModuleSceneIntro::Start()
 	checkpoints.add(App->physics->CreateWallSensor(65, 1, actual_pos.x, actual_pos.y + 5, actual_pos.z + 2, SOUTH));	//4th sensor
 	cannon_ball = App->physics->CreateDemolitionBall(actual_pos.x - 24, actual_pos.y + 4, actual_pos.z + 8, 5, UNCOLORED, 5, 10.0f);
 	cannon_ball->GetPos(&cannon_ball_init_pos.x, &cannon_ball_init_pos.y, &cannon_ball_init_pos.z);
-	cannon_sphere.color = Black;
+	cannon_sphere.color = Indigo;
 	cannon_ball->GetPosZ(&cannon_ball_z);
 	cannon_ball->collision_listeners.add(this);
 	Cube c10;
