@@ -29,13 +29,13 @@ bool ModuleSceneIntro::Start()
 
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 5, actual_pos.z + 16, NORTH));	//1rst sensor
 
-	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, UNCOLORED);	//back start wall
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 20, 30, 1, actual_pos.x, actual_pos.y + 5, actual_pos.z, NORTH, UNCOLORED);	//back start wall
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 10, 25, 1, actual_pos.x-15, actual_pos.y+10, actual_pos.z+12, EAST, UNCOLORED);	//back_right start wall
 	App->physics->CreateRoad(50, EAST, EAST, 0, 30);
 	Cube c1;
 	Red_bodies.add(App->physics->CreateWall(c1, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, NORTH, RED));		//1rst wall
 	Red_Cubes.add(c1);
-
-	App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -20);
+	App->physics->CreateRoad(20, EAST, EAST, 0, 30);
 	App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -15);
 	App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -10);
 	App->physics->CreateRoad(20, EAST, EAST, 30, 30, false, UNCOLORED, -5);
@@ -56,7 +56,6 @@ bool ModuleSceneIntro::Start()
 	Blue_Cubes.add(c4);
 	App->physics->CreateRoad(40, EAST, EAST, 30, 30);
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 5, actual_pos.z, NORTH));	//2nd sensor
-
 	App->physics->CreateRoad(50, NORTH, EAST, 30, 30);
 	App->physics->CreateRoad(50, NORTH, NORTH, 30, 30);
 	Cube c5;
@@ -133,14 +132,14 @@ bool ModuleSceneIntro::Start()
 	sensor2_3->collision_listeners.add(this);
 	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
 	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
+	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30);
 	App->physics->CreateRoad(15, SOUTH, SOUTH, 30, 30);
-	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
-	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 20);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 15);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 10);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 5);
+	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
 	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 4, 10, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z + 14, WEST, UNCOLORED);	//receptor3
-	cannon_ball2 = App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 4, actual_pos.z + 10, 6, UNCOLORED, 6, 10.0f);
+	cannon_ball2 = App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 4, actual_pos.z + 8, 6, UNCOLORED, 6, 10.0f);
 	cannon_ball2->GetPos(&cannon_ball2_init_pos.x, &cannon_ball2_init_pos.y, &cannon_ball2_init_pos.z);
 	cannon_sphere2.color = Indigo;
 	cannon_ball2->GetPosX(&cannon_ball2_x);
@@ -153,7 +152,7 @@ bool ModuleSceneIntro::Start()
 	cannon_ball3->collision_listeners.add(this);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30);
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x + 10, actual_pos.y + 10, actual_pos.z, WEST));	//5th sensor
-	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 10, 15, 1, actual_pos.x, actual_pos.y, actual_pos.z - 8, EAST, UNCOLORED);	//midwall
+	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 20, 14, 1, actual_pos.x, actual_pos.y, actual_pos.z - 8, EAST, UNCOLORED);	//endwall
 
 	for (p2List_item<PhysBody3D*>* item = checkpoints.getFirst(); item; item = item->next)
 	{
@@ -212,6 +211,7 @@ bool ModuleSceneIntro::Start()
 
 	for (int i = 0; i < SCENE_INTRO_U_CUBES; i++)
 		Uncolored_Cubes[i].color = { 0.8f, 0.85f, 0.9f };	//TODO: repaint walls
+	Uncolored_Cubes[SCENE_INTRO_U_CUBES - 1].color = Black; //TODO: Background changed? change color if not.
 
 	for (p2List_item<PhysBody3D*>* item = US_2nd_road_bodies.getFirst(); item; item = item->next)
 		All_Spheres_bodies.add(item->data);
