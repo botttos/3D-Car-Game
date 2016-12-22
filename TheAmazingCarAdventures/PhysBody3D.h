@@ -18,6 +18,7 @@ public:
 	void GetTransform(float* matrix) const;
 	void SetTransform(const float* matrix) const;
 	void GetPos(float * x, float * y, float * z);
+	void GetPosX(float * x); 
 	float GetPosY();
 	void GetPosZ(float * z);
 	void SetPos(float x, float y, float z);

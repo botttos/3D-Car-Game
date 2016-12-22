@@ -111,7 +111,7 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateRoad(50, WEST, WEST, 65, 65);
 	App->physics->CreateRoad(50, WEST, WEST, 65, 65);
 	checkpoints.add(App->physics->CreateWallSensor(65, 1, actual_pos.x, actual_pos.y + 5, actual_pos.z + 2, SOUTH));	//4th sensor
-	cannon_ball = App->physics->CreateDemolitionBall(actual_pos.x - 24, actual_pos.y + 4, actual_pos.z + 8, 5, UNCOLORED, 0, 10.0f);
+	cannon_ball = App->physics->CreateDemolitionBall(actual_pos.x - 24, actual_pos.y + 4, actual_pos.z + 8, 5, UNCOLORED, 5, 10.0f);
 	cannon_ball->GetPos(&cannon_ball_init_pos.x, &cannon_ball_init_pos.y, &cannon_ball_init_pos.z);
 	cannon_sphere.color = Black;
 	cannon_ball->GetPosZ(&cannon_ball_z);
@@ -126,18 +126,31 @@ bool ModuleSceneIntro::Start()
 	Green_Cubes.add(c11);
 
 	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
-	Cube c12;
-	Green_bodies.add(App->physics->CreateWall(c12, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, WEST, GREEN));
-	Green_Cubes.add(c12);
+	sensor2_3 = App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z, WEST);
+	sensor2_3->SetAsSensor(true);
+	sensor2_3->collision_listeners.add(this);
+	//Cube c12;
+	//Green_bodies.add(App->physics->CreateWall(c12, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, WEST, GREEN));
+	//Green_Cubes.add(c12);
 	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
 	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
 	App->physics->CreateRoad(15, SOUTH, SOUTH, 30, 30);
-	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30, true, RED);
+	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 20);
-	App->physics->CreateDemolitionTrap(actual_pos.x, actual_pos.y + 20, actual_pos.z, 3, GREEN, 4, 32, 25.0f);
+	//App->physics->CreateDemolitionTrap(actual_pos.x, actual_pos.y + 20, actual_pos.z, 3, GREEN, 4, 32, 25.0f);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 15);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 10);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 5);
+	cannon_ball2 = App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 4, actual_pos.z + 10, 5, UNCOLORED, 6, 10.0f);
+	cannon_ball2->GetPos(&cannon_ball2_init_pos.x, &cannon_ball2_init_pos.y, &cannon_ball2_init_pos.z);
+	cannon_sphere2.color = Black;
+	cannon_ball2->GetPosX(&cannon_ball2_x);
+	cannon_ball2->collision_listeners.add(this);
+	cannon_ball3 = App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 4, actual_pos.z - 8, 5, UNCOLORED, 7, 10.0f);
+	cannon_ball3->GetPos(&cannon_ball3_init_pos.x, &cannon_ball3_init_pos.y, &cannon_ball3_init_pos.z);
+	cannon_sphere3.color = Black;
+	cannon_ball3->GetPosX(&cannon_ball3_x);
+	cannon_ball3->collision_listeners.add(this);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30);
 	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x + 10, actual_pos.y + 5, actual_pos.z, WEST));	//5th sensor
 	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 10, 15, 1, actual_pos.x, actual_pos.y, actual_pos.z - 8, EAST, UNCOLORED);	//midwall
@@ -221,6 +234,8 @@ bool ModuleSceneIntro::Start()
 	for (int i = 0; i < SCENE_INTRO_U_CUBES; i++)
 		Uncolored_Cubes_Bodies[i]->collision_listeners.add(this);
 
+	delay_c3.Start();
+
 	return ret;
 }
 
@@ -244,9 +259,37 @@ update_status ModuleSceneIntro::Update(float dt)
 		cannon_ball->Push(0, 0, 550);
 		cannon_ball_reached_sensor = false;
 	}
-
 	cannon_ball->GetTransform(&cannon_sphere.transform);
 	cannon_sphere.Render();
+
+
+	float x_cannon2;
+	cannon_ball2->GetPosX(&x_cannon2);
+	if (x_cannon2 == cannon_ball2_x && cannon_ball2_reached_sensor == true)
+	{
+		App->audio->PlayFx(cannon_tp_fx);
+		cannon_ball2->GetRigidBody()->activate(true);
+		cannon_ball2->Push(550, 0, 0);
+		cannon_ball2_reached_sensor = false;
+	}
+	cannon_ball2->GetTransform(&cannon_sphere2.transform);
+	cannon_sphere2.Render();
+
+	float x_cannon3;
+	cannon_ball3->GetPosX(&x_cannon3);
+	if (x_cannon3 == cannon_ball3_x && cannon_ball3_reached_sensor == true)
+	{
+		if (delay_c3.Read() > 1000)
+		{
+			App->audio->PlayFx(cannon_tp_fx);
+			cannon_ball3->GetRigidBody()->activate(true);
+			cannon_ball3->Push(550, 0, 0);
+			cannon_ball3_reached_sensor = false;
+			//delay_c3.Start();
+		}
+	}
+	cannon_ball3->GetTransform(&cannon_sphere3.transform);
+	cannon_sphere3.Render();
 
 	//TRANSFORMATIONS
 	p2List_item<Sphere>* spheres = Red_Spheres.getFirst();
@@ -392,6 +435,40 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		cannon_ball->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
 		cannon_ball->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
 		cannon_ball_reached_sensor = true;
+	}
+
+	if (body2 == cannon_ball2 && body1 == sensor2_3)
+	{
+		cannon_ball2->SetPos(cannon_ball2_init_pos.x, cannon_ball2_init_pos.y, cannon_ball2_init_pos.z);
+		cannon_ball2->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		cannon_ball2->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+		cannon_ball2_reached_sensor = true;
+	}
+
+	if (body2 == App->player->vehicle && body1 == cannon_ball2)
+	{
+		App->player->defeat = true;
+		cannon_ball2->SetPos(cannon_ball2_init_pos.x, cannon_ball2_init_pos.y, cannon_ball2_init_pos.z);
+		cannon_ball2->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		cannon_ball2->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+		cannon_ball2_reached_sensor = true;
+	}
+
+	if (body2 == cannon_ball3 && body1 == sensor2_3)
+	{
+		cannon_ball3->SetPos(cannon_ball3_init_pos.x, cannon_ball3_init_pos.y, cannon_ball3_init_pos.z);
+		cannon_ball3->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		cannon_ball3->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+		cannon_ball3_reached_sensor = true;
+	}
+
+	if (body2 == App->player->vehicle && body1 == cannon_ball3)
+	{
+		App->player->defeat = true;
+		cannon_ball3->SetPos(cannon_ball3_init_pos.x, cannon_ball3_init_pos.y, cannon_ball3_init_pos.z);
+		cannon_ball3->GetRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		cannon_ball3->GetRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+		cannon_ball3_reached_sensor = true;
 	}
 
 	if (body2 == App->player->vehicle)

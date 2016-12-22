@@ -17,7 +17,7 @@
 
 ModulePhysics3D::ModulePhysics3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	debug = false;
+	debug = true;
 
 	collision_conf = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collision_conf);
@@ -724,8 +724,14 @@ PhysBody3D * ModulePhysics3D::CreateDemolitionBall(int x, int y, int z, float ra
 
 	switch (road)
 	{
-	case 0:
+	case 5:
 		App->scene_intro->cannon_sphere = sphere;
+		break;
+	case 6:
+		App->scene_intro->cannon_sphere2 = sphere;
+		break;
+	case 7:
+		App->scene_intro->cannon_sphere3 = sphere;
 		break;
 	case 2:
 		App->scene_intro->US_2nd_road.add(sphere);

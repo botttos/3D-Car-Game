@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "Primitive.h"
 
-#define SCENE_INTRO_U_CUBES 103
+#define SCENE_INTRO_U_CUBES 98
 
 struct PhysBody3D;
 struct PhysMotor3D;
@@ -80,6 +80,21 @@ public:
 	vec3 cannon_ball_init_pos;
 	PhysBody3D* sensor;
 	bool cannon_ball_reached_sensor = true;
+
+	PhysBody3D* cannon_ball2;
+	Sphere cannon_sphere2;
+	float cannon_ball2_x;
+	vec3 cannon_ball2_init_pos;
+	PhysBody3D* sensor2_3;
+	bool cannon_ball2_reached_sensor = true;
+
+	Timer delay_c3;
+	PhysBody3D* cannon_ball3;
+	Sphere cannon_sphere3;
+	float cannon_ball3_x;
+	vec3 cannon_ball3_init_pos;
+	bool cannon_ball3_reached_sensor = true;
+
 	void ResetSpheres();
 
 	int cannon_tp_fx;
