@@ -9,7 +9,19 @@ Made with Bullet physics library.
 
 Sop 'em up is a racing game where the player changes the scenario in order to pass the obstacles or make the path easier if done quickly enough.
 
-Version 1.0:
+###Version 1.1:
+
+Edited last road: New obstacle combination to solve :D
+
+Visual feedback when you complete the run (END letters wrote behind the end).
+
+New background color.
+
+Less steep roads --> better car stability.
+
+Bug is not completely solved, but is not relevant anymore.
+
+###Version 1.0:
 
 First map completed.
 
