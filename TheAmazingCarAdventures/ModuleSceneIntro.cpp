@@ -131,9 +131,6 @@ bool ModuleSceneIntro::Start()
 	sensor2_3 = App->physics->CreateWallSensor(30, 1, actual_pos.x, actual_pos.y + 3, actual_pos.z, WEST);
 	sensor2_3->SetAsSensor(true);
 	sensor2_3->collision_listeners.add(this);
-	//Cube c12;
-	//Green_bodies.add(App->physics->CreateWall(c12, 10, 30, 1, actual_pos.x, actual_pos.y, actual_pos.z, WEST, GREEN));
-	//Green_Cubes.add(c12);
 	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
 	App->physics->CreateRoad(50, SOUTH, SOUTH, 30, 30);
 	App->physics->CreateRoad(15, SOUTH, SOUTH, 30, 30);
@@ -155,7 +152,7 @@ bool ModuleSceneIntro::Start()
 	cannon_ball3->GetPosX(&cannon_ball3_x);
 	cannon_ball3->collision_listeners.add(this);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30);
-	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x + 10, actual_pos.y + 5, actual_pos.z, WEST));	//5th sensor
+	checkpoints.add(App->physics->CreateWallSensor(30, 1, actual_pos.x + 10, actual_pos.y + 10, actual_pos.z, WEST));	//5th sensor
 	App->physics->CreateWall(Uncolored_Cubes[App->physics->Cube_num], &Uncolored_Cubes_Bodies[App->physics->Cube_num], 10, 15, 1, actual_pos.x, actual_pos.y, actual_pos.z - 8, EAST, UNCOLORED);	//midwall
 
 	for (p2List_item<PhysBody3D*>* item = checkpoints.getFirst(); item; item = item->next)

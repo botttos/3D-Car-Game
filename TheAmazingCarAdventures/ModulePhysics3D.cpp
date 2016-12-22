@@ -17,7 +17,7 @@
 
 ModulePhysics3D::ModulePhysics3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	debug = false;
+	debug = true;
 
 	collision_conf = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collision_conf);
@@ -758,9 +758,9 @@ PhysBody3D * ModulePhysics3D::CreateWallSensor(float lenght, float width, int x,
 	Cube cube;
 
 	if (dir == NORTH || dir == SOUTH)
-		cube.size.Set(lenght, 10, width);
+		cube.size.Set(lenght, 20, width);
 	else if (dir == EAST || dir == WEST)
-		cube.size.Set(width, 10, lenght);
+		cube.size.Set(width, 20, lenght);
 
 	cube.SetPos(x, y, z);
 	ret = AddBody(cube, 0);
