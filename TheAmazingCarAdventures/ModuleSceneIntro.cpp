@@ -143,12 +143,12 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30, false, UNCOLORED, 5);
 	cannon_ball2 = App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 4, actual_pos.z + 10, 5, UNCOLORED, 6, 10.0f);
 	cannon_ball2->GetPos(&cannon_ball2_init_pos.x, &cannon_ball2_init_pos.y, &cannon_ball2_init_pos.z);
-	cannon_sphere2.color = Black;
+	cannon_sphere2.color = Indigo;
 	cannon_ball2->GetPosX(&cannon_ball2_x);
 	cannon_ball2->collision_listeners.add(this);
 	cannon_ball3 = App->physics->CreateDemolitionBall(actual_pos.x + 10, actual_pos.y + 4, actual_pos.z - 8, 5, UNCOLORED, 7, 10.0f);
 	cannon_ball3->GetPos(&cannon_ball3_init_pos.x, &cannon_ball3_init_pos.y, &cannon_ball3_init_pos.z);
-	cannon_sphere3.color = Black;
+	cannon_sphere3.color = Indigo;
 	cannon_ball3->GetPosX(&cannon_ball3_x);
 	cannon_ball3->collision_listeners.add(this);
 	App->physics->CreateRoad(20, SOUTH, SOUTH, 30, 30);
