@@ -3,7 +3,7 @@ Made with Bullet physics library.
 
 ###Creators:
   - Marc Latorre (https://github.com/marclafr).
-  - Francisco Ruiz (https://github.com/ValencianoFran).
+  - Francisco Ruiz (https://github.com/botttos).
   
 ##The Game:
 
